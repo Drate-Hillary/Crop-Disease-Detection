@@ -1,0 +1,149 @@
+body {
+    min-height: 100vh;
+    display: flex;
+    align-items: center;
+    background: linear-gradient(135deg, #f5f7fa 0%, #e8f1e4 100%);
+    padding: 20px 0;
+}
+
+.signup-container {
+    max-width: 380px;
+    margin: 0 auto;
+    padding: 1rem;
+    background: white;
+    border-radius: 10px;
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+}
+
+.signup-header {
+    margin-bottom: 20px;
+}
+
+.header {
+    display: flex;
+    align-items: center;
+    justify-content: start;
+    gap: 0.8rem;
+}
+
+.header .fa-leaf {
+    font-size: x-large;
+    color: #1e720f;
+}
+
+.signup-header h2 {
+    font-size: 1.4rem;
+    font-weight: 700;
+    color: #343a40;
+    margin-bottom: 5px;
+}
+
+.form-floating {
+    margin-bottom: 15px;
+    position: relative;
+}
+
+.form-floating label {
+    font-size: 0.9rem;
+    font-weight: 500;
+    display: flex;
+    align-items: center;
+}
+
+.form-control {
+    border-radius: 6px;
+    min-height: 3.5rem;
+    font-size: 0.9rem;
+    padding: 1rem 2.5rem 0.5rem 0.75rem;
+    font-weight: 500;
+}
+
+.form-control:focus {
+    border-color: #1e720f;
+    box-shadow: 0 0 0 0.25rem rgba(81, 179, 48, 0.15);
+}
+
+.btn-signup {
+    width: 100%;
+    padding: 12px;
+    font-weight: 600;
+    border-radius: 8px;
+    background-color: #1e720f;
+    border: none;
+    transition: all 0.3s;
+    margin-top: 10px;
+}
+
+.btn-signup:hover {
+    background-color: #0a500a;
+    transform: translateY(-1px);
+}
+
+.form-check-input:checked {
+    background-color: #1e720f;
+    border-color: #51b330;
+}
+
+.password-toggle {
+    position: absolute;
+    right: 15px;
+    top: 50%;
+    transform: translateY(-50%);
+    cursor: pointer;
+    color: #6c757d;
+    z-index: 5;
+    height: 20px;
+    width: 20px;
+    transition: opacity 0.2s;
+}
+
+.password-toggle:hover {
+    opacity: 0.7;
+}
+
+.icon {
+    width: 18px;
+    height: 18px;
+    margin-right: 8px;
+}
+
+.icon.signup {
+    filter: brightness(0) invert(1);
+}
+
+.login-link {
+    font-size: 0.9rem;
+}
+
+.login-link a {
+    font-weight: 500;
+    color: #1e720f;
+    text-decoration: none;
+}
+
+.login-link a:hover {
+    text-decoration: underline;
+}
+
+.terms-text {
+    font-size: 0.8rem;
+    color: #6c757d;
+    line-height: 1.4;
+}
+
+.terms-text a {
+    color: #1e720f;
+    text-decoration: none;
+}
+
+.terms-text a:hover {
+    text-decoration: underline;
+}
+
+.row {
+    margin: 0 -7.5px;
+}
+
+.col-6 {
+    padding: 0 7.5px;
+}

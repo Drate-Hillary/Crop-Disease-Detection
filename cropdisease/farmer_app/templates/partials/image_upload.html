@@ -1,0 +1,190 @@
+{% block content %} {% load static %}
+
+<!-- Upload Diagnosis Section -->
+<section id="upload-diagnosis-section">
+  <div class="upload-container">
+    <!-- Back button and title -->
+    <div class="d-flex align-items-center mb-4">
+      <h2 class="mb-0">Crop Disease Diagnosis</h2>
+    </div>
+
+    <!-- Step indicator -->
+    <div class="step-indicator mb-4">
+      <div class="row text-center">
+        <div class="col step active">
+          <div class="step-circle">1</div>
+          <small>Upload Image</small>
+        </div>
+        <div class="col step">
+          <div class="step-circle">2</div>
+          <small>Crop Details</small>
+        </div>
+        <div class="col step">
+          <div class="step-circle">3</div>
+          <small>Get Results</small>
+        </div>
+      </div>
+    </div>
+
+    <!-- Main upload card -->
+    <div class="card upload-card mb-4">
+      <div class="card-body p-4">
+        <h4 class="card-title mb-4">Upload Crop Image</h4>
+
+        <!-- Image upload area -->
+        <div id="uploadArea" class="upload-area p-5 text-center mb-4">
+          <i class="bi bi-cloud-arrow-up upload-icon mb-3"></i>
+          <h5>Drag & drop your crop image here</h5>
+          <p class="text-muted">or click to browse files</p>
+          <input type="file" id="fileInput" accept="image/*" class="d-none" />
+          <small class="text-muted d-block mt-2"
+            >Supported formats: JPG, PNG (Max 5MB)</small
+          >
+        </div>
+
+        <!-- Preview section (hidden initially) -->
+        <div id="previewSection" class="text-center mb-4" style="display: none">
+          <img
+            id="imagePreview"
+            src="#"
+            alt="Preview"
+            class="preview-image mb-3"
+          />
+          <div>
+            <button id="changeImageBtn" class="btn btn-outline-secondary me-2">
+              <i class="bi bi-arrow-repeat"></i> Change Image
+            </button>
+            <button id="confirmImageBtn" class="btn btn-primary">
+              Confirm Image <i class="bi bi-chevron-right"></i>
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Crop selection (hidden initially) -->
+    <div
+      id="cropSelectionSection"
+      class="card upload-card mb-4"
+      style="display: none"
+    >
+      <div class="card-body p-4">
+        <h4 class="card-title mb-4">Select Crop Details</h4>
+
+        <!-- Crop type selection -->
+        <div class="mb-4">
+          <h5 class="mb-3">1. Select Crop Type</h5>
+          <ul class="nav crop-selector">
+            <li class="nav-item">
+              <a class="nav-link active" href="#">Tomato</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" href="#">Wheat</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" href="#">Corn</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" href="#">Rice</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" href="#">Potato</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" href="#"><i class="bi bi-three-dots"></i></a>
+            </li>
+          </ul>
+        </div>
+
+        <!-- Plant part selection -->
+        <div class="mb-4">
+          <h5 class="mb-3">2. Select Plant Part</h5>
+          <div class="d-flex flex-wrap">
+            <button
+              type="button"
+              class="btn btn-outline-secondary plant-part-btn me-2 active"
+            >
+              <i class="bi bi-leaf me-1"></i> Leaves
+            </button>
+            <button
+              type="button"
+              class="btn btn-outline-secondary plant-part-btn me-2"
+            >
+              <i class="bi bi-flower1 me-1"></i> Flowers
+            </button>
+            <button
+              type="button"
+              class="btn btn-outline-secondary plant-part-btn me-2"
+            >
+              <i class="bi bi-tree me-1"></i> Stem
+            </button>
+            <button
+              type="button"
+              class="btn btn-outline-secondary plant-part-btn me-2"
+            >
+              <i class="bi bi-apple me-1"></i> Fruits
+            </button>
+            <button
+              type="button"
+              class="btn btn-outline-secondary plant-part-btn me-2"
+            >
+              <i class="bi bi-egg-fill me-1"></i> Roots
+            </button>
+          </div>
+        </div>
+
+        <!-- Additional notes -->
+        <div class="mb-4">
+          <h5 class="mb-3">3. Additional Notes (Optional)</h5>
+          <textarea
+            class="form-control"
+            rows="3"
+            placeholder="Any observations about the plant's condition, weather, etc."
+          ></textarea>
+        </div>
+
+        <div class="d-flex justify-content-between">
+          <button id="backToUploadBtn" class="btn btn-outline-secondary">
+            <i class="bi bi-chevron-left"></i> Back
+          </button>
+          <button id="analyzeBtn" class="btn btn-primary">
+            Analyze <i class="bi bi-magic"></i>
+          </button>
+        </div>
+      </div>
+    </div>
+
+    <!-- Recent uploads -->
+    <div class="card upload-card">
+      <div class="card-body p-4">
+        <h5 class="card-title mb-3">
+          <i class="bi bi-clock-history me-2"></i> Recent Uploads
+        </h5>
+        <div class="list-group">
+          <a href="#" class="list-group-item list-group-item-action">
+            <div class="d-flex w-100 justify-content-between">
+              <h6 class="mb-1">Tomato - Late Blight</h6>
+              <small class="text-danger">High severity</small>
+            </div>
+            <small class="text-muted">Uploaded: 2 hours ago</small>
+          </a>
+          <a href="#" class="list-group-item list-group-item-action">
+            <div class="d-flex w-100 justify-content-between">
+              <h6 class="mb-1">Wheat - Healthy</h6>
+              <small class="text-success">No disease</small>
+            </div>
+            <small class="text-muted">Uploaded: 1 day ago</small>
+          </a>
+          <a href="#" class="list-group-item list-group-item-action">
+            <div class="d-flex w-100 justify-content-between">
+              <h6 class="mb-1">Corn - Rust</h6>
+              <small class="text-warning">Medium severity</small>
+            </div>
+            <small class="text-muted">Uploaded: 3 days ago</small>
+          </a>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+{% endblock %}

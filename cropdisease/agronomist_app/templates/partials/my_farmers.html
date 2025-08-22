@@ -1,0 +1,374 @@
+{% block content %} {% load static %}
+
+<!-- My Farmers sections -->
+<section id="my-farmers" class="content-section" style="display: none">
+  <div class="row mb-4 mt-4">
+    <div class="col-md-6">
+      <h4><i class="fas fa-users me-2"></i> My Farmers</h4>
+      <p class="text-muted">
+        Manage your assigned farmers and their farm details
+      </p>
+    </div>
+    <div class="col-md-6 text-md-end">
+      <button class="btn btn-success me-2">
+        <i class="fas fa-plus me-1"></i> Add New Farmer
+      </button>
+      <button class="btn btn-outline-success">
+        <i class="fas fa-filter me-1"></i> Filters
+      </button>
+    </div>
+  </div>
+
+  <!-- Farmer Statistics Cards -->
+  <div class="row mb-4">
+    <div class="col-md-3">
+      <div class="card border-start border-primary border-4">
+        <div class="card-body">
+          <div class="d-flex justify-content-between">
+            <div>
+              <h6 class="text-muted">Total Farmers</h6>
+              <h3>42</h3>
+            </div>
+            <div class="bg-primary bg-opacity-10 p-3 rounded">
+              <i class="fas fa-users text-primary"></i>
+            </div>
+          </div>
+          <small class="text-success"
+            ><i class="fas fa-arrow-up me-1"></i> 12% from last month</small
+          >
+        </div>
+      </div>
+    </div>
+    <div class="col-md-3">
+      <div class="card border-start border-success border-4">
+        <div class="card-body">
+          <div class="d-flex justify-content-between">
+            <div>
+              <h6 class="text-muted">Active Farms</h6>
+              <h3>36</h3>
+            </div>
+            <div class="bg-success bg-opacity-10 p-3 rounded">
+              <i class="fas fa-tractor text-success"></i>
+            </div>
+          </div>
+          <small class="text-success"
+            ><i class="fas fa-arrow-up me-1"></i> 8% from last month</small
+          >
+        </div>
+      </div>
+    </div>
+    <div class="col-md-3">
+      <div class="card border-start border-warning border-4">
+        <div class="card-body">
+          <div class="d-flex justify-content-between">
+            <div>
+              <h6 class="text-muted">Pending Issues</h6>
+              <h3>7</h3>
+            </div>
+            <div class="bg-warning bg-opacity-10 p-3 rounded">
+              <i class="fas fa-exclamation-triangle text-warning"></i>
+            </div>
+          </div>
+          <small class="text-danger"
+            ><i class="fas fa-arrow-down me-1"></i> 2 from last week</small
+          >
+        </div>
+      </div>
+    </div>
+    <div class="col-md-3">
+      <div class="card border-start border-info border-4">
+        <div class="card-body">
+          <div class="d-flex justify-content-between">
+            <div>
+              <h6 class="text-muted">Upcoming Visits</h6>
+              <h3>5</h3>
+            </div>
+            <div class="bg-info bg-opacity-10 p-3 rounded">
+              <i class="fas fa-calendar-check text-info"></i>
+            </div>
+          </div>
+          <small class="text-success"
+            ><i class="fas fa-bell me-1"></i> 2 this week</small
+          >
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Farmer List Section -->
+  <div class="card">
+    <div class="card-header d-flex justify-content-between align-items-center">
+      <div>
+        <span>All Assigned Farmers</span>
+        <span class="badge bg-primary ms-2">42</span>
+      </div>
+      <div class="d-flex">
+        <div class="input-group me-3" style="width: 250px">
+          <input
+            type="text"
+            class="form-control"
+            placeholder="Search farmers..."
+          />
+          <button class="btn btn-outline-secondary" type="button">
+            <i class="fas fa-search"></i>
+          </button>
+        </div>
+        <div class="dropdown">
+          <button
+            class="btn btn-outline-secondary dropdown-toggle"
+            type="button"
+            data-bs-toggle="dropdown"
+          >
+            <i class="fas fa-filter me-1"></i> Filter
+          </button>
+          <ul class="dropdown-menu dropdown-menu-end">
+            <li>
+              <h6 class="dropdown-header">Filter By</h6>
+            </li>
+            <li><a class="dropdown-item" href="#">All Farmers</a></li>
+            <li><a class="dropdown-item" href="#">Active Only</a></li>
+            <li><a class="dropdown-item" href="#">With Issues</a></li>
+            <li>
+              <hr class="dropdown-divider" />
+            </li>
+            <li><a class="dropdown-item" href="#">By Location</a></li>
+            <li><a class="dropdown-item" href="#">By Crop Type</a></li>
+          </ul>
+        </div>
+      </div>
+    </div>
+    <div class="card-body p-0">
+      <div class="table-responsive">
+        <table class="table table-hover mb-0">
+          <thead class="table-light">
+            <tr>
+              <th style="width: 50px"></th>
+              <th>Farmer Name</th>
+              <th>Location</th>
+              <th>Main Crops</th>
+              <th>Farm Size</th>
+              <th>Last Visit</th>
+              <th>Status</th>
+              <th>Actions</th>
+            </tr>
+          </thead>
+          <tbody>
+            <!-- Farmer 1 -->
+            <tr>
+              <td>
+                <img
+                  src="https://randomuser.me/api/portraits/men/32.jpg"
+                  class="rounded-circle"
+                  width="40"
+                  height="40"
+                  alt="Farmer"
+                />
+              </td>
+              <td>
+                <h6 class="mb-0">John Kamau</h6>
+                <small class="text-muted">+254 712 345 678</small>
+              </td>
+              <td>Nairobi West</td>
+              <td>
+                <span class="badge bg-success bg-opacity-10 text-success me-1"
+                  >Tomatoes</span
+                >
+                <span class="badge bg-primary bg-opacity-10 text-primary"
+                  >Kale</span
+                >
+              </td>
+              <td>2.5 acres</td>
+              <td>
+                <small>2 days ago</small>
+                <div class="text-warning">
+                  <i class="fas fa-exclamation-circle"></i> Needs follow-up
+                </div>
+              </td>
+              <td><span class="badge bg-success">Active</span></td>
+              <td>
+                <button
+                  class="btn btn-sm btn-outline-primary me-1"
+                  title="View"
+                >
+                  <i class="fas fa-eye"></i>
+                </button>
+                <button
+                  class="btn btn-sm btn-outline-secondary me-1"
+                  title="Message"
+                >
+                  <i class="fas fa-comment"></i>
+                </button>
+                <button
+                  class="btn btn-sm btn-outline-success"
+                  title="Schedule Visit"
+                >
+                  <i class="fas fa-calendar-plus"></i>
+                </button>
+              </td>
+            </tr>
+
+            <!-- Farmer 2 -->
+            <tr>
+              <td>
+                <img
+                  src="https://randomuser.me/api/portraits/women/44.jpg"
+                  class="rounded-circle"
+                  width="40"
+                  height="40"
+                  alt="Farmer"
+                />
+              </td>
+              <td>
+                <h6 class="mb-0">Mary Wanjiku</h6>
+                <small class="text-muted">+254 723 456 789</small>
+              </td>
+              <td>Kiambu</td>
+              <td>
+                <span class="badge bg-warning bg-opacity-10 text-warning me-1"
+                  >Maize</span
+                >
+                <span class="badge bg-info bg-opacity-10 text-info">Beans</span>
+              </td>
+              <td>5 acres</td>
+              <td>
+                <small>1 week ago</small>
+              </td>
+              <td><span class="badge bg-success">Active</span></td>
+              <td>
+                <button
+                  class="btn btn-sm btn-outline-primary me-1"
+                  title="View"
+                >
+                  <i class="fas fa-eye"></i>
+                </button>
+                <button
+                  class="btn btn-sm btn-outline-secondary me-1"
+                  title="Message"
+                >
+                  <i class="fas fa-comment"></i>
+                </button>
+                <button
+                  class="btn btn-sm btn-outline-success"
+                  title="Schedule Visit"
+                >
+                  <i class="fas fa-calendar-plus"></i>
+                </button>
+              </td>
+            </tr>
+
+            <!-- Farmer 3 -->
+            <tr>
+              <td>
+                <img
+                  src="https://randomuser.me/api/portraits/men/67.jpg"
+                  class="rounded-circle"
+                  width="40"
+                  height="40"
+                  alt="Farmer"
+                />
+              </td>
+              <td>
+                <h6 class="mb-0">Peter Mwangi</h6>
+                <small class="text-muted">+254 734 567 890</small>
+              </td>
+              <td>Thika</td>
+              <td>
+                <span class="badge bg-danger bg-opacity-10 text-danger me-1"
+                  >Coffee</span
+                >
+                <span class="badge bg-secondary bg-opacity-10 text-secondary"
+                  >Macadamia</span
+                >
+              </td>
+              <td>8 acres</td>
+              <td>
+                <small>3 weeks ago</small>
+                <div class="text-danger">
+                  <i class="fas fa-exclamation-triangle"></i> Urgent visit
+                  needed
+                </div>
+              </td>
+              <td><span class="badge bg-warning">Needs Attention</span></td>
+              <td>
+                <button
+                  class="btn btn-sm btn-outline-primary me-1"
+                  title="View"
+                >
+                  <i class="fas fa-eye"></i>
+                </button>
+                <button
+                  class="btn btn-sm btn-outline-secondary me-1"
+                  title="Message"
+                >
+                  <i class="fas fa-comment"></i>
+                </button>
+                <button
+                  class="btn btn-sm btn-outline-success"
+                  title="Schedule Visit"
+                >
+                  <i class="fas fa-calendar-plus"></i>
+                </button>
+              </td>
+            </tr>
+
+            <!-- Additional farmers would go here -->
+          </tbody>
+        </table>
+      </div>
+
+      <!-- Pagination -->
+      <div
+        class="d-flex justify-content-between align-items-center p-3 border-top"
+      >
+        <div>
+          <small class="text-muted"
+            >Showing <strong>1-10</strong> of <strong>42</strong> farmers</small
+          >
+        </div>
+        <nav aria-label="Page navigation">
+          <ul class="pagination pagination-sm mb-0">
+            <li class="page-item disabled">
+              <a class="page-link" href="#" tabindex="-1" aria-disabled="true"
+                >Previous</a
+              >
+            </li>
+            <li class="page-item active">
+              <a class="page-link" href="#">1</a>
+            </li>
+            <li class="page-item"><a class="page-link" href="#">2</a></li>
+            <li class="page-item"><a class="page-link" href="#">3</a></li>
+            <li class="page-item">
+              <a class="page-link" href="#">Next</a>
+            </li>
+          </ul>
+        </nav>
+      </div>
+    </div>
+  </div>
+
+  <!-- Map View Card (optional) -->
+  <div class="card mt-4">
+    <div class="card-header d-flex justify-content-between align-items-center">
+      <span>Farmer Locations</span>
+      <div class="dropdown">
+        <button
+          class="btn btn-sm btn-outline-secondary dropdown-toggle"
+          type="button"
+          data-bs-toggle="dropdown"
+        >
+          <i class="fas fa-layer-group me-1"></i> Map Layers
+        </button>
+        <ul class="dropdown-menu dropdown-menu-end">
+          <li><a class="dropdown-item" href="#">All Farmers</a></li>
+          <li><a class="dropdown-item" href="#">With Issues</a></li>
+          <li><a class="dropdown-item" href="#">By Crop Type</a></li>
+        </ul>
+      </div>
+    </div>
+    <div class="card-body p-0">
+      <div id="farmerMap" style="height: 300px"></div>
+    </div>
+  </div>
+</section>
+
+{% endblock %}

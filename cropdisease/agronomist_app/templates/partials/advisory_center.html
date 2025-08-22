@@ -1,0 +1,829 @@
+{% block content %} {% load static %}
+
+<!-- Advisory Center Section -->
+<section id="advisory-center" class="content-section" style="display: none">
+  <div class="row mb-4 mt-4">
+    <div class="col-md-6">
+      <h4><i class="fas fa-comment-medical me-2"></i> Advisory Center</h4>
+      <p class="text-muted">
+        Create and manage agricultural advisories for your farmers
+      </p>
+    </div>
+    <div class="col-md-6 text-md-end">
+      <button
+        class="btn btn-success me-2"
+        data-bs-toggle="modal"
+        data-bs-target="#newAdvisoryModal"
+      >
+        <i class="fas fa-plus me-1"></i> New Advisory
+      </button>
+      <button class="btn btn-outline-success">
+        <i class="fas fa-bullhorn me-1"></i> Broadcast
+      </button>
+    </div>
+  </div>
+
+  <!-- Advisory Summary Cards -->
+  <div class="row mb-4">
+    <div class="col-md-3">
+      <div class="card border-start border-primary border-4">
+        <div class="card-body">
+          <div class="d-flex justify-content-between">
+            <div>
+              <h6 class="text-muted">Active Advisories</h6>
+              <h3>18</h3>
+            </div>
+            <div class="bg-primary bg-opacity-10 p-3 rounded">
+              <i class="fas fa-bell text-primary"></i>
+            </div>
+          </div>
+          <small class="text-success"
+            ><i class="fas fa-arrow-up me-1"></i> 5 new this week</small
+          >
+        </div>
+      </div>
+    </div>
+    <div class="col-md-3">
+      <div class="card border-start border-success border-4">
+        <div class="card-body">
+          <div class="d-flex justify-content-between">
+            <div>
+              <h6 class="text-muted">Farmer Reach</h6>
+              <h3>142</h3>
+            </div>
+            <div class="bg-success bg-opacity-10 p-3 rounded">
+              <i class="fas fa-users text-success"></i>
+            </div>
+          </div>
+          <small class="text-success">85% open rate</small>
+        </div>
+      </div>
+    </div>
+    <div class="col-md-3">
+      <div class="card border-start border-warning border-4">
+        <div class="card-body">
+          <div class="d-flex justify-content-between">
+            <div>
+              <h6 class="text-muted">Pending Responses</h6>
+              <h3>7</h3>
+            </div>
+            <div class="bg-warning bg-opacity-10 p-3 rounded">
+              <i class="fas fa-comments text-warning"></i>
+            </div>
+          </div>
+          <small class="text-danger"
+            ><i class="fas fa-clock me-1"></i> Needs follow-up</small
+          >
+        </div>
+      </div>
+    </div>
+    <div class="col-md-3">
+      <div class="card border-start border-info border-4">
+        <div class="card-body">
+          <div class="d-flex justify-content-between">
+            <div>
+              <h6 class="text-muted">Templates</h6>
+              <h3>24</h3>
+            </div>
+            <div class="bg-info bg-opacity-10 p-3 rounded">
+              <i class="fas fa-file-alt text-info"></i>
+            </div>
+          </div>
+          <small class="text-primary">Ready to use</small>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Advisory Management Tabs -->
+  <div class="card">
+    <div class="card-header">
+      <ul
+        class="nav nav-tabs card-header-tabs"
+        id="advisoryTabs"
+        role="tablist"
+      >
+        <li class="nav-item" role="presentation">
+          <button
+            class="nav-link active"
+            id="active-tab"
+            data-bs-toggle="tab"
+            data-bs-target="#active"
+            type="button"
+            role="tab"
+          >
+            <i class="fas fa-bell me-1"></i> Active Advisories
+            <span class="badge bg-primary ms-1">18</span>
+          </button>
+        </li>
+        <li class="nav-item" role="presentation">
+          <button
+            class="nav-link"
+            id="drafts-tab"
+            data-bs-toggle="tab"
+            data-bs-target="#drafts"
+            type="button"
+            role="tab"
+          >
+            <i class="fas fa-file me-1"></i> Drafts
+            <span class="badge bg-secondary ms-1">5</span>
+          </button>
+        </li>
+        <li class="nav-item" role="presentation">
+          <button
+            class="nav-link"
+            id="templates-tab"
+            data-bs-toggle="tab"
+            data-bs-target="#templates"
+            type="button"
+            role="tab"
+          >
+            <i class="fas fa-copy me-1"></i> Templates
+            <span class="badge bg-info ms-1">24</span>
+          </button>
+        </li>
+        <li class="nav-item" role="presentation">
+          <button
+            class="nav-link"
+            id="archive-tab"
+            data-bs-toggle="tab"
+            data-bs-target="#archive"
+            type="button"
+            role="tab"
+          >
+            <i class="fas fa-archive me-1"></i> Archive
+            <span class="badge bg-dark ms-1">56</span>
+          </button>
+        </li>
+      </ul>
+    </div>
+    <div class="card-body p-0">
+      <div class="tab-content" id="advisoryTabsContent">
+        <!-- Active Advisories Tab -->
+        <div class="tab-pane fade show active" id="active" role="tabpanel">
+          <div class="table-responsive">
+            <table class="table table-hover mb-0">
+              <thead class="table-light">
+                <tr>
+                  <th>Advisory Title</th>
+                  <th>Type</th>
+                  <th>Farmers</th>
+                  <th>Sent</th>
+                  <th>Status</th>
+                  <th>Actions</th>
+                </tr>
+              </thead>
+              <tbody>
+                <!-- Advisory 1 -->
+                <tr>
+                  <td>
+                    <strong>Tomato Blight Alert</strong>
+                    <div class="text-muted small">
+                      Preventive measures for late blight
+                    </div>
+                  </td>
+                  <td><span class="badge bg-danger">Disease Alert</span></td>
+                  <td>
+                    <div class="avatar-group">
+                      <img
+                        src="https://randomuser.me/api/portraits/men/32.jpg"
+                        class="rounded-circle"
+                        width="30"
+                        height="30"
+                        alt="Farmer"
+                        data-bs-toggle="tooltip"
+                        title="John Kamau"
+                      />
+                      <img
+                        src="https://randomuser.me/api/portraits/women/44.jpg"
+                        class="rounded-circle"
+                        width="30"
+                        height="30"
+                        alt="Farmer"
+                        data-bs-toggle="tooltip"
+                        title="Mary Wanjiku"
+                      />
+                      <span class="small">+12 more</span>
+                    </div>
+                  </td>
+                  <td>
+                    <small>Today</small>
+                    <div class="text-muted">10:30 AM</div>
+                  </td>
+                  <td>
+                    <div class="progress" style="height: 6px">
+                      <div
+                        class="progress-bar bg-success"
+                        style="width: 85%"
+                      ></div>
+                    </div>
+                    <small>85% read</small>
+                  </td>
+                  <td>
+                    <button
+                      class="btn btn-sm btn-outline-primary me-1"
+                      title="View"
+                    >
+                      <i class="fas fa-eye"></i>
+                    </button>
+                    <button
+                      class="btn btn-sm btn-outline-secondary me-1"
+                      title="Stats"
+                    >
+                      <i class="fas fa-chart-bar"></i>
+                    </button>
+                    <button
+                      class="btn btn-sm btn-outline-success"
+                      title="Resend"
+                    >
+                      <i class="fas fa-paper-plane"></i>
+                    </button>
+                  </td>
+                </tr>
+
+                <!-- Advisory 2 -->
+                <tr>
+                  <td>
+                    <strong>Heavy Rain Advisory</strong>
+                    <div class="text-muted small">
+                      Flood prevention measures
+                    </div>
+                  </td>
+                  <td><span class="badge bg-primary">Weather Alert</span></td>
+                  <td>All Farmers</td>
+                  <td>
+                    <small>Yesterday</small>
+                    <div class="text-muted">2:15 PM</div>
+                  </td>
+                  <td>
+                    <div class="progress" style="height: 6px">
+                      <div
+                        class="progress-bar bg-warning"
+                        style="width: 65%"
+                      ></div>
+                    </div>
+                    <small>65% read</small>
+                  </td>
+                  <td>
+                    <button
+                      class="btn btn-sm btn-outline-primary me-1"
+                      title="View"
+                    >
+                      <i class="fas fa-eye"></i>
+                    </button>
+                    <button
+                      class="btn btn-sm btn-outline-secondary me-1"
+                      title="Stats"
+                    >
+                      <i class="fas fa-chart-bar"></i>
+                    </button>
+                    <button
+                      class="btn btn-sm btn-outline-success"
+                      title="Resend"
+                    >
+                      <i class="fas fa-paper-plane"></i>
+                    </button>
+                  </td>
+                </tr>
+
+                <!-- Advisory 3 -->
+                <tr>
+                  <td>
+                    <strong>Fertilizer Application Guide</strong>
+                    <div class="text-muted small">
+                      Spring fertilization schedule
+                    </div>
+                  </td>
+                  <td><span class="badge bg-success">Best Practice</span></td>
+                  <td>
+                    <div class="avatar-group">
+                      <img
+                        src="https://randomuser.me/api/portraits/men/67.jpg"
+                        class="rounded-circle"
+                        width="30"
+                        height="30"
+                        alt="Farmer"
+                        data-bs-toggle="tooltip"
+                        title="Peter Mwangi"
+                      />
+                      <span class="small">+8 more</span>
+                    </div>
+                  </td>
+                  <td>
+                    <small>Apr 22, 2023</small>
+                    <div class="text-muted">9:45 AM</div>
+                  </td>
+                  <td>
+                    <div class="progress" style="height: 6px">
+                      <div
+                        class="progress-bar bg-success"
+                        style="width: 92%"
+                      ></div>
+                    </div>
+                    <small>92% read</small>
+                  </td>
+                  <td>
+                    <button
+                      class="btn btn-sm btn-outline-primary me-1"
+                      title="View"
+                    >
+                      <i class="fas fa-eye"></i>
+                    </button>
+                    <button
+                      class="btn btn-sm btn-outline-secondary me-1"
+                      title="Stats"
+                    >
+                      <i class="fas fa-chart-bar"></i>
+                    </button>
+                    <button
+                      class="btn btn-sm btn-outline-success"
+                      title="Resend"
+                    >
+                      <i class="fas fa-paper-plane"></i>
+                    </button>
+                  </td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+
+          <!-- Pagination -->
+          <div
+            class="d-flex justify-content-between align-items-center p-3 border-top"
+          >
+            <div>
+              <small class="text-muted"
+                >Showing <strong>1-10</strong> of <strong>18</strong> active
+                advisories</small
+              >
+            </div>
+            <nav aria-label="Page navigation">
+              <ul class="pagination pagination-sm mb-0">
+                <li class="page-item disabled">
+                  <a
+                    class="page-link"
+                    href="#"
+                    tabindex="-1"
+                    aria-disabled="true"
+                    >Previous</a
+                  >
+                </li>
+                <li class="page-item active">
+                  <a class="page-link" href="#">1</a>
+                </li>
+                <li class="page-item"><a class="page-link" href="#">2</a></li>
+                <li class="page-item">
+                  <a class="page-link" href="#">Next</a>
+                </li>
+              </ul>
+            </nav>
+          </div>
+        </div>
+
+        <!-- Drafts Tab -->
+        <div class="tab-pane fade" id="drafts" role="tabpanel">
+          <div class="p-4 text-center">
+            <i class="fas fa-file-alt fa-3x text-muted mb-3"></i>
+            <h5>Draft Advisories</h5>
+            <p class="text-muted">
+              You have 5 draft advisories ready to complete and send
+            </p>
+            <button class="btn btn-primary">
+              <i class="fas fa-eye me-1"></i> View Drafts
+            </button>
+          </div>
+        </div>
+
+        <!-- Templates Tab -->
+        <div class="tab-pane fade" id="templates" role="tabpanel">
+          <div class="p-3">
+            <div class="row">
+              <!-- Template 1 -->
+              <div class="col-md-4 mb-3">
+                <div class="card h-100">
+                  <div class="card-body">
+                    <div class="d-flex justify-content-between mb-2">
+                      <span class="badge bg-success">Disease Alert</span>
+                      <button class="btn btn-sm btn-outline-secondary">
+                        <i class="far fa-copy"></i>
+                      </button>
+                    </div>
+                    <h6>Tomato Blight Advisory</h6>
+                    <p class="small text-muted">
+                      Preventive measures and treatment options for late blight
+                    </p>
+                    <div
+                      class="d-flex justify-content-between align-items-center"
+                    >
+                      <small class="text-muted">Last used: 2 days ago</small>
+                      <button class="btn btn-sm btn-outline-primary">
+                        <i class="fas fa-paper-plane"></i> Use
+                      </button>
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+              <!-- Template 2 -->
+              <div class="col-md-4 mb-3">
+                <div class="card h-100">
+                  <div class="card-body">
+                    <div class="d-flex justify-content-between mb-2">
+                      <span class="badge bg-primary">Weather Alert</span>
+                      <button class="btn btn-sm btn-outline-secondary">
+                        <i class="far fa-copy"></i>
+                      </button>
+                    </div>
+                    <h6>Heavy Rain Advisory</h6>
+                    <p class="small text-muted">
+                      Flood prevention and crop protection measures
+                    </p>
+                    <div
+                      class="d-flex justify-content-between align-items-center"
+                    >
+                      <small class="text-muted">Last used: 1 week ago</small>
+                      <button class="btn btn-sm btn-outline-primary">
+                        <i class="fas fa-paper-plane"></i> Use
+                      </button>
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+              <!-- Template 3 -->
+              <div class="col-md-4 mb-3">
+                <div class="card h-100">
+                  <div class="card-body">
+                    <div class="d-flex justify-content-between mb-2">
+                      <span class="badge bg-warning">Pest Alert</span>
+                      <button class="btn btn-sm btn-outline-secondary">
+                        <i class="far fa-copy"></i>
+                      </button>
+                    </div>
+                    <h6>Fall Armyworm Advisory</h6>
+                    <p class="small text-muted">
+                      Identification and control measures for armyworm
+                    </p>
+                    <div
+                      class="d-flex justify-content-between align-items-center"
+                    >
+                      <small class="text-muted">Last used: 3 weeks ago</small>
+                      <button class="btn btn-sm btn-outline-primary">
+                        <i class="fas fa-paper-plane"></i> Use
+                      </button>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Archive Tab -->
+        <div class="tab-pane fade" id="archive" role="tabpanel">
+          <div class="p-4 text-center">
+            <i class="fas fa-archive fa-3x text-muted mb-3"></i>
+            <h5>Archived Advisories</h5>
+            <p class="text-muted">
+              Browse through 56 past advisories sent to farmers
+            </p>
+            <button class="btn btn-primary">
+              <i class="fas fa-search me-1"></i> Browse Archive
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Farmer Responses -->
+  <div class="card mt-4">
+    <div class="card-header d-flex justify-content-between align-items-center">
+      <div>
+        <span>Farmer Responses</span>
+        <span class="badge bg-primary ms-2">14</span>
+      </div>
+      <div class="dropdown">
+        <button
+          class="btn btn-outline-secondary dropdown-toggle"
+          type="button"
+          data-bs-toggle="dropdown"
+        >
+          <i class="fas fa-filter me-1"></i> Filter
+        </button>
+        <ul class="dropdown-menu dropdown-menu-end">
+          <li><a class="dropdown-item" href="#">All Responses</a></li>
+          <li><a class="dropdown-item" href="#">Questions</a></li>
+          <li><a class="dropdown-item" href="#">Feedback</a></li>
+          <li><a class="dropdown-item" href="#">Unread</a></li>
+        </ul>
+      </div>
+    </div>
+    <div class="card-body p-0">
+      <div class="list-group list-group-flush">
+        <!-- Response 1 -->
+        <a href="#" class="list-group-item list-group-item-action">
+          <div class="d-flex w-100 justify-content-between">
+            <div class="d-flex align-items-center">
+              <img
+                src="https://randomuser.me/api/portraits/men/32.jpg"
+                class="rounded-circle me-3"
+                width="40"
+                height="40"
+                alt="Farmer"
+              />
+              <div>
+                <h6 class="mb-0">John Kamau</h6>
+                <small class="text-muted">Regarding: Tomato Blight Alert</small>
+              </div>
+            </div>
+            <div>
+              <small class="text-muted">Today, 11:45 AM</small>
+              <span class="badge bg-warning ms-2">Unread</span>
+            </div>
+          </div>
+          <p class="mb-1 mt-2">
+            The fungicide you recommended isn't available locally. What
+            alternatives can I use?
+          </p>
+        </a>
+
+        <!-- Response 2 -->
+        <a href="#" class="list-group-item list-group-item-action">
+          <div class="d-flex w-100 justify-content-between">
+            <div class="d-flex align-items-center">
+              <img
+                src="https://randomuser.me/api/portraits/women/44.jpg"
+                class="rounded-circle me-3"
+                width="40"
+                height="40"
+                alt="Farmer"
+              />
+              <div>
+                <h6 class="mb-0">Mary Wanjiku</h6>
+                <small class="text-muted">Regarding: Heavy Rain Advisory</small>
+              </div>
+            </div>
+            <div>
+              <small class="text-muted">Yesterday, 3:20 PM</small>
+              <span class="badge bg-success ms-2">Replied</span>
+            </div>
+          </div>
+          <p class="mb-1 mt-2">
+            Thanks for the advice! My drainage system worked perfectly.
+          </p>
+        </a>
+
+        <!-- Response 3 -->
+        <a href="#" class="list-group-item list-group-item-action">
+          <div class="d-flex w-100 justify-content-between">
+            <div class="d-flex align-items-center">
+              <img
+                src="https://randomuser.me/api/portraits/men/67.jpg"
+                class="rounded-circle me-3"
+                width="40"
+                height="40"
+                alt="Farmer"
+              />
+              <div>
+                <h6 class="mb-0">Peter Mwangi</h6>
+                <small class="text-muted"
+                  >Regarding: Fertilizer Application Guide</small
+                >
+              </div>
+            </div>
+            <div>
+              <small class="text-muted">Apr 23, 2023</small>
+            </div>
+          </div>
+          <p class="mb-1 mt-2">
+            Can you clarify the application rates for clay soil?
+          </p>
+        </a>
+      </div>
+    </div>
+  </div>
+
+  <!-- New Advisory Modal -->
+  <div
+    class="modal fade"
+    id="newAdvisoryModal"
+    tabindex="-1"
+    aria-labelledby="newAdvisoryModalLabel"
+    aria-hidden="true"
+  >
+    <div class="modal-dialog modal-lg">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="newAdvisoryModalLabel">
+            Create New Advisory
+          </h5>
+          <button
+            type="button"
+            class="btn-close"
+            data-bs-dismiss="modal"
+            aria-label="Close"
+          ></button>
+        </div>
+        <div class="modal-body">
+          <form>
+            <div class="mb-3">
+              <label class="form-label">Advisory Type</label>
+              <div class="row g-2">
+                <div class="col-md-3">
+                  <input
+                    type="radio"
+                    class="btn-check"
+                    name="advisoryType"
+                    id="diseaseAlert"
+                    autocomplete="off"
+                    checked
+                  />
+                  <label
+                    class="btn btn-outline-danger w-100"
+                    for="diseaseAlert"
+                  >
+                    <i class="fas fa-virus me-1"></i> Disease Alert
+                  </label>
+                </div>
+                <div class="col-md-3">
+                  <input
+                    type="radio"
+                    class="btn-check"
+                    name="advisoryType"
+                    id="pestAlert"
+                    autocomplete="off"
+                  />
+                  <label class="btn btn-outline-warning w-100" for="pestAlert">
+                    <i class="fas fa-bug me-1"></i> Pest Alert
+                  </label>
+                </div>
+                <div class="col-md-3">
+                  <input
+                    type="radio"
+                    class="btn-check"
+                    name="advisoryType"
+                    id="weatherAlert"
+                    autocomplete="off"
+                  />
+                  <label
+                    class="btn btn-outline-primary w-100"
+                    for="weatherAlert"
+                  >
+                    <i class="fas fa-cloud-rain me-1"></i> Weather Alert
+                  </label>
+                </div>
+                <div class="col-md-3">
+                  <input
+                    type="radio"
+                    class="btn-check"
+                    name="advisoryType"
+                    id="bestPractice"
+                    autocomplete="off"
+                  />
+                  <label
+                    class="btn btn-outline-success w-100"
+                    for="bestPractice"
+                  >
+                    <i class="fas fa-lightbulb me-1"></i> Best Practice
+                  </label>
+                </div>
+              </div>
+            </div>
+
+            <div class="mb-3">
+              <label for="advisoryTitle" class="form-label">Title</label>
+              <input
+                type="text"
+                class="form-control"
+                id="advisoryTitle"
+                placeholder="Enter advisory title"
+              />
+            </div>
+
+            <div class="mb-3">
+              <label for="advisoryContent" class="form-label">Content</label>
+              <textarea
+                class="form-control"
+                id="advisoryContent"
+                rows="6"
+                placeholder="Write your advisory content here..."
+              ></textarea>
+              <div class="form-text">
+                You can use markdown formatting for better readability
+              </div>
+            </div>
+
+            <div class="row g-3 mb-3">
+              <div class="col-md-6">
+                <label class="form-label">Target Crops</label>
+                <select class="form-select" multiple>
+                  <option selected>Tomatoes</option>
+                  <option>Maize</option>
+                  <option>Wheat</option>
+                  <option>Coffee</option>
+                  <option>Potatoes</option>
+                </select>
+              </div>
+              <div class="col-md-6">
+                <label class="form-label">Target Farmers</label>
+                <select class="form-select" multiple>
+                  <option selected>All Farmers</option>
+                  <option>John Kamau</option>
+                  <option>Mary Wanjiku</option>
+                  <option>Peter Mwangi</option>
+                  <option>James Omondi</option>
+                </select>
+              </div>
+            </div>
+
+            <div class="mb-3">
+              <label class="form-label">Priority</label>
+              <div class="row g-2">
+                <div class="col-md-4">
+                  <input
+                    type="radio"
+                    class="btn-check"
+                    name="priority"
+                    id="highPriority"
+                    autocomplete="off"
+                    checked
+                  />
+                  <label
+                    class="btn btn-outline-danger w-100"
+                    for="highPriority"
+                  >
+                    <i class="fas fa-exclamation-circle me-1"></i> High
+                  </label>
+                </div>
+                <div class="col-md-4">
+                  <input
+                    type="radio"
+                    class="btn-check"
+                    name="priority"
+                    id="mediumPriority"
+                    autocomplete="off"
+                  />
+                  <label
+                    class="btn btn-outline-warning w-100"
+                    for="mediumPriority"
+                  >
+                    <i class="fas fa-exclamation-triangle me-1"></i> Medium
+                  </label>
+                </div>
+                <div class="col-md-4">
+                  <input
+                    type="radio"
+                    class="btn-check"
+                    name="priority"
+                    id="lowPriority"
+                    autocomplete="off"
+                  />
+                  <label class="btn btn-outline-info w-100" for="lowPriority">
+                    <i class="fas fa-info-circle me-1"></i> Low
+                  </label>
+                </div>
+              </div>
+            </div>
+
+            <div class="mb-3">
+              <label class="form-label">Attachments (Optional)</label>
+              <input type="file" class="form-control" multiple />
+              <div class="form-text">
+                Upload images, PDFs, or documents to include with advisory
+              </div>
+            </div>
+
+            <div class="form-check mb-3">
+              <input
+                class="form-check-input"
+                type="checkbox"
+                id="saveAsTemplate"
+              />
+              <label class="form-check-label" for="saveAsTemplate">
+                Save as template for future use
+              </label>
+            </div>
+          </form>
+        </div>
+        <div class="modal-footer">
+          <button
+            type="button"
+            class="btn btn-secondary"
+            data-bs-dismiss="modal"
+          >
+            Cancel
+          </button>
+          <button type="button" class="btn btn-outline-primary">
+            <i class="fas fa-save me-1"></i> Save Draft
+          </button>
+          <button type="button" class="btn btn-success">
+            <i class="fas fa-paper-plane me-1"></i> Send Advisory
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+{% endblock %}

@@ -1,0 +1,114 @@
+:root {
+  --primary-color: #1e720f;
+  --secondary-color: #0a500a;
+}
+body {
+  background-color: #f8f9fa;
+  height: 100vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  color: var(--secondary-color);
+}
+.login-card {
+  max-width: 350px;
+  width: 100%;
+  padding: 2rem;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  border-radius: 10px;
+  border: none;
+}
+.login-card h2 {
+  text-align: start;
+  font-weight: 700;
+  font-size: 1.5rem;
+  color: var(--primary-color);
+}
+.fa-leaf {
+  font-size: x-large;
+  color: #1e720f;
+}
+.login-card small {
+  color: var(--secondary-color);
+}
+.form-floating {
+  position: relative;
+}
+.form-floating .input-icon {
+  position: absolute;
+  top: 50%;
+  left: 12px;
+  transform: translateY(-50%);
+  width: 25px;
+  height: 25px;
+  pointer-events: none;
+}
+.form-floating .form-control {
+  padding-right: 2.5rem;
+  border-color: var(--secondary-color);
+}
+.form-floating .form-control:focus {
+  border-color: var(--primary-color);
+  box-shadow: 0 0 0 0.25rem rgba(30, 114, 15, 0.25);
+}
+.form-floating label {
+  color: var(--secondary-color);
+}
+.form-floating .toggle-password {
+  position: absolute;
+  top: 50%;
+  right: 12px;
+  transform: translateY(-50%);
+  width: 20px;
+  height: 20px;
+  cursor: pointer;
+}
+.form-check-input {
+  border-color: var(--secondary-color);
+}
+.form-check-input:checked {
+  background-color: var(--primary-color);
+  border-color: var(--primary-color);
+}
+.form-check-label {
+  font-size: 0.9rem;
+  color: var(--secondary-color);
+}
+.btn-primary {
+  background-color: var(--primary-color);
+  border-color: var(--primary-color);
+}
+.btn-primary:hover {
+  background-color: var(--secondary-color);
+  border-color: var(--secondary-color);
+}
+.btn-primary:active,
+.btn-primary:focus,
+.btn-primary.active {
+  background-color: var(--primary-color) !important;
+  border-color: var(--primary-color) !important;
+  box-shadow: none !important;
+}
+.btn-primary:disabled {
+  background-color: var(--primary-color) !important;
+  border-color: var(--primary-color) !important;
+  opacity: 0.8;
+}
+.btn .btn-icon {
+  width: 1.2rem;
+  height: 1.2rem;
+  margin-right: 0.5rem;
+  vertical-align: middle;
+  filter: brightness(0) invert(1);
+}
+a {
+  color: var(--primary-color);
+}
+a:hover {
+  color: var(--secondary-color);
+  text-decoration: underline;
+}
+.text-center small a {
+  font-weight: 500;
+  font-size: 1rem;
+}

@@ -1,0 +1,971 @@
+{% block content %} {% load static %}
+
+<!-- Knowledge Base Section -->
+<section id="knowledge-base" class="content-section" style="display: none">
+  <div class="row mb-4 mt-4">
+    <div class="col-md-6">
+      <h4><i class="fas fa-book me-2"></i> Agricultural Knowledge Base</h4>
+      <p class="text-muted">
+        Access comprehensive resources on crops, diseases, and best practices
+      </p>
+    </div>
+    <div class="col-md-6 text-md-end">
+      <button class="btn btn-success me-2">
+        <i class="fas fa-plus me-1"></i> Add Article
+      </button>
+      <button class="btn btn-outline-success">
+        <i class="fas fa-download me-1"></i> Export Resources
+      </button>
+    </div>
+  </div>
+
+  <!-- Search and Filter Section -->
+  <div class="card mb-4">
+    <div class="card-body">
+      <div class="row g-3">
+        <div class="col-md-8">
+          <div class="input-group">
+            <input
+              type="text"
+              class="form-control"
+              placeholder="Search knowledge base..."
+            />
+            <button class="btn btn-success" type="button">
+              <i class="fas fa-search me-1"></i> Search
+            </button>
+          </div>
+        </div>
+        <div class="col-md-4">
+          <select class="form-select">
+            <option selected>Filter by Category</option>
+            <option>Crop Guides</option>
+            <option>Disease Library</option>
+            <option>Pest Management</option>
+            <option>Soil Health</option>
+            <option>Best Practices</option>
+          </select>
+        </div>
+      </div>
+      <div class="row mt-3">
+        <div class="col-12">
+          <div class="d-flex flex-wrap gap-2">
+            <button class="btn btn-sm btn-outline-success active">All</button>
+            <button class="btn btn-sm btn-outline-success">Tomatoes</button>
+            <button class="btn btn-sm btn-outline-success">Maize</button>
+            <button class="btn btn-sm btn-outline-success">Wheat</button>
+            <button class="btn btn-sm btn-outline-success">Coffee</button>
+            <button class="btn btn-sm btn-outline-success">Potatoes</button>
+            <button class="btn btn-sm btn-outline-success">Vegetables</button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Knowledge Base Summary Cards -->
+  <div class="row mb-4">
+    <div class="col-md-3">
+      <div class="card border-start border-primary border-4">
+        <div class="card-body">
+          <div class="d-flex justify-content-between">
+            <div>
+              <h6 class="text-muted">Total Articles</h6>
+              <h3>247</h3>
+            </div>
+            <div class="bg-primary bg-opacity-10 p-3 rounded">
+              <i class="fas fa-file-alt text-primary"></i>
+            </div>
+          </div>
+          <small class="text-success">
+            <i class="fas fa-arrow-up me-1"></i> 12 new this month
+          </small>
+        </div>
+      </div>
+    </div>
+    <div class="col-md-3">
+      <div class="card border-start border-success border-4">
+        <div class="card-body">
+          <div class="d-flex justify-content-between">
+            <div>
+              <h6 class="text-muted">Crop Guides</h6>
+              <h3>42</h3>
+            </div>
+            <div class="bg-success bg-opacity-10 p-3 rounded">
+              <i class="fas fa-seedling text-success"></i>
+            </div>
+          </div>
+          <small class="text-success">Covering 15+ crops</small>
+        </div>
+      </div>
+    </div>
+    <div class="col-md-3">
+      <div class="card border-start border-warning border-4">
+        <div class="card-body">
+          <div class="d-flex justify-content-between">
+            <div>
+              <h6 class="text-muted">Diseases</h6>
+              <h3>78</h3>
+            </div>
+            <div class="bg-warning bg-opacity-10 p-3 rounded">
+              <i class="fas fa-virus text-warning"></i>
+            </div>
+          </div>
+          <small class="text-danger">5 new threats added</small>
+        </div>
+      </div>
+    </div>
+    <div class="col-md-3">
+      <div class="card border-start border-info border-4">
+        <div class="card-body">
+          <div class="d-flex justify-content-between">
+            <div>
+              <h6 class="text-muted">Pests</h6>
+              <h3>65</h3>
+            </div>
+            <div class="bg-info bg-opacity-10 p-3 rounded">
+              <i class="fas fa-bug text-info"></i>
+            </div>
+          </div>
+          <small class="text-primary">With control measures</small>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Featured Resources -->
+  <div class="card mb-4">
+    <div class="card-header d-flex justify-content-between align-items-center">
+      <div>
+        <span>Featured Resources</span>
+        <span class="badge bg-primary ms-2">8</span>
+      </div>
+      <button class="btn btn-sm btn-outline-secondary">
+        <i class="fas fa-sync-alt me-1"></i> Refresh
+      </button>
+    </div>
+    <div class="card-body">
+      <div class="row">
+        <!-- Featured 1 -->
+        <div class="col-md-3 mb-3">
+          <div class="card h-100">
+            <img
+              src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcThGkCG61p5jbM_Na1LPthNyW-IG1MHAR3-Fw&s"
+              class="card-img-top"
+              alt="Tomato blight"
+              style="height: 120px; object-fit: cover"
+            />
+            <div class="card-body">
+              <span class="badge bg-danger mb-2">Disease Alert</span>
+              <h6 class="card-title">Managing Tomato Late Blight</h6>
+              <p class="card-text small text-muted">
+                Comprehensive guide to identification, prevention, and treatment
+                of late blight in tomatoes.
+              </p>
+            </div>
+            <div class="card-footer bg-transparent">
+              <button class="btn btn-sm btn-outline-success w-100">
+                <i class="fas fa-book-open me-1"></i> Read Guide
+              </button>
+            </div>
+          </div>
+        </div>
+
+        <!-- Featured 2 -->
+        <div class="col-md-3 mb-3">
+          <div class="card h-100">
+            <img
+            src="data:image/jpeg;base64,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""
+            class=" card-img-top" alt="Wheat field" style="height: 120px;
+            object-fit: cover;">
+            <div class="card-body">
+              <span class="badge bg-success mb-2">Crop Guide</span>
+              <h6 class="card-title">Wheat Cultivation Best Practices</h6>
+              <p class="card-text small text-muted">
+                Optimal planting, fertilization, and harvesting techniques for
+                wheat farmers.
+              </p>
+            </div>
+            <div class="card-footer bg-transparent">
+              <button class="btn btn-sm btn-outline-success w-100">
+                <i class="fas fa-book-open me-1"></i> Read Guide
+              </button>
+            </div>
+          </div>
+        </div>
+
+        <!-- Featured 3 -->
+        <div class="col-md-3 mb-3">
+          <div class="card h-100">
+            <img
+              src="data:image/jpeg;base64,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"
+              class="card-img-top"
+              alt="Fall armyworm"
+              style="height: 120px; object-fit: cover"
+            />
+            <div class="card-body">
+              <span class="badge bg-warning mb-2">Pest Alert</span>
+              <h6 class="card-title">Fall Armyworm Control</h6>
+              <p class="card-text small text-muted">
+                Effective strategies for detecting and controlling fall armyworm
+                infestations in maize.
+              </p>
+            </div>
+            <div class="card-footer bg-transparent">
+              <button class="btn btn-sm btn-outline-success w-100">
+                <i class="fas fa-book-open me-1"></i> Read Guide
+              </button>
+            </div>
+          </div>
+        </div>
+
+        <!-- Featured 4 -->
+        <div class="col-md-3 mb-3">
+          <div class="card h-100">
+            <img
+              src="data:image/jpeg;base64,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"
+              class="card-img-top"
+              alt="Soil testing"
+              style="height: 120px; object-fit: cover"
+            />
+            <div class="card-body">
+              <span class="badge bg-info mb-2">Soil Health</span>
+              <h6 class="card-title">Soil Testing & Amendment</h6>
+              <p class="card-text small text-muted">
+                How to properly test soil and implement corrective measures for
+                optimal crop growth.
+              </p>
+            </div>
+            <div class="card-footer bg-transparent">
+              <button class="btn btn-sm btn-outline-success w-100">
+                <i class="fas fa-book-open me-1"></i> Read Guide
+              </button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Knowledge Base Categories -->
+  <div class="row">
+    <!-- Crop Guides Column -->
+    <div class="col-md-4 mb-4">
+      <div class="card h-100">
+        <div class="card-header bg-success text-white">
+          <h5 class="mb-0"><i class="fas fa-seedling me-2"></i> Crop Guides</h5>
+        </div>
+        <div class="card-body">
+          <div class="list-group list-group-flush">
+            <a
+              href="#"
+              class="list-group-item list-group-item-action d-flex justify-content-between align-items-center"
+            >
+              <span>
+                <i class="fas fa-apple-alt text-danger me-2"></i>
+                Tomato Cultivation Guide
+              </span>
+              <span class="badge bg-success rounded-pill">Updated</span>
+            </a>
+            <a href="#" class="list-group-item list-group-item-action">
+              <i class="fas fa-wheat-awn text-warning me-2"></i>
+              Maize Production Handbook
+            </a>
+            <a href="#" class="list-group-item list-group-item-action">
+              <i class="fas fa-bread-slice text-brown me-2"></i>
+              Wheat Farming Techniques
+            </a>
+            <a href="#" class="list-group-item list-group-item-action">
+              <i class="fas fa-mug-hot text-secondary me-2"></i>
+              Coffee Growing Best Practices
+            </a>
+            <a href="#" class="list-group-item list-group-item-action">
+              <i class="fas fa-apple-whole text-danger me-2"></i>
+              Potato Farming Guide
+            </a>
+          </div>
+        </div>
+        <div class="card-footer bg-transparent text-center">
+          <button class="btn btn-sm btn-outline-success">
+            View All Crop Guides <i class="fas fa-arrow-right ms-1"></i>
+          </button>
+        </div>
+      </div>
+    </div>
+
+    <!-- Disease Library Column -->
+    <div class="col-md-4 mb-4">
+      <div class="card h-100">
+        <div class="card-header bg-danger text-white">
+          <h5 class="mb-0">
+            <i class="fas fa-virus me-2"></i> Disease Library
+          </h5>
+        </div>
+        <div class="card-body">
+          <div class="list-group list-group-flush">
+            <a
+              href="#"
+              class="list-group-item list-group-item-action d-flex justify-content-between align-items-center"
+            >
+              <span>
+                <i class="fas fa-leaf text-success me-2"></i>
+                Tomato Late Blight
+              </span>
+              <span class="badge bg-danger rounded-pill">High Risk</span>
+            </a>
+            <a href="#" class="list-group-item list-group-item-action">
+              <i class="fas fa-leaf text-success me-2"></i>
+              Maize Rust
+            </a>
+            <a href="#" class="list-group-item list-group-item-action">
+              <i class="fas fa-leaf text-success me-2"></i>
+              Coffee Berry Disease
+            </a>
+            <a
+              href="#"
+              class="list-group-item list-group-item-action d-flex justify-content-between align-items-center"
+            >
+              <span>
+                <i class="fas fa-leaf text-success me-2"></i>
+                Wheat Powdery Mildew
+              </span>
+              <span class="badge bg-warning rounded-pill">Alert</span>
+            </a>
+            <a href="#" class="list-group-item list-group-item-action">
+              <i class="fas fa-leaf text-success me-2"></i>
+              Potato Early Blight
+            </a>
+          </div>
+        </div>
+        <div class="card-footer bg-transparent text-center">
+          <button class="btn btn-sm btn-outline-danger">
+            View All Diseases <i class="fas fa-arrow-right ms-1"></i>
+          </button>
+        </div>
+      </div>
+    </div>
+
+    <!-- Pest Management Column -->
+    <div class="col-md-4 mb-4">
+      <div class="card h-100">
+        <div class="card-header bg-warning text-dark">
+          <h5 class="mb-0"><i class="fas fa-bug me-2"></i> Pest Management</h5>
+        </div>
+        <div class="card-body">
+          <div class="list-group list-group-flush">
+            <a
+              href="#"
+              class="list-group-item list-group-item-action d-flex justify-content-between align-items-center"
+            >
+              <span>
+                <i class="fas fa-bug text-danger me-2"></i>
+                Fall Armyworm
+              </span>
+              <span class="badge bg-danger rounded-pill">Urgent</span>
+            </a>
+            <a href="#" class="list-group-item list-group-item-action">
+              <i class="fas fa-bug text-danger me-2"></i>
+              Aphids Control
+            </a>
+            <a href="#" class="list-group-item list-group-item-action">
+              <i class="fas fa-bug text-danger me-2"></i>
+              Whiteflies Management
+            </a>
+            <a href="#" class="list-group-item list-group-item-action">
+              <i class="fas fa-bug text-danger me-2"></i>
+              Stem Borers
+            </a>
+            <a href="#" class="list-group-item list-group-item-action">
+              <i class="fas fa-bug text-danger me-2"></i>
+              Thrips Control
+            </a>
+          </div>
+        </div>
+        <div class="card-footer bg-transparent text-center">
+          <button class="btn btn-sm btn-outline-warning">
+            View All Pest Guides <i class="fas fa-arrow-right ms-1"></i>
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Additional Resources Section -->
+  <div class="card">
+    <div class="card-header">
+      <h5 class="mb-0">
+        <i class="fas fa-graduation-cap me-2"></i> Training Resources
+      </h5>
+    </div>
+    <div class="card-body">
+      <div class="row">
+        <!-- Training 1 -->
+        <div class="col-md-3 mb-3">
+          <div class="card h-100">
+            <div class="card-body text-center">
+              <div
+                class="bg-primary bg-opacity-10 p-3 rounded-circle d-inline-block mb-3"
+              >
+                <i class="fas fa-video fa-2x text-primary"></i>
+              </div>
+              <h6>Integrated Pest Management</h6>
+              <p class="small text-muted">
+                Video series on sustainable pest control methods
+              </p>
+              <button class="btn btn-sm btn-outline-primary mt-2">
+                <i class="fas fa-play me-1"></i> Watch Now
+              </button>
+            </div>
+          </div>
+        </div>
+
+        <!-- Training 2 -->
+        <div class="col-md-3 mb-3">
+          <div class="card h-100">
+            <div class="card-body text-center">
+              <div
+                class="bg-success bg-opacity-10 p-3 rounded-circle d-inline-block mb-3"
+              >
+                <i class="fas fa-file-pdf fa-2x text-success"></i>
+              </div>
+              <h6>Soil Fertility Handbook</h6>
+              <p class="small text-muted">
+                Comprehensive guide to soil health management
+              </p>
+              <button class="btn btn-sm btn-outline-success mt-2">
+                <i class="fas fa-download me-1"></i> Download
+              </button>
+            </div>
+          </div>
+        </div>
+
+        <!-- Training 3 -->
+        <div class="col-md-3 mb-3">
+          <div class="card h-100">
+            <div class="card-body text-center">
+              <div
+                class="bg-info bg-opacity-10 p-3 rounded-circle d-inline-block mb-3"
+              >
+                <i class="fas fa-chalkboard-teacher fa-2x text-info"></i>
+              </div>
+              <h6>Farmer Training Modules</h6>
+              <p class="small text-muted">
+                Complete set of training materials for extension
+              </p>
+              <button class="btn btn-sm btn-outline-info mt-2">
+                <i class="fas fa-book-open me-1"></i> Access
+              </button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Article Detail Modal -->
+  <div
+    class="modal fade"
+    id="articleModal"
+    tabindex="-1"
+    aria-labelledby="articleModalLabel"
+    aria-hidden="true"
+  >
+    <div class="modal-dialog modal-xl modal-dialog-scrollable">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="articleModalLabel">
+            Tomato Late Blight Management
+          </h5>
+          <button
+            type="button"
+            class="btn-close"
+            data-bs-dismiss="modal"
+            aria-label="Close"
+          ></button>
+        </div>
+        <div class="modal-body">
+          <div class="row mb-4">
+            <div class="col-md-8">
+              <span class="badge bg-danger mb-2">Disease Alert</span>
+              <span class="badge bg-success mb-2">Tomatoes</span>
+              <span class="badge bg-warning mb-2">High Priority</span>
+
+              <div class="d-flex align-items-center mb-3">
+                <img
+                  src="https://randomuser.me/api/portraits/men/32.jpg"
+                  class="rounded-circle me-2"
+                  width="40"
+                  height="40"
+                  alt="Author"
+                />
+                <div>
+                  <h6 class="mb-0">Dr. James Mwangi</h6>
+                  <small class="text-muted"
+                    >Plant Pathologist • Last updated: April 15, 2023</small
+                  >
+                </div>
+              </div>
+
+              <img
+                src="https://images.unsplash.com/photo-1518977676601-b53f82aba655?w=500&auto=format&fit=crop&q=60&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8Mnx8dG9tYXRvJTIwYmxpZ2h0fGVufDB8fDB8fHww"
+                class="img-fluid rounded mb-3"
+                alt="Tomato blight"
+              />
+
+              <h4 class="mt-4">Overview</h4>
+              <p>
+                Tomato late blight, caused by the pathogen Phytophthora
+                infestans, is one of the most devastating diseases of tomatoes
+                worldwide. It can cause complete crop loss under favorable
+                conditions.
+              </p>
+
+              <h4 class="mt-4">Symptoms</h4>
+              <ul>
+                <li>
+                  Irregular, water-soaked lesions on leaves that rapidly expand
+                </li>
+                <li>
+                  White fungal growth on underside of leaves during humid
+                  conditions
+                </li>
+                <li>Dark, firm lesions on stems and petioles</li>
+                <li>
+                  Brown, sunken lesions on fruit that may become covered with
+                  white fungal growth
+                </li>
+              </ul>
+
+              <div class="row mt-4">
+                <div class="col-md-6">
+                  <div class="card">
+                    <div class="card-header bg-danger text-white">
+                      <h6 class="mb-0">Conditions Favoring Disease</h6>
+                    </div>
+                    <div class="card-body">
+                      <ul>
+                        <li>Cool temperatures (15-21°C)</li>
+                        <li>High humidity (>90%)</li>
+                        <li>Extended leaf wetness periods</li>
+                        <li>Poor air circulation</li>
+                      </ul>
+                    </div>
+                  </div>
+                </div>
+                <div class="col-md-6">
+                  <div class="card">
+                    <div class="card-header bg-success text-white">
+                      <h6 class="mb-0">Prevention</h6>
+                    </div>
+                    <div class="card-body">
+                      <ul>
+                        <li>Plant resistant varieties when available</li>
+                        <li>Ensure proper spacing for air circulation</li>
+                        <li>Avoid overhead irrigation</li>
+                        <li>
+                          Apply preventive fungicides in high-risk periods
+                        </li>
+                      </ul>
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+              <h4 class="mt-4">Management Strategies</h4>
+              <h5 class="mt-3">Cultural Control</h5>
+              <p>
+                Implement crop rotation with non-solanaceous crops for 3-4
+                years. Remove and destroy infected plant material. Use drip
+                irrigation instead of overhead watering.
+              </p>
+
+              <h5 class="mt-3">Chemical Control</h5>
+              <p>
+                When disease is detected or conditions are favorable, apply
+                fungicides. Recommended products include:
+              </p>
+              <table class="table table-bordered">
+                <thead>
+                  <tr>
+                    <th>Product</th>
+                    <th>Active Ingredient</th>
+                    <th>Application Interval</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr>
+                    <td>Bordeaux Mixture</td>
+                    <td>Copper sulfate + lime</td>
+                    <td>7-10 days</td>
+                  </tr>
+                  <tr>
+                    <td>Revus</td>
+                    <td>Mandipropamid</td>
+                    <td>10-14 days</td>
+                  </tr>
+                  <tr>
+                    <td>Ridomil Gold</td>
+                    <td>Metalaxyl-M + copper</td>
+                    <td>14 days</td>
+                  </tr>
+                </tbody>
+              </table>
+
+              <h5 class="mt-3">Biological Control</h5>
+              <p>Some biological options show promise in early trials:</p>
+              <ul>
+                <li>Bacillus subtilis strains</li>
+                <li>Trichoderma harzianum</li>
+                <li>Pseudomonas fluorescens</li>
+              </ul>
+
+              <h4 class="mt-4">Monitoring and Early Detection</h4>
+              <p>
+                Regular field inspections are critical. Use the Agricure mobile
+                app to report suspected cases and receive localized alerts when
+                disease risk is high in your area.
+              </p>
+            </div>
+
+            <div class="col-md-4">
+              <div class="card mb-3">
+                <div class="card-header">
+                  <h6 class="mb-0">Related Resources</h6>
+                </div>
+                <div class="card-body">
+                  <div class="list-group list-group-flush">
+                    <a href="#" class="list-group-item list-group-item-action">
+                      <i class="fas fa-file-pdf text-danger me-2"></i>
+                      Late Blight Identification Guide
+                    </a>
+                    <a href="#" class="list-group-item list-group-item-action">
+                      <i class="fas fa-video text-primary me-2"></i>
+                      Fungicide Application Video
+                    </a>
+                    <a href="#" class="list-group-item list-group-item-action">
+                      <i class="fas fa-file-alt text-success me-2"></i>
+                      Resistant Tomato Varieties
+                    </a>
+                  </div>
+                </div>
+              </div>
+
+              <div class="card mb-3">
+                <div class="card-header">
+                  <h6 class="mb-0">Quick Actions</h6>
+                </div>
+                <div class="card-body">
+                  <button class="btn btn-outline-danger w-100 mb-2">
+                    <i class="fas fa-bell me-1"></i> Send Alert to Farmers
+                  </button>
+                  <button class="btn btn-outline-primary w-100 mb-2">
+                    <i class="fas fa-print me-1"></i> Print Advisory
+                  </button>
+                  <button class="btn btn-outline-success w-100">
+                    <i class="fas fa-share-alt me-1"></i> Share with Team
+                  </button>
+                </div>
+              </div>
+
+              <div class="card">
+                <div class="card-header">
+                  <h6 class="mb-0">Disease Statistics</h6>
+                </div>
+                <div class="card-body">
+                  <div class="mb-3">
+                    <h6>Current Risk Level</h6>
+                    <div class="progress" style="height: 20px">
+                      <div class="progress-bar bg-danger" style="width: 85%">
+                        High
+                      </div>
+                    </div>
+                  </div>
+                  <div class="mb-3">
+                    <h6>Reported Cases This Month</h6>
+                    <div class="h4 text-danger">24</div>
+                  </div>
+                  <div>
+                    <h6>Affected Regions</h6>
+                    <span class="badge bg-danger me-1">Nairobi</span>
+                    <span class="badge bg-danger me-1">Kiambu</span>
+                    <span class="badge bg-warning me-1">Nakuru</span>
+                    <span class="badge bg-warning me-1">Meru</span>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="modal-footer">
+          <button
+            type="button"
+            class="btn btn-secondary"
+            data-bs-dismiss="modal"
+          >
+            Close
+          </button>
+          <button type="button" class="btn btn-primary">
+            <i class="fas fa-edit me-1"></i> Edit Article
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Add Article Modal -->
+  <div
+    class="modal fade"
+    id="addArticleModal"
+    tabindex="-1"
+    aria-labelledby="addArticleModalLabel"
+    aria-hidden="true"
+  >
+    <div class="modal-dialog modal-xl">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="addArticleModalLabel">
+            Add New Knowledge Base Article
+          </h5>
+          <button
+            type="button"
+            class="btn-close"
+            data-bs-dismiss="modal"
+            aria-label="Close"
+          ></button>
+        </div>
+        <div class="modal-body">
+          <form>
+            <div class="row mb-3">
+              <div class="col-md-8">
+                <label for="articleTitle" class="form-label"
+                  >Article Title</label
+                >
+                <input
+                  type="text"
+                  class="form-control"
+                  id="articleTitle"
+                  placeholder="Enter article title"
+                />
+              </div>
+              <div class="col-md-4">
+                <label for="articleType" class="form-label">Article Type</label>
+                <select class="form-select" id="articleType">
+                  <option selected disabled>Select type</option>
+                  <option>Crop Guide</option>
+                  <option>Disease Information</option>
+                  <option>Pest Management</option>
+                  <option>Soil Health</option>
+                  <option>Best Practice</option>
+                  <option>Research Summary</option>
+                </select>
+              </div>
+            </div>
+
+            <div class="mb-3">
+              <label class="form-label">Categories</label>
+              <div class="row g-2">
+                <div class="col-auto">
+                  <div class="form-check">
+                    <input
+                      class="form-check-input"
+                      type="checkbox"
+                      id="tomatoesCat"
+                      checked
+                    />
+                    <label class="form-check-label" for="tomatoesCat"
+                      >Tomatoes</label
+                    >
+                  </div>
+                </div>
+                <div class="col-auto">
+                  <div class="form-check">
+                    <input
+                      class="form-check-input"
+                      type="checkbox"
+                      id="maizeCat"
+                    />
+                    <label class="form-check-label" for="maizeCat">Maize</label>
+                  </div>
+                </div>
+                <div class="col-auto">
+                  <div class="form-check">
+                    <input
+                      class="form-check-input"
+                      type="checkbox"
+                      id="wheatCat"
+                    />
+                    <label class="form-check-label" for="wheatCat">Wheat</label>
+                  </div>
+                </div>
+                <div class="col-auto">
+                  <div class="form-check">
+                    <input
+                      class="form-check-input"
+                      type="checkbox"
+                      id="coffeeCat"
+                    />
+                    <label class="form-check-label" for="coffeeCat"
+                      >Coffee</label
+                    >
+                  </div>
+                </div>
+                <div class="col-auto">
+                  <div class="form-check">
+                    <input
+                      class="form-check-input"
+                      type="checkbox"
+                      id="potatoesCat"
+                    />
+                    <label class="form-check-label" for="potatoesCat"
+                      >Potatoes</label
+                    >
+                  </div>
+                </div>
+                <div class="col-auto">
+                  <div class="form-check">
+                    <input
+                      class="form-check-input"
+                      type="checkbox"
+                      id="vegetablesCat"
+                    />
+                    <label class="form-check-label" for="vegetablesCat"
+                      >Vegetables</label
+                    >
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <div class="mb-3">
+              <label for="articleSummary" class="form-label">Summary</label>
+              <textarea
+                class="form-control"
+                id="articleSummary"
+                rows="3"
+                placeholder="Brief summary of the article content"
+              ></textarea>
+            </div>
+
+            <div class="mb-3">
+              <label for="articleContent" class="form-label">Content</label>
+              <div id="articleContentEditor" style="height: 300px"></div>
+              <div class="form-text">
+                Use the toolbar to format your content. You can add images,
+                tables, and more.
+              </div>
+            </div>
+
+            <div class="row mb-3">
+              <div class="col-md-6">
+                <label for="articleImages" class="form-label">Images</label>
+                <input
+                  type="file"
+                  class="form-control"
+                  id="articleImages"
+                  multiple
+                  accept="image/*"
+                />
+                <div class="form-text">
+                  Upload images to include in the article (max 5 images)
+                </div>
+              </div>
+              <div class="col-md-6">
+                <label for="articleAttachments" class="form-label"
+                  >Attachments</label
+                >
+                <input
+                  type="file"
+                  class="form-control"
+                  id="articleAttachments"
+                  multiple
+                />
+                <div class="form-text">
+                  Upload PDFs, documents, or other resources
+                </div>
+              </div>
+            </div>
+
+            <div class="mb-3">
+              <label class="form-label">Priority Level</label>
+              <div class="row g-2">
+                <div class="col-md-4">
+                  <input
+                    type="radio"
+                    class="btn-check"
+                    name="priorityLevel"
+                    id="priorityHigh"
+                    autocomplete="off"
+                  />
+                  <label
+                    class="btn btn-outline-danger w-100"
+                    for="priorityHigh"
+                  >
+                    <i class="fas fa-exclamation-circle me-1"></i> High
+                  </label>
+                </div>
+                <div class="col-md-4">
+                  <input
+                    type="radio"
+                    class="btn-check"
+                    name="priorityLevel"
+                    id="priorityMedium"
+                    autocomplete="off"
+                    checked
+                  />
+                  <label
+                    class="btn btn-outline-warning w-100"
+                    for="priorityMedium"
+                  >
+                    <i class="fas fa-exclamation-triangle me-1"></i> Medium
+                  </label>
+                </div>
+                <div class="col-md-4">
+                  <input
+                    type="radio"
+                    class="btn-check"
+                    name="priorityLevel"
+                    id="priorityLow"
+                    autocomplete="off"
+                  />
+                  <label
+                    class="btn btn-outline-success w-100"
+                    for="priorityLow"
+                  >
+                    <i class="fas fa-info-circle me-1"></i> Low
+                  </label>
+                </div>
+              </div>
+            </div>
+
+            <div class="form-check mb-3">
+              <input
+                class="form-check-input"
+                type="checkbox"
+                id="featureArticle"
+              />
+              <label class="form-check-label" for="featureArticle">
+                Feature this article on the knowledge base homepage
+              </label>
+            </div>
+          </form>
+        </div>
+        <div class="modal-footer">
+          <button
+            type="button"
+            class="btn btn-secondary"
+            data-bs-dismiss="modal"
+          >
+            Cancel
+          </button>
+          <button type="button" class="btn btn-outline-primary">
+            <i class="fas fa-save me-1"></i> Save Draft
+          </button>
+          <button type="button" class="btn btn-success">
+            <i class="fas fa-check me-1"></i> Publish Article
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+{% endblock %}

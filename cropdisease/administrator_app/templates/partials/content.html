@@ -1,0 +1,864 @@
+{% block content %} {% load static %}
+
+<!-- Content Management -->
+<div class="tab-pane" id="content">
+  <div class="row">
+    <!-- Main Content Area -->
+    <div class="col-lg-8">
+      <div class="card mb-4">
+        <div
+          class="card-header d-flex justify-content-between align-items-center"
+        >
+          <h5 class="mb-0">Content Articles</h5>
+          <button
+            class="btn btn-primary btn-sm"
+            data-bs-toggle="modal"
+            data-bs-target="#newArticleModal"
+          >
+            <i class="fas fa-plus me-1"></i> New Article
+          </button>
+        </div>
+        <div class="card-body">
+          <div class="table-responsive">
+            <table class="table table-hover">
+              <thead>
+                <tr>
+                  <th>Title</th>
+                  <th>Category</th>
+                  <th>Status</th>
+                  <th>Last Updated</th>
+                  <th>Actions</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td>Preventing Tomato Blight</td>
+                  <td><span class="badge bg-primary">Tomatoes</span></td>
+                  <td><span class="badge bg-success">Published</span></td>
+                  <td>
+                    2023-06-10<br /><small class="text-muted"
+                      >by Admin User</small
+                    >
+                  </td>
+                  <td>
+                    <div class="d-flex">
+                      <button
+                        class="btn btn-sm btn-outline-primary me-1"
+                        data-bs-toggle="modal"
+                        data-bs-target="#editArticleModal"
+                      >
+                        <i class="fas fa-edit"></i>
+                      </button>
+                      <button class="btn btn-sm btn-outline-secondary me-1">
+                        <i class="fas fa-eye"></i>
+                      </button>
+                      <button class="btn btn-sm btn-outline-danger">
+                        <i class="fas fa-trash"></i>
+                      </button>
+                    </div>
+                  </td>
+                </tr>
+                <tr>
+                  <td>Wheat Rust Management</td>
+                  <td><span class="badge bg-warning text-dark">Wheat</span></td>
+                  <td><span class="badge bg-success">Published</span></td>
+                  <td>
+                    2023-06-05<br /><small class="text-muted"
+                      >by Sarah Agronomist</small
+                    >
+                  </td>
+                  <td>
+                    <div class="d-flex">
+                      <button
+                        class="btn btn-sm btn-outline-primary me-1"
+                        data-bs-toggle="modal"
+                        data-bs-target="#editArticleModal"
+                      >
+                        <i class="fas fa-edit"></i>
+                      </button>
+                      <button class="btn btn-sm btn-outline-secondary me-1">
+                        <i class="fas fa-eye"></i>
+                      </button>
+                      <button class="btn btn-sm btn-outline-danger">
+                        <i class="fas fa-trash"></i>
+                      </button>
+                    </div>
+                  </td>
+                </tr>
+                <tr>
+                  <td>Organic Pest Control Methods</td>
+                  <td><span class="badge bg-info">General</span></td>
+                  <td><span class="badge bg-warning text-dark">Draft</span></td>
+                  <td>
+                    2023-06-02<br /><small class="text-muted"
+                      >by Michael Extension</small
+                    >
+                  </td>
+                  <td>
+                    <div class="d-flex">
+                      <button
+                        class="btn btn-sm btn-outline-primary me-1"
+                        data-bs-toggle="modal"
+                        data-bs-target="#editArticleModal"
+                      >
+                        <i class="fas fa-edit"></i>
+                      </button>
+                      <button class="btn btn-sm btn-outline-secondary me-1">
+                        <i class="fas fa-eye"></i>
+                      </button>
+                      <button class="btn btn-sm btn-outline-danger">
+                        <i class="fas fa-trash"></i>
+                      </button>
+                    </div>
+                  </td>
+                </tr>
+                <tr>
+                  <td>Soil Preparation for Maize</td>
+                  <td><span class="badge bg-success">Maize</span></td>
+                  <td><span class="badge bg-secondary">Archived</span></td>
+                  <td>
+                    2023-05-28<br /><small class="text-muted"
+                      >by Admin User</small
+                    >
+                  </td>
+                  <td>
+                    <div class="d-flex">
+                      <button
+                        class="btn btn-sm btn-outline-primary me-1"
+                        data-bs-toggle="modal"
+                        data-bs-target="#editArticleModal"
+                      >
+                        <i class="fas fa-edit"></i>
+                      </button>
+                      <button class="btn btn-sm btn-outline-secondary me-1">
+                        <i class="fas fa-eye"></i>
+                      </button>
+                      <button class="btn btn-sm btn-outline-danger">
+                        <i class="fas fa-trash"></i>
+                      </button>
+                    </div>
+                  </td>
+                </tr>
+                <tr>
+                  <td>Potato Planting Calendar</td>
+                  <td><span class="badge bg-danger">Potatoes</span></td>
+                  <td><span class="badge bg-success">Published</span></td>
+                  <td>
+                    2023-05-20<br /><small class="text-muted"
+                      >by Emma Farmer</small
+                    >
+                  </td>
+                  <td>
+                    <div class="d-flex">
+                      <button
+                        class="btn btn-sm btn-outline-primary me-1"
+                        data-bs-toggle="modal"
+                        data-bs-target="#editArticleModal"
+                      >
+                        <i class="fas fa-edit"></i>
+                      </button>
+                      <button class="btn btn-sm btn-outline-secondary me-1">
+                        <i class="fas fa-eye"></i>
+                      </button>
+                      <button class="btn btn-sm btn-outline-danger">
+                        <i class="fas fa-trash"></i>
+                      </button>
+                    </div>
+                  </td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+
+          <nav aria-label="Page navigation">
+            <ul class="pagination justify-content-center">
+              <li class="page-item disabled">
+                <a class="page-link" href="#" tabindex="-1">Previous</a>
+              </li>
+              <li class="page-item active">
+                <a class="page-link" href="#">1</a>
+              </li>
+              <li class="page-item"><a class="page-link" href="#">2</a></li>
+              <li class="page-item"><a class="page-link" href="#">3</a></li>
+              <li class="page-item">
+                <a class="page-link" href="#">Next</a>
+              </li>
+            </ul>
+          </nav>
+        </div>
+      </div>
+
+      <div class="card">
+        <div
+          class="card-header d-flex justify-content-between align-items-center"
+        >
+          <h5 class="mb-0">Regional Recommendations</h5>
+          <button
+            class="btn btn-primary btn-sm"
+            data-bs-toggle="modal"
+            data-bs-target="#newRegionModal"
+          >
+            <i class="fas fa-plus me-1"></i> Add Region
+          </button>
+        </div>
+        <div class="card-body">
+          <div class="table-responsive">
+            <table class="table table-hover">
+              <thead>
+                <tr>
+                  <th>Region</th>
+                  <th>Crops</th>
+                  <th>Last Updated</th>
+                  <th>Actions</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td>Central Highlands</td>
+                  <td>
+                    <span class="badge bg-primary me-1">Tomatoes</span>
+                    <span class="badge bg-warning text-dark me-1">Wheat</span>
+                    <span class="badge bg-success">Maize</span>
+                  </td>
+                  <td>
+                    2023-06-12<br /><small class="text-muted"
+                      >by Admin User</small
+                    >
+                  </td>
+                  <td>
+                    <div class="d-flex">
+                      <button class="btn btn-sm btn-outline-primary me-1">
+                        <i class="fas fa-edit"></i>
+                      </button>
+                      <button class="btn btn-sm btn-outline-secondary me-1">
+                        <i class="fas fa-eye"></i>
+                      </button>
+                      <button class="btn btn-sm btn-outline-danger">
+                        <i class="fas fa-trash"></i>
+                      </button>
+                    </div>
+                  </td>
+                </tr>
+                <tr>
+                  <td>Coastal Region</td>
+                  <td>
+                    <span class="badge bg-primary me-1">Tomatoes</span>
+                    <span class="badge bg-danger">Potatoes</span>
+                  </td>
+                  <td>
+                    2023-06-08<br /><small class="text-muted"
+                      >by Sarah Agronomist</small
+                    >
+                  </td>
+                  <td>
+                    <div class="d-flex">
+                      <button class="btn btn-sm btn-outline-primary me-1">
+                        <i class="fas fa-edit"></i>
+                      </button>
+                      <button class="btn btn-sm btn-outline-secondary me-1">
+                        <i class="fas fa-eye"></i>
+                      </button>
+                      <button class="btn btn-sm btn-outline-danger">
+                        <i class="fas fa-trash"></i>
+                      </button>
+                    </div>
+                  </td>
+                </tr>
+                <tr>
+                  <td>Eastern Lowlands</td>
+                  <td>
+                    <span class="badge bg-success me-1">Maize</span>
+                    <span class="badge bg-info">Sorghum</span>
+                  </td>
+                  <td>
+                    2023-05-30<br /><small class="text-muted"
+                      >by Michael Extension</small
+                    >
+                  </td>
+                  <td>
+                    <div class="d-flex">
+                      <button class="btn btn-sm btn-outline-primary me-1">
+                        <i class="fas fa-edit"></i>
+                      </button>
+                      <button class="btn btn-sm btn-outline-secondary me-1">
+                        <i class="fas fa-eye"></i>
+                      </button>
+                      <button class="btn btn-sm btn-outline-danger">
+                        <i class="fas fa-trash"></i>
+                      </button>
+                    </div>
+                  </td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Sidebar -->
+    <div class="col-lg-4">
+      <div class="card mb-4">
+        <div class="card-header">
+          <h5 class="mb-0">Content Statistics</h5>
+        </div>
+        <div class="card-body">
+          <div class="mb-3">
+            <div class="d-flex justify-content-between mb-1">
+              <span class="text-muted">Published Articles</span>
+              <span class="fw-bold">24</span>
+            </div>
+            <div class="progress" style="height: 6px">
+              <div
+                class="progress-bar bg-success"
+                role="progressbar"
+                style="width: 70%"
+                aria-valuenow="70"
+                aria-valuemin="0"
+                aria-valuemax="100"
+              ></div>
+            </div>
+          </div>
+          <div class="mb-3">
+            <div class="d-flex justify-content-between mb-1">
+              <span class="text-muted">Drafts</span>
+              <span class="fw-bold">5</span>
+            </div>
+            <div class="progress" style="height: 6px">
+              <div
+                class="progress-bar bg-warning"
+                role="progressbar"
+                style="width: 15%"
+                aria-valuenow="15"
+                aria-valuemin="0"
+                aria-valuemax="100"
+              ></div>
+            </div>
+          </div>
+          <div class="mb-3">
+            <div class="d-flex justify-content-between mb-1">
+              <span class="text-muted">Archived</span>
+              <span class="fw-bold">8</span>
+            </div>
+            <div class="progress" style="height: 6px">
+              <div
+                class="progress-bar bg-secondary"
+                role="progressbar"
+                style="width: 25%"
+                aria-valuenow="25"
+                aria-valuemin="0"
+                aria-valuemax="100"
+              ></div>
+            </div>
+          </div>
+          <div class="mt-4">
+            <h6 class="small text-muted mb-2">Most Popular Categories</h6>
+            <div class="d-flex flex-wrap gap-2">
+              <span class="badge bg-primary">Tomatoes (12)</span>
+              <span class="badge bg-warning text-dark">Wheat (8)</span>
+              <span class="badge bg-success">Maize (6)</span>
+              <span class="badge bg-danger">Potatoes (5)</span>
+              <span class="badge bg-info">General (3)</span>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="card mb-4">
+        <div class="card-header">
+          <h5 class="mb-0">Quick Actions</h5>
+        </div>
+        <div class="card-body">
+          <div class="d-grid gap-2">
+            <button class="btn btn-outline-primary text-start">
+              <i class="fas fa-sync-alt me-2"></i> Update Seasonal Content
+            </button>
+            <button class="btn btn-outline-primary text-start">
+              <i class="fas fa-language me-2"></i> Manage Translations
+            </button>
+            <button class="btn btn-outline-primary text-start">
+              <i class="fas fa-tags me-2"></i> Manage Categories
+            </button>
+            <button class="btn btn-outline-primary text-start">
+              <i class="fas fa-file-export me-2"></i> Export Content Library
+            </button>
+            <button class="btn btn-outline-danger text-start">
+              <i class="fas fa-trash-alt me-2"></i> Clean Up Old Drafts
+            </button>
+          </div>
+        </div>
+      </div>
+
+      <div class="card">
+        <div class="card-header">
+          <h5 class="mb-0">Content Review</h5>
+        </div>
+        <div class="card-body">
+          <div class="alert alert-warning">
+            <i class="fas fa-exclamation-triangle me-2"></i>
+            <strong>3 articles need review</strong> - outdated seasonal advice
+          </div>
+          <ul class="list-group list-group-flush">
+            <li
+              class="list-group-item d-flex justify-content-between align-items-center"
+            >
+              <div>
+                <i class="fas fa-file-alt text-primary me-2"></i>
+                Winter Wheat Planting Guide
+                <div class="text-muted small">Last updated 8 months ago</div>
+              </div>
+              <a href="#" class="btn btn-sm btn-outline-primary">Review</a>
+            </li>
+            <li
+              class="list-group-item d-flex justify-content-between align-items-center"
+            >
+              <div>
+                <i class="fas fa-file-alt text-primary me-2"></i>
+                Rainy Season Pest Control
+                <div class="text-muted small">Last updated 10 months ago</div>
+              </div>
+              <a href="#" class="btn btn-sm btn-outline-primary">Review</a>
+            </li>
+            <li
+              class="list-group-item d-flex justify-content-between align-items-center"
+            >
+              <div>
+                <i class="fas fa-file-alt text-primary me-2"></i>
+                Fertilizer Application Schedule
+                <div class="text-muted small">Last updated 1 year ago</div>
+              </div>
+              <a href="#" class="btn btn-sm btn-outline-primary">Review</a>
+            </li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- New Article Modal -->
+<div
+  class="modal fade"
+  id="newArticleModal"
+  tabindex="-1"
+  aria-labelledby="newArticleModalLabel"
+  aria-hidden="true"
+>
+  <div class="modal-dialog modal-xl">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="newArticleModalLabel">
+          Create New Article
+        </h5>
+        <button
+          type="button"
+          class="btn-close"
+          data-bs-dismiss="modal"
+          aria-label="Close"
+        ></button>
+      </div>
+      <div class="modal-body">
+        <form>
+          <div class="row mb-3">
+            <div class="col-md-8">
+              <label for="articleTitle" class="form-label">Title</label>
+              <input
+                type="text"
+                class="form-control"
+                id="articleTitle"
+                placeholder="Enter article title"
+              />
+            </div>
+            <div class="col-md-4">
+              <label for="articleCategory" class="form-label">Category</label>
+              <select class="form-select" id="articleCategory">
+                <option selected>Select category</option>
+                <option>Tomatoes</option>
+                <option>Wheat</option>
+                <option>Maize</option>
+                <option>Potatoes</option>
+                <option>Rice</option>
+                <option>General</option>
+              </select>
+            </div>
+          </div>
+
+          <div class="row mb-3">
+            <div class="col-md-6">
+              <label for="articleStatus" class="form-label">Status</label>
+              <select class="form-select" id="articleStatus">
+                <option>Draft</option>
+                <option selected>Published</option>
+                <option>Archived</option>
+              </select>
+            </div>
+            <div class="col-md-6">
+              <label for="articleLanguage" class="form-label">Language</label>
+              <select class="form-select" id="articleLanguage">
+                <option selected>English</option>
+                <option>Spanish</option>
+                <option>French</option>
+                <option>Swahili</option>
+                <option>Hindi</option>
+              </select>
+            </div>
+          </div>
+
+          <div class="mb-3">
+            <label for="articleSummary" class="form-label">Summary</label>
+            <textarea
+              class="form-control"
+              id="articleSummary"
+              rows="3"
+              placeholder="Brief summary of the article content"
+            ></textarea>
+          </div>
+
+          <div class="mb-3">
+            <label class="form-label">Featured Image</label>
+            <div class="border rounded p-3 text-center">
+              <i class="fas fa-image fa-3x text-muted mb-2"></i>
+              <div class="d-flex justify-content-center">
+                <button class="btn btn-sm btn-outline-primary me-2">
+                  <i class="fas fa-upload me-1"></i> Upload Image
+                </button>
+                <button class="btn btn-sm btn-outline-secondary">
+                  <i class="fas fa-link me-1"></i> From URL
+                </button>
+              </div>
+            </div>
+          </div>
+
+          <div class="mb-3">
+            <label for="articleContent" class="form-label">Content</label>
+            <div class="border rounded p-2 bg-light" style="min-height: 300px">
+              <!-- This would be replaced with a rich text editor in implementation -->
+              <div
+                class="d-flex align-items-center justify-content-center h-100"
+              >
+                <div class="text-center">
+                  <i class="fas fa-edit fa-2x text-muted mb-2"></i>
+                  <p class="text-muted">Rich text editor will appear here</p>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div class="mb-3">
+            <label class="form-label">Tags</label>
+            <input
+              type="text"
+              class="form-control"
+              placeholder="Add tags separated by commas"
+            />
+            <div class="mt-2">
+              <span class="badge bg-primary me-1">disease</span>
+              <span class="badge bg-primary me-1">prevention</span>
+              <span class="badge bg-primary me-1">treatment</span>
+            </div>
+          </div>
+
+          <div class="form-check mb-3">
+            <input
+              class="form-check-input"
+              type="checkbox"
+              id="notifySubscribers"
+              checked
+            />
+            <label class="form-check-label" for="notifySubscribers">
+              Notify subscribers about this new content
+            </label>
+          </div>
+        </form>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">
+          Cancel
+        </button>
+        <button type="button" class="btn btn-outline-primary">
+          <i class="fas fa-save me-1"></i> Save Draft
+        </button>
+        <button type="button" class="btn btn-primary">
+          <i class="fas fa-paper-plane me-1"></i> Publish
+        </button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- Edit Article Modal -->
+<div
+  class="modal fade"
+  id="editArticleModal"
+  tabindex="-1"
+  aria-labelledby="editArticleModalLabel"
+  aria-hidden="true"
+>
+  <div class="modal-dialog modal-xl">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="editArticleModalLabel">Edit Article</h5>
+        <button
+          type="button"
+          class="btn-close"
+          data-bs-dismiss="modal"
+          aria-label="Close"
+        ></button>
+      </div>
+      <div class="modal-body">
+        <form>
+          <div class="row mb-3">
+            <div class="col-md-8">
+              <label for="editArticleTitle" class="form-label">Title</label>
+              <input
+                type="text"
+                class="form-control"
+                id="editArticleTitle"
+                value="Preventing Tomato Blight"
+              />
+            </div>
+            <div class="col-md-4">
+              <label for="editArticleCategory" class="form-label"
+                >Category</label
+              >
+              <select class="form-select" id="editArticleCategory">
+                <option>Tomatoes</option>
+                <option>Wheat</option>
+                <option selected>Maize</option>
+                <option>Potatoes</option>
+                <option>Rice</option>
+                <option>General</option>
+              </select>
+            </div>
+          </div>
+
+          <div class="row mb-3">
+            <div class="col-md-6">
+              <label for="editArticleStatus" class="form-label">Status</label>
+              <select class="form-select" id="editArticleStatus">
+                <option>Draft</option>
+                <option selected>Published</option>
+                <option>Archived</option>
+              </select>
+            </div>
+            <div class="col-md-6">
+              <label for="editArticleLanguage" class="form-label"
+                >Language</label
+              >
+              <select class="form-select" id="editArticleLanguage">
+                <option selected>English</option>
+                <option>Spanish</option>
+                <option>French</option>
+                <option>Swahili</option>
+                <option>Hindi</option>
+              </select>
+            </div>
+          </div>
+
+          <div class="mb-3">
+            <label for="editArticleSummary" class="form-label">Summary</label>
+            <textarea class="form-control" id="editArticleSummary" rows="3">
+Tomato blight can devastate crops if not properly managed. Learn prevention techniques and treatment options.</textarea
+            >
+          </div>
+
+          <div class="mb-3">
+            <label class="form-label">Featured Image</label>
+            <div class="border rounded p-3 text-center bg-light">
+              <img
+                src="https://images.unsplash.com/photo-1518977676601-b53f82aba655?w=500&auto=format&fit=crop&q=60&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxzZWFyY2h8Mnx8dG9tYXRvJTIwYmxpZ2h0fGVufDB8fDB8fHww"
+                alt="Tomato Blight"
+                class="img-fluid mb-2"
+                style="max-height: 150px"
+              />
+              <div class="d-flex justify-content-center">
+                <button class="btn btn-sm btn-outline-primary me-2">
+                  <i class="fas fa-upload me-1"></i> Change Image
+                </button>
+                <button class="btn btn-sm btn-outline-danger">
+                  <i class="fas fa-trash me-1"></i> Remove
+                </button>
+              </div>
+            </div>
+          </div>
+
+          <div class="mb-3">
+            <label for="editArticleContent" class="form-label">Content</label>
+            <div class="border rounded p-2 bg-white" style="min-height: 300px">
+              <!-- This would be replaced with a rich text editor in implementation -->
+              <div class="p-3">
+                <h4>Understanding Tomato Blight</h4>
+                <p>
+                  Tomato blight is a common fungal disease that affects tomato
+                  plants, especially in humid conditions...
+                </p>
+                <h4>Prevention Techniques</h4>
+                <ul>
+                  <li>Rotate crops annually</li>
+                  <li>Ensure proper spacing between plants</li>
+                  <li>Water at the base of plants</li>
+                </ul>
+                <h4>Treatment Options</h4>
+                <p>
+                  If blight is detected early, fungicides can be effective...
+                </p>
+              </div>
+            </div>
+          </div>
+
+          <div class="mb-3">
+            <label class="form-label">Tags</label>
+            <input
+              type="text"
+              class="form-control"
+              value="tomatoes, blight, prevention, treatment"
+            />
+            <div class="mt-2">
+              <span class="badge bg-primary me-1">tomatoes</span>
+              <span class="badge bg-primary me-1">blight</span>
+              <span class="badge bg-primary me-1">prevention</span>
+              <span class="badge bg-primary me-1">treatment</span>
+            </div>
+          </div>
+
+          <div class="form-check mb-3">
+            <input
+              class="form-check-input"
+              type="checkbox"
+              id="updateNotification"
+            />
+            <label class="form-check-label" for="updateNotification">
+              Notify subscribers about this update
+            </label>
+          </div>
+        </form>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">
+          Cancel
+        </button>
+        <button type="button" class="btn btn-outline-primary">
+          <i class="fas fa-history me-1"></i> View History
+        </button>
+        <button type="button" class="btn btn-primary">
+          <i class="fas fa-save me-1"></i> Save Changes
+        </button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- New Region Modal -->
+<div
+  class="modal fade"
+  id="newRegionModal"
+  tabindex="-1"
+  aria-labelledby="newRegionModalLabel"
+  aria-hidden="true"
+>
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="newRegionModalLabel">Add New Region</h5>
+        <button
+          type="button"
+          class="btn-close"
+          data-bs-dismiss="modal"
+          aria-label="Close"
+        ></button>
+      </div>
+      <div class="modal-body">
+        <form>
+          <div class="mb-3">
+            <label for="regionName" class="form-label">Region Name</label>
+            <input
+              type="text"
+              class="form-control"
+              id="regionName"
+              placeholder="Enter region name"
+            />
+          </div>
+
+          <div class="mb-3">
+            <label class="form-label">Applicable Crops</label>
+            <div class="form-check">
+              <input
+                class="form-check-input"
+                type="checkbox"
+                id="cropTomatoes"
+                checked
+              />
+              <label class="form-check-label" for="cropTomatoes"
+                >Tomatoes</label
+              >
+            </div>
+            <div class="form-check">
+              <input class="form-check-input" type="checkbox" id="cropWheat" />
+              <label class="form-check-label" for="cropWheat">Wheat</label>
+            </div>
+            <div class="form-check">
+              <input
+                class="form-check-input"
+                type="checkbox"
+                id="cropMaize"
+                checked
+              />
+              <label class="form-check-label" for="cropMaize">Maize</label>
+            </div>
+            <div class="form-check">
+              <input
+                class="form-check-input"
+                type="checkbox"
+                id="cropPotatoes"
+              />
+              <label class="form-check-label" for="cropPotatoes"
+                >Potatoes</label
+              >
+            </div>
+            <div class="form-check">
+              <input class="form-check-input" type="checkbox" id="cropRice" />
+              <label class="form-check-label" for="cropRice">Rice</label>
+            </div>
+          </div>
+
+          <div class="mb-3">
+            <label for="regionDescription" class="form-label"
+              >Description</label
+            >
+            <textarea
+              class="form-control"
+              id="regionDescription"
+              rows="3"
+              placeholder="Brief description of the region's agricultural characteristics"
+            ></textarea>
+          </div>
+
+          <div class="mb-3">
+            <label class="form-label">Seasonal Considerations</label>
+            <div class="border rounded p-2 bg-light" style="min-height: 100px">
+              <!-- This would be replaced with a rich text editor in implementation -->
+              <div
+                class="d-flex align-items-center justify-content-center h-100"
+              >
+                <div class="text-center">
+                  <i class="fas fa-edit text-muted mb-2"></i>
+                  <p class="text-muted">Add seasonal notes here</p>
+                </div>
+              </div>
+            </div>
+          </div>
+        </form>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">
+          Cancel
+        </button>
+        <button type="button" class="btn btn-primary">
+          <i class="fas fa-save me-1"></i> Save Region
+        </button>
+      </div>
+    </div>
+  </div>
+</div>
+
+{% endblock %}

@@ -1,0 +1,969 @@
+{% block content %} {% load static %}
+
+<!-- Field report section-->
+<section id="field-reports" class="content-section" style="display: none">
+  <div class="row mb-4 mt-4">
+    <div class="col-md-6">
+      <h4><i class="fas fa-clipboard-list me-2"></i> Field Reports</h4>
+      <p class="text-muted">
+        View and manage all your field inspection reports
+      </p>
+    </div>
+    <div class="col-md-6 text-md-end">
+      <button
+        class="btn btn-success me-2"
+        data-bs-toggle="modal"
+        data-bs-target="#newReportModal"
+      >
+        <i class="fas fa-plus me-1"></i> New Report
+      </button>
+      <div class="btn-group">
+        <button
+          class="btn btn-outline-success dropdown-toggle"
+          type="button"
+          data-bs-toggle="dropdown"
+        >
+          <i class="fas fa-download me-1"></i> Export
+        </button>
+        <ul class="dropdown-menu dropdown-menu-end">
+          <li>
+            <a class="dropdown-item" href="#"
+              ><i class="fas fa-file-excel me-2"></i> Excel</a
+            >
+          </li>
+          <li>
+            <a class="dropdown-item" href="#"
+              ><i class="fas fa-file-pdf me-2"></i> PDF</a
+            >
+          </li>
+          <li>
+            <a class="dropdown-item" href="#"
+              ><i class="fas fa-file-csv me-2"></i> CSV</a
+            >
+          </li>
+        </ul>
+      </div>
+    </div>
+  </div>
+
+  <!-- Reports Summary Cards -->
+  <div class="row mb-4">
+    <div class="col-md-3">
+      <div class="card border-start border-primary border-4">
+        <div class="card-body">
+          <div class="d-flex justify-content-between">
+            <div>
+              <h6 class="text-muted">Total Reports</h6>
+              <h3>127</h3>
+            </div>
+            <div class="bg-primary bg-opacity-10 p-3 rounded">
+              <i class="fas fa-file-alt text-primary"></i>
+            </div>
+          </div>
+          <small class="text-success"
+            ><i class="fas fa-arrow-up me-1"></i> 8% from last month</small
+          >
+        </div>
+      </div>
+    </div>
+    <div class="col-md-3">
+      <div class="card border-start border-warning border-4">
+        <div class="card-body">
+          <div class="d-flex justify-content-between">
+            <div>
+              <h6 class="text-muted">Pending Review</h6>
+              <h3>14</h3>
+            </div>
+            <div class="bg-warning bg-opacity-10 p-3 rounded">
+              <i class="fas fa-clock text-warning"></i>
+            </div>
+          </div>
+          <small class="text-danger"
+            ><i class="fas fa-arrow-up me-1"></i> 3 new today</small
+          >
+        </div>
+      </div>
+    </div>
+    <div class="col-md-3">
+      <div class="card border-start border-danger border-4">
+        <div class="card-body">
+          <div class="d-flex justify-content-between">
+            <div>
+              <h6 class="text-muted">Urgent Cases</h6>
+              <h3>5</h3>
+            </div>
+            <div class="bg-danger bg-opacity-10 p-3 rounded">
+              <i class="fas fa-exclamation-triangle text-danger"></i>
+            </div>
+          </div>
+          <small class="text-danger"
+            ><i class="fas fa-bell me-1"></i> Needs attention</small
+          >
+        </div>
+      </div>
+    </div>
+    <div class="col-md-3">
+      <div class="card border-start border-success border-4">
+        <div class="card-body">
+          <div class="d-flex justify-content-between">
+            <div>
+              <h6 class="text-muted">Resolved</h6>
+              <h3>98</h3>
+            </div>
+            <div class="bg-success bg-opacity-10 p-3 rounded">
+              <i class="fas fa-check-circle text-success"></i>
+            </div>
+          </div>
+          <small class="text-success"
+            ><i class="fas fa-check me-1"></i> 85% resolution rate</small
+          >
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Reports Table -->
+  <div class="card">
+    <div class="card-header d-flex justify-content-between align-items-center">
+      <div>
+        <span>Recent Field Reports</span>
+        <span class="badge bg-primary ms-2">127</span>
+      </div>
+      <div class="d-flex">
+        <div class="input-group me-3" style="width: 250px">
+          <input
+            type="text"
+            class="form-control"
+            placeholder="Search reports..."
+          />
+          <button class="btn btn-outline-secondary" type="button">
+            <i class="fas fa-search"></i>
+          </button>
+        </div>
+        <div class="dropdown">
+          <button
+            class="btn btn-outline-secondary dropdown-toggle"
+            type="button"
+            data-bs-toggle="dropdown"
+          >
+            <i class="fas fa-sort me-1"></i> Sort By
+          </button>
+          <ul class="dropdown-menu dropdown-menu-end">
+            <li><a class="dropdown-item" href="#">Newest First</a></li>
+            <li><a class="dropdown-item" href="#">Oldest First</a></li>
+            <li>
+              <a class="dropdown-item" href="#">Priority (High to Low)</a>
+            </li>
+            <li><a class="dropdown-item" href="#">Status</a></li>
+          </ul>
+        </div>
+      </div>
+    </div>
+    <div class="card-body p-0">
+      <div class="table-responsive">
+        <table class="table table-hover mb-0">
+          <thead class="table-light">
+            <tr>
+              <th>Report ID</th>
+              <th>Farmer</th>
+              <th>Crop</th>
+              <th>Issue</th>
+              <th>Date</th>
+              <th>Status</th>
+              <th>Priority</th>
+              <th>Actions</th>
+            </tr>
+          </thead>
+          <tbody>
+            <!-- Report 1 -->
+            <tr class="priority-high">
+              <td>FR-2023-0425</td>
+              <td>
+                <div class="d-flex align-items-center">
+                  <img
+                    src="https://randomuser.me/api/portraits/men/32.jpg"
+                    class="rounded-circle me-2"
+                    width="32"
+                    height="32"
+                    alt="Farmer"
+                  />
+                  <span>John Kamau</span>
+                </div>
+              </td>
+              <td>Tomatoes</td>
+              <td>Late Blight</td>
+              <td>
+                <small>Today</small>
+                <div class="text-muted">10:30 AM</div>
+              </td>
+              <td><span class="badge bg-warning">Pending</span></td>
+              <td><span class="badge bg-danger">High</span></td>
+              <td>
+                <button
+                  class="btn btn-sm btn-outline-primary me-1"
+                  title="View"
+                  data-bs-toggle="modal"
+                  data-bs-target="#reportDetailModal"
+                >
+                  <i class="fas fa-eye"></i>
+                </button>
+                <button class="btn btn-sm btn-outline-secondary" title="Edit">
+                  <i class="fas fa-edit"></i>
+                </button>
+              </td>
+            </tr>
+
+            <!-- Report 2 -->
+            <tr class="priority-medium">
+              <td>FR-2023-0424</td>
+              <td>
+                <div class="d-flex align-items-center">
+                  <img
+                    src="https://randomuser.me/api/portraits/women/44.jpg"
+                    class="rounded-circle me-2"
+                    width="32"
+                    height="32"
+                    alt="Farmer"
+                  />
+                  <span>Mary Wanjiku</span>
+                </div>
+              </td>
+              <td>Maize</td>
+              <td>Fall Armyworm</td>
+              <td>
+                <small>Yesterday</small>
+                <div class="text-muted">2:15 PM</div>
+              </td>
+              <td><span class="badge bg-info">In Progress</span></td>
+              <td><span class="badge bg-warning">Medium</span></td>
+              <td>
+                <button
+                  class="btn btn-sm btn-outline-primary me-1"
+                  title="View"
+                  data-bs-toggle="modal"
+                  data-bs-target="#reportDetailModal"
+                >
+                  <i class="fas fa-eye"></i>
+                </button>
+                <button class="btn btn-sm btn-outline-secondary" title="Edit">
+                  <i class="fas fa-edit"></i>
+                </button>
+              </td>
+            </tr>
+
+            <!-- Report 3 -->
+            <tr>
+              <td>FR-2023-0422</td>
+              <td>
+                <div class="d-flex align-items-center">
+                  <img
+                    src="https://randomuser.me/api/portraits/men/67.jpg"
+                    class="rounded-circle me-2"
+                    width="32"
+                    height="32"
+                    alt="Farmer"
+                  />
+                  <span>Peter Mwangi</span>
+                </div>
+              </td>
+              <td>Coffee</td>
+              <td>Berry Disease</td>
+              <td>
+                <small>Apr 22, 2023</small>
+                <div class="text-muted">9:45 AM</div>
+              </td>
+              <td><span class="badge bg-success">Resolved</span></td>
+              <td><span class="badge bg-primary">Low</span></td>
+              <td>
+                <button
+                  class="btn btn-sm btn-outline-primary me-1"
+                  title="View"
+                  data-bs-toggle="modal"
+                  data-bs-target="#reportDetailModal"
+                >
+                  <i class="fas fa-eye"></i>
+                </button>
+                <button class="btn btn-sm btn-outline-secondary" title="Edit">
+                  <i class="fas fa-edit"></i>
+                </button>
+              </td>
+            </tr>
+
+            <!-- Report 4 -->
+            <tr class="priority-high">
+              <td>FR-2023-0420</td>
+              <td>
+                <div class="d-flex align-items-center">
+                  <img
+                    src="https://randomuser.me/api/portraits/men/45.jpg"
+                    class="rounded-circle me-2"
+                    width="32"
+                    height="32"
+                    alt="Farmer"
+                  />
+                  <span>James Omondi</span>
+                </div>
+              </td>
+              <td>Kale</td>
+              <td>Aphid Infestation</td>
+              <td>
+                <small>Apr 20, 2023</small>
+                <div class="text-muted">11:20 AM</div>
+              </td>
+              <td><span class="badge bg-danger">Urgent</span></td>
+              <td><span class="badge bg-danger">High</span></td>
+              <td>
+                <button
+                  class="btn btn-sm btn-outline-primary me-1"
+                  title="View"
+                  data-bs-toggle="modal"
+                  data-bs-target="#reportDetailModal"
+                >
+                  <i class="fas fa-eye"></i>
+                </button>
+                <button class="btn btn-sm btn-outline-secondary" title="Edit">
+                  <i class="fas fa-edit"></i>
+                </button>
+              </td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+
+      <!-- Pagination -->
+      <div
+        class="d-flex justify-content-between align-items-center p-3 border-top"
+      >
+        <div>
+          <small class="text-muted"
+            >Showing <strong>1-10</strong> of
+            <strong>127</strong> reports</small
+          >
+        </div>
+        <nav aria-label="Page navigation">
+          <ul class="pagination pagination-sm mb-0">
+            <li class="page-item disabled">
+              <a class="page-link" href="#" tabindex="-1" aria-disabled="true"
+                >Previous</a
+              >
+            </li>
+            <li class="page-item active">
+              <a class="page-link" href="#">1</a>
+            </li>
+            <li class="page-item"><a class="page-link" href="#">2</a></li>
+            <li class="page-item"><a class="page-link" href="#">3</a></li>
+            <li class="page-item">
+              <a class="page-link" href="#">Next</a>
+            </li>
+          </ul>
+        </nav>
+      </div>
+    </div>
+  </div>
+
+  <!-- Charts Section -->
+  <div class="row mt-4">
+    <div class="col-md-6">
+      <div class="card">
+        <div class="card-header">
+          <span>Reports by Status</span>
+        </div>
+        <div class="card-body">
+          <canvas id="statusChart" height="250"></canvas>
+        </div>
+      </div>
+    </div>
+    <div class="col-md-6">
+      <div class="card">
+        <div class="card-header">
+          <span>Common Issues</span>
+        </div>
+        <div class="card-body">
+          <canvas id="issuesChart" height="250"></canvas>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Image Modal -->
+  <div class="modal fade" id="imageModal" tabindex="-1" aria-hidden="true">
+    <div class="modal-dialog modal-xl">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title">Field Image</h5>
+          <button
+            type="button"
+            class="btn-close"
+            data-bs-dismiss="modal"
+            aria-label="Close"
+          ></button>
+        </div>
+        <div class="modal-body text-center">
+          <img src="" class="img-fluid" id="modalImage" alt="Field condition" />
+        </div>
+        <div class="modal-footer">
+          <button
+            type="button"
+            class="btn btn-secondary"
+            data-bs-dismiss="modal"
+          >
+            Close
+          </button>
+          <button type="button" class="btn btn-primary">
+            <i class="bi bi-download me-1"></i> Download
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Field Report Detail Modal -->
+  <div
+    class="modal fade"
+    id="reportDetailModal"
+    tabindex="-1"
+    aria-labelledby="reportDetailModalLabel"
+    aria-hidden="true"
+  >
+    <div class="modal-dialog modal-xl">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="reportDetailModalLabel">
+            Field Report #FR-2023-0425
+          </h5>
+          <button
+            type="button"
+            class="btn-close"
+            data-bs-dismiss="modal"
+            aria-label="Close"
+          ></button>
+        </div>
+        <div class="modal-body">
+          <div class="row mb-4">
+            <div class="col-md-6">
+              <div class="card mb-3">
+                <div class="card-header">
+                  <h6>Report Information</h6>
+                </div>
+                <div class="card-body">
+                  <div class="row mb-2">
+                    <div class="col-sm-4 text-muted">Farmer:</div>
+                    <div class="col-sm-8">John Doe</div>
+                  </div>
+                  <div class="row mb-2">
+                    <div class="col-sm-4 text-muted">Location:</div>
+                    <div class="col-sm-8">Nairobi West, Block 12</div>
+                  </div>
+                  <div class="row mb-2">
+                    <div class="col-sm-4 text-muted">Date:</div>
+                    <div class="col-sm-8">April 25, 2023 • 10:30 AM</div>
+                  </div>
+                  <div class="row mb-2">
+                    <div class="col-sm-4 text-muted">Crop:</div>
+                    <div class="col-sm-8">Tomatoes (Variety: Rio Grande)</div>
+                  </div>
+                  <div class="row">
+                    <div class="col-sm-4 text-muted">Growth Stage:</div>
+                    <div class="col-sm-8">Fruiting (Week 6)</div>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="col-md-6">
+              <div class="card">
+                <div class="card-header">
+                  <h6>Diagnosis Summary</h6>
+                </div>
+                <div class="card-body">
+                  <div class="row mb-2">
+                    <div class="col-sm-4 text-muted">Issue:</div>
+                    <div class="col-sm-8">
+                      <span class="badge bg-danger">Late Blight</span>
+                    </div>
+                  </div>
+                  <div class="row mb-2">
+                    <div class="col-sm-4 text-muted">Severity:</div>
+                    <div class="col-sm-8">
+                      <div class="progress" style="height: 6px">
+                        <div
+                          class="progress-bar bg-danger"
+                          style="width: 75%"
+                        ></div>
+                      </div>
+                      <small>Moderate to Severe</small>
+                    </div>
+                  </div>
+                  <div class="row mb-2">
+                    <div class="col-sm-4 text-muted">Affected Area:</div>
+                    <div class="col-sm-8">~30% of field</div>
+                  </div>
+                  <div class="row">
+                    <div class="col-sm-4 text-muted">Reported By:</div>
+                    <div class="col-sm-8">Agronomist Sarah M.</div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div class="row mb-4">
+            <div class="col-md-6">
+              <div class="card">
+                <div
+                  class="card-header d-flex justify-content-between align-items-center"
+                >
+                  <h6>Field Images</h6>
+                  <button class="btn btn-sm btn-outline-primary">
+                    <i class="fas fa-expand me-1"></i> View Full Size
+                  </button>
+                </div>
+                <div class="card-body">
+                  <div class="row">
+                    <div class="col-6 mb-3">
+                      <img
+                        src="https://images.unsplash.com/photo-1518977676601-b53f82aba655?w=500&auto=format&fit=crop&q=60&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8Mnx8dG9tYXRvJTIwYmxpZ2h0fGVufDB8fDB8fHww"
+                        class="img-fluid rounded"
+                        alt="Tomato blight symptoms"
+                        data-bs-toggle="modal"
+                        data-bs-target="#imageModal"
+                      />
+                    </div>
+                    <div class="col-6 mb-3">
+                      <img
+                        src="https://images.unsplash.com/photo-1589927986089-35812388d1f4?w=500&auto=format&fit=crop&q=60&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8M3x8dG9tYXRvJTIwYmxpZ2h0fGVufDB8fDB8fHww"
+                        class="img-fluid rounded"
+                        alt="Tomato blight close-up"
+                        data-bs-toggle="modal"
+                        data-bs-target="#imageModal"
+                      />
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="col-md-6">
+              <div class="card h-100">
+                <div class="card-header">
+                  <h6>Environmental Conditions</h6>
+                </div>
+                <div class="card-body">
+                  <div class="row text-center mb-3">
+                    <div class="col-4">
+                      <div class="text-muted small">Temperature</div>
+                      <div class="h4">24°C</div>
+                    </div>
+                    <div class="col-4">
+                      <div class="text-muted small">Humidity</div>
+                      <div class="h4">82%</div>
+                    </div>
+                    <div class="col-4">
+                      <div class="text-muted small">Rainfall</div>
+                      <div class="h4">15mm</div>
+                    </div>
+                  </div>
+                  <div class="alert alert-warning">
+                    <i class="fas fa-exclamation-triangle me-2"></i>
+                    Conditions favorable for disease spread. High humidity and
+                    recent rainfall increase risk.
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div class="card mb-4">
+            <div class="card-header">
+              <h6>Field Observations</h6>
+            </div>
+            <div class="card-body">
+              <p>
+                Irregular brown lesions on leaves with white fungal growth on
+                undersides during humid conditions. Lesions initially appear on
+                older leaves and spread upward. Some fruit showing dark, sunken
+                lesions. Disease appears to be spreading from the northeast
+                corner of the field where drainage is poor.
+              </p>
+
+              <div class="mt-3">
+                <h6>Symptoms Checklist</h6>
+                <div class="form-check">
+                  <input
+                    class="form-check-input"
+                    type="checkbox"
+                    id="symptom1"
+                    checked
+                  />
+                  <label class="form-check-label" for="symptom1"
+                    >Brown lesions on leaves</label
+                  >
+                </div>
+                <div class="form-check">
+                  <input
+                    class="form-check-input"
+                    type="checkbox"
+                    id="symptom2"
+                    checked
+                  />
+                  <label class="form-check-label" for="symptom2"
+                    >White fungal growth</label
+                  >
+                </div>
+                <div class="form-check">
+                  <input
+                    class="form-check-input"
+                    type="checkbox"
+                    id="symptom3"
+                    checked
+                  />
+                  <label class="form-check-label" for="symptom3"
+                    >Lesions on stems</label
+                  >
+                </div>
+                <div class="form-check">
+                  <input
+                    class="form-check-input"
+                    type="checkbox"
+                    id="symptom4"
+                  />
+                  <label class="form-check-label" for="symptom4"
+                    >Wilting plants</label
+                  >
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div class="card">
+            <div
+              class="card-header d-flex justify-content-between align-items-center"
+            >
+              <h6>Recommended Actions</h6>
+              <button class="btn btn-sm btn-success">
+                <i class="fas fa-paper-plane me-1"></i> Send to Farmer
+              </button>
+            </div>
+            <div class="card-body">
+              <div class="alert alert-danger">
+                <i class="fas fa-exclamation-circle me-2"></i>
+                <strong>Urgent Action Required:</strong> This disease can spread
+                rapidly and cause complete crop loss if not treated immediately.
+              </div>
+
+              <h6 class="mt-3">Immediate Actions</h6>
+              <ol>
+                <li>
+                  Remove and destroy severely infected plants (burn or bury
+                  deep)
+                </li>
+                <li>
+                  Apply copper-based fungicide (e.g., Bordeaux mixture) to all
+                  plants
+                </li>
+                <li>Improve air circulation by pruning lower leaves</li>
+                <li>Avoid overhead irrigation</li>
+              </ol>
+
+              <h6 class="mt-3">Long-term Prevention</h6>
+              <ul>
+                <li>Rotate crops with non-solanaceous plants for 3-4 years</li>
+                <li>
+                  Plant resistant varieties next season (e.g., Mountain Magic,
+                  Defiant)
+                </li>
+                <li>Improve field drainage in affected areas</li>
+                <li>Apply mulch to prevent soil splash</li>
+              </ul>
+
+              <div class="mt-3">
+                <h6>Follow-up Schedule</h6>
+                <div class="list-group">
+                  <div class="list-group-item">
+                    <div class="d-flex w-100 justify-content-between">
+                      <h6 class="mb-1">Initial Treatment</h6>
+                      <small>Today</small>
+                    </div>
+                    <p class="mb-1">Apply first fungicide treatment</p>
+                  </div>
+                  <div class="list-group-item">
+                    <div class="d-flex w-100 justify-content-between">
+                      <h6 class="mb-1">Follow-up Inspection</h6>
+                      <small>April 28, 2023</small>
+                    </div>
+                    <p class="mb-1">Assess treatment effectiveness</p>
+                  </div>
+                  <div class="list-group-item">
+                    <div class="d-flex w-100 justify-content-between">
+                      <h6 class="mb-1">Second Treatment</h6>
+                      <small>May 2, 2023</small>
+                    </div>
+                    <p class="mb-1">Apply systemic fungicide if needed</p>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="modal-footer">
+          <button
+            type="button"
+            class="btn btn-secondary"
+            data-bs-dismiss="modal"
+          >
+            Close
+          </button>
+          <button type="button" class="btn btn-primary">
+            <i class="fas fa-edit me-1"></i> Edit Report
+          </button>
+          <button type="button" class="btn btn-success">
+            <i class="fas fa-print me-1"></i> Print Report
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- New Field Report Modal -->
+  <div
+    class="modal fade"
+    id="newReportModal"
+    tabindex="-1"
+    aria-labelledby="newReportModalLabel"
+    aria-hidden="true"
+  >
+    <div class="modal-dialog modal-xl">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="newReportModalLabel">
+            Create New Field Report
+          </h5>
+          <button
+            type="button"
+            class="btn-close"
+            data-bs-dismiss="modal"
+            aria-label="Close"
+          ></button>
+        </div>
+        <div class="modal-body">
+          <form>
+            <div class="row mb-3">
+              <div class="col-md-6">
+                <label for="reportFarmer" class="form-label">Farmer</label>
+                <select class="form-select" id="reportFarmer" required>
+                  <option value="">Select Farmer</option>
+                  <option value="1">John Doe</option>
+                  <option value="2">Maria Garcia</option>
+                  <option value="3">Green Valley Co-op</option>
+                </select>
+              </div>
+              <div class="col-md-6">
+                <label for="reportDate" class="form-label">Visit Date</label>
+                <input
+                  type="datetime-local"
+                  class="form-control"
+                  id="reportDate"
+                  required
+                />
+              </div>
+            </div>
+
+            <div class="row mb-3">
+              <div class="col-md-6">
+                <label for="reportCrop" class="form-label">Crop</label>
+                <select class="form-select" id="reportCrop" required>
+                  <option value="">Select Crop</option>
+                  <option value="tomato">Tomatoes</option>
+                  <option value="corn">Corn</option>
+                  <option value="wheat">Wheat</option>
+                  <option value="potato">Potatoes</option>
+                </select>
+              </div>
+              <div class="col-md-6">
+                <label for="reportGrowthStage" class="form-label"
+                  >Growth Stage</label
+                >
+                <select class="form-select" id="reportGrowthStage" required>
+                  <option value="">Select Stage</option>
+                  <option value="seedling">Seedling</option>
+                  <option value="vegetative">Vegetative</option>
+                  <option value="flowering">Flowering</option>
+                  <option value="fruiting" selected>Fruiting</option>
+                  <option value="harvest">Harvest</option>
+                </select>
+              </div>
+            </div>
+
+            <div class="mb-3">
+              <label for="reportLocation" class="form-label"
+                >Field Location</label
+              >
+              <div class="input-group">
+                <input
+                  type="text"
+                  class="form-control"
+                  id="reportLocation"
+                  placeholder="Enter field location"
+                />
+                <button
+                  class="btn btn-outline-secondary"
+                  type="button"
+                  id="mapLocation"
+                >
+                  <i class="fas fa-map-marker-alt"></i> Map
+                </button>
+              </div>
+            </div>
+
+            <div class="mb-3">
+              <label class="form-label">Field Conditions</label>
+              <div class="row">
+                <div class="col-md-4 mb-3">
+                  <label class="form-label">Temperature (°C)</label>
+                  <input type="number" class="form-control" placeholder="25" />
+                </div>
+                <div class="col-md-4 mb-3">
+                  <label class="form-label">Humidity (%)</label>
+                  <input type="number" class="form-control" placeholder="65" />
+                </div>
+                <div class="col-md-4 mb-3">
+                  <label class="form-label">Rainfall (mm)</label>
+                  <input type="number" class="form-control" placeholder="10" />
+                </div>
+              </div>
+            </div>
+
+            <div class="mb-3">
+              <label for="reportImages" class="form-label">Field Images</label>
+              <div class="border rounded p-3 text-center bg-light">
+                <i class="fas fa-images fa-3x text-muted mb-2"></i>
+                <p class="text-muted">Upload images showing field conditions</p>
+                <input
+                  type="file"
+                  class="form-control"
+                  id="reportImages"
+                  multiple
+                  accept="image/*"
+                />
+              </div>
+            </div>
+
+            <div class="mb-3">
+              <label for="reportObservations" class="form-label"
+                >Observations</label
+              >
+              <textarea
+                class="form-control"
+                id="reportObservations"
+                rows="4"
+                placeholder="Describe what you observed in the field..."
+              ></textarea>
+            </div>
+
+            <div class="mb-3">
+              <label class="form-label">Potential Issues</label>
+              <div class="form-check">
+                <input
+                  class="form-check-input"
+                  type="checkbox"
+                  id="issueDisease"
+                />
+                <label class="form-check-label" for="issueDisease"
+                  >Disease</label
+                >
+              </div>
+              <div class="form-check">
+                <input
+                  class="form-check-input"
+                  type="checkbox"
+                  id="issuePest"
+                />
+                <label class="form-check-label" for="issuePest">Pest</label>
+              </div>
+              <div class="form-check">
+                <input
+                  class="form-check-input"
+                  type="checkbox"
+                  id="issueNutrient"
+                />
+                <label class="form-check-label" for="issueNutrient"
+                  >Nutrient Deficiency</label
+                >
+              </div>
+              <div class="form-check">
+                <input
+                  class="form-check-input"
+                  type="checkbox"
+                  id="issueWater"
+                />
+                <label class="form-check-label" for="issueWater"
+                  >Water Stress</label
+                >
+              </div>
+            </div>
+
+            <div class="mb-3">
+              <label for="reportDiagnosis" class="form-label"
+                >Preliminary Diagnosis</label
+              >
+              <select class="form-select" id="reportDiagnosis">
+                <option value="">Select Diagnosis</option>
+                <option value="late_blight">Late Blight</option>
+                <option value="early_blight">Early Blight</option>
+                <option value="rust">Rust</option>
+                <option value="mildew">Powdery Mildew</option>
+                <option value="other">Other</option>
+              </select>
+            </div>
+
+            <div class="mb-3">
+              <label for="reportRecommendations" class="form-label"
+                >Recommended Actions</label
+              >
+              <textarea
+                class="form-control"
+                id="reportRecommendations"
+                rows="4"
+                placeholder="Enter your recommendations for the farmer..."
+              ></textarea>
+            </div>
+
+            <div class="form-check mb-3">
+              <input
+                class="form-check-input"
+                type="checkbox"
+                id="reportUrgent"
+              />
+              <label class="form-check-label" for="reportUrgent">
+                Mark as urgent (requires immediate attention)
+              </label>
+            </div>
+          </form>
+        </div>
+        <div class="modal-footer">
+          <button
+            type="button"
+            class="btn btn-secondary"
+            data-bs-dismiss="modal"
+          >
+            Cancel
+          </button>
+          <button type="button" class="btn btn-outline-primary">
+            <i class="fas fa-save me-1"></i> Save Draft
+          </button>
+          <button type="button" class="btn btn-primary">
+            <i class="fas fa-check me-1"></i> Submit Report
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+<!-- Leaflet JS -->
+<script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"
+  integrity="sha256-20nQCchB9co0qIjJZRGuk2/Z9VM+kNiyxNV1lvTlZBo=" crossorigin=""></script>
+<!-- Chart.js -->
+<script src="https://cdn.jsdelivr.net/npm/chart.js@3.9.1/dist/chart.min.js"></script>
+
+{% endblock %}
+

@@ -17,44 +17,34 @@
 <body>
     <div class="container">
         <div class="signup-container">
-            {% if messages %}
-                {% for message in messages %}
-                    <div class="alert alert-{{ message.tags }} alert-dismissible fade show" role="alert">
-                        {{ message }}
-                        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
-                    </div>
-                {% endfor %}
-            {% endif %}
 
             <div class="signup-header">
                 <div class="header">
                     <i class="fas fa-leaf"></i>
-                    <h2>Create Account</h2>
+                    <h2>Create an Account</h2>
                 </div>
                 <small class="text-muted">Join us today and get started</small>
             </div>
 
+            {% if messages %}
+                <div class="messages">
+                    {% for message in messages %}
+                        <div class="alert alert-{% if message.tags == 'success' %}success{% else %}danger{% endif %} alert-dismissible fade show" role="alert">
+                            {{ message }}
+                            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                        </div>
+                    {% endfor %}
+                </div>
+            {% endif %}
+
             <form id="signupForm" action="{% url 'sign_up' %}" method="POST">
                 {% csrf_token %}
-                <div class="row">
-                    <div class="col-6">
-                        <div class="form-floating">
-                            <input type="text" class="form-control" id="firstName" name="first_name" placeholder="First Name" required>
-                            <label for="firstName">
-                                <img src="{% static 'images/user.svg' %}" class="icon" alt="">
-                                First Name
-                            </label>
-                        </div>
-                    </div>
-                    <div class="col-6">
-                        <div class="form-floating">
-                            <input type="text" class="form-control" id="lastName" name="last_name" placeholder="Last Name" required>
-                            <label for="lastName">
-                                <img src="{% static "images/user.svg" %}" class="icon" alt="">
-                                Last Name
-                            </label>
-                        </div>
-                    </div>
+                <div class="form-floating">
+                    <input type="text" class="form-control" id="username" name="user_name" placeholder="First Name" required>
+                    <label for="username">
+                        <img src="{% static 'images/user.svg' %}" class="icon" alt="">
+                        User Name
+                    </label>
                 </div>
 
                 <div class="form-floating">
@@ -74,7 +64,7 @@
                 </div>
 
                 <div class="form-floating">
-                    <input type="password" class="form-control" id="password" name="password" placeholder="Password" required>
+                    <input type="password" class="form-control" id="password" name="password1" placeholder="Password" required>
                     <label for="password">
                         <img src="{% static "images/lock.svg" %}" class="icon" alt="">
                         Password
@@ -89,7 +79,7 @@
                 </div>
 
                 <div class="form-floating">
-                    <input type="password" class="form-control" id="confirmPassword" name="confirm_password" placeholder="Confirm Password" required>
+                    <input type="password" class="form-control" id="confirmPassword" name="password2" placeholder="Confirm Password" required>
                     <label for="confirmPassword">
                         <img src="{% static "images/lock.svg" %}" class="icon" alt="">
                         Confirm Password

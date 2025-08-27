@@ -9,6 +9,20 @@ body {
   background-color: #f5f5f5;
 }
 
+.profile-initial {
+  width: 35px;
+  height: 35px;
+  border-radius: 50%;
+  background-color: #6c757d;
+  color: white;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-weight: bold;
+  font-size: 1rem;
+  margin-right: 8px;
+}
+
 .sidebar {
   background-color: white;
   position: fixed;
@@ -48,6 +62,14 @@ body {
   border: none;
   box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
   transition: transform 0.3s;
+}
+
+.profile-image {
+  width: 35px;
+  height: 35px;
+  border-radius: 50%;
+  object-fit: cover;
+  margin-right: 8px;
 }
 
 .dashboard-card:hover {

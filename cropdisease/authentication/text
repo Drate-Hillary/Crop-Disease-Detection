@@ -61,8 +61,3 @@ class Farmer(AbstractBaseUser, PermissionsMixin):
     
     def get_short_name(self):
         return self.user_name
-    
-    def get_first_initial(self):
-        if self.user_name and len(self.user_name) > 0:
-            return self.user_name[0].upper()
-        return "U"

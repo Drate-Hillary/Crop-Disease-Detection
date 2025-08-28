@@ -1,245 +1,263 @@
-{% block content %}
-
-{% load static %}
+{% block content %} {% load static %}
 
 <!-- User Management Tab -->
 <div class="tab-pane" id="users">
-  <div class="card">
-    <div
-      class="card-header d-flex justify-content-between align-items-center flex-wrap"
-    >
-      <h5 class="mb-0 mb-2 mb-sm-0">User Management</h5>
-      <div class="d-flex">
-        <button
-          class="btn btn-primary btn-sm me-2"
-          data-bs-toggle="modal"
-          data-bs-target="#addUserModal"
-        >
-          <i class="fas fa-plus me-1"></i> Add User
-        </button>
-        <button class="btn btn-outline-secondary btn-sm">
-          <i class="fas fa-download me-1"></i> Export
-        </button>
-      </div>
-    </div>
-    <div class="card-body">
-      <div class="row mb-3">
-        <div class="col-md-6 mb-2 mb-md-0">
-          <div class="input-group">
-            <input
-              type="text"
-              class="form-control"
-              placeholder="Search users..."
-            />
-            <button class="btn btn-outline-secondary" type="button">
-              <i class="fas fa-search"></i>
-            </button>
-          </div>
+  <div class="container my-4">
+    <div class="card">
+      <div
+        class="card-header d-flex justify-content-between align-items-center flex-wrap"
+      >
+        <h5 class="mb-0 mb-2 mb-sm-0 me-4">
+          <i class="fa-solid fa-users fs-4"></i>
+          User Management
+        </h5>
+        <div class="d-flex">
+          <button
+            class="btn btn-primary btn-sm me-2"
+            data-bs-toggle="modal"
+            data-bs-target="#addUserModal"
+          >
+            <i class="fas fa-plus me-1"></i> Add User
+          </button>
+          <button class="btn btn-outline-secondary btn-sm">
+            <i class="fas fa-download me-1"></i> Export
+          </button>
         </div>
-        <div class="col-md-6">
-          <div class="d-flex justify-content-md-end justify-content-start">
-            <div class="dropdown me-2">
-              <button
-                class="btn btn-outline-secondary dropdown-toggle"
-                type="button"
-                id="filterDropdown"
-                data-bs-toggle="dropdown"
-              >
-                <i class="fas fa-filter me-1"></i> Filter
+      </div>
+      <div class="card-body">
+        <div class="row mb-3">
+          <div class="col-md-6 mb-2 mb-md-0">
+            <div class="input-group">
+              <input
+                type="text"
+                class="form-control"
+                placeholder="Search users..."
+              />
+              <button class="btn btn-outline-secondary" type="button">
+                <i class="fas fa-search"></i>
               </button>
-              <ul class="dropdown-menu" aria-labelledby="filterDropdown">
-                <li><a class="dropdown-item" href="#">Farmers</a></li>
-                <li><a class="dropdown-item" href="#">Agronomists</a></li>
-                <li><a class="dropdown-item" href="#">Extension Workers</a></li>
-                <li>
-                  <hr class="dropdown-divider" />
-                </li>
-                <li><a class="dropdown-item" href="#">Active Users</a></li>
-                <li><a class="dropdown-item" href="#">Inactive Users</a></li>
-              </ul>
             </div>
-            <div class="dropdown">
-              <button
-                class="btn btn-outline-secondary dropdown-toggle"
-                type="button"
-                id="sortDropdown"
-                data-bs-toggle="dropdown"
-              >
-                <i class="fas fa-sort me-1"></i> Sort
-              </button>
-              <ul class="dropdown-menu" aria-labelledby="sortDropdown">
-                <li><a class="dropdown-item" href="#">Newest First</a></li>
-                <li><a class="dropdown-item" href="#">Oldest First</a></li>
-                <li><a class="dropdown-item" href="#">A-Z</a></li>
-                <li><a class="dropdown-item" href="#">Z-A</a></li>
-              </ul>
+          </div>
+          <div class="col-md-6">
+            <div class="d-flex justify-content-md-end justify-content-start">
+              <div class="dropdown me-2">
+                <button
+                  class="btn btn-outline-secondary dropdown-toggle"
+                  type="button"
+                  id="filterDropdown"
+                  data-bs-toggle="dropdown"
+                >
+                  <i class="fas fa-filter me-1"></i> Filter
+                </button>
+                <ul class="dropdown-menu" aria-labelledby="filterDropdown">
+                  <li><a class="dropdown-item" href="#">Farmers</a></li>
+                  <li><a class="dropdown-item" href="#">Agronomists</a></li>
+                  <li>
+                    <a class="dropdown-item" href="#">Extension Workers</a>
+                  </li>
+                  <li><hr class="dropdown-divider" /></li>
+                  <li><a class="dropdown-item" href="#">Active Users</a></li>
+                  <li><a class="dropdown-item" href="#">Inactive Users</a></li>
+                </ul>
+              </div>
             </div>
           </div>
         </div>
+
+        <div class="table-responsive">
+          <table class="table table-hover">
+            <thead>
+              <tr>
+                <th>Profile</th>
+                <th>Role</th>
+                <th>Status</th>
+                <th>Last Active</th>
+                <th>Actions</th>
+              </tr>
+            </thead>
+            <tbody>
+              <!-- User 1 -->
+              <tr>
+                <td class="d-flex align-items-center gap-2">
+                  <img
+                    src="https://plus.unsplash.com/premium_photo-1671656349322-41de944d259b?w=500&auto=format&fit=crop&q=60&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxzZWFyY2h8MXx8cG9ydHJhaXR8ZW58MHx8MHx8fDA%3D"
+                    alt="John Farmer"
+                    class="rounded-circle"
+                    style="width: 45px; height: 45px; object-fit: cover"
+                  />
+                  <span class="profile-details">
+                    <h5 class="fs-6 mb-0">John Farmer</h5>
+                    <small class="text-muted">john@example.com</small>
+                  </span>
+                </td>
+                <td><span class="badge bg-primary">Farmer</span></td>
+                <td><span class="badge bg-success">Active</span></td>
+                <td>2 hours ago</td>
+                <td>
+                  <div class="d-flex">
+                    <button
+                      class="btn btn-sm btn-outline-primary me-1"
+                      data-bs-toggle="modal"
+                      data-bs-target="#userModal1"
+                    >
+                      <i class="fas fa-eye"></i>
+                    </button>
+                    <button class="btn btn-sm btn-outline-danger">
+                      <i class="fas fa-trash"></i>
+                    </button>
+                  </div>
+                </td>
+              </tr>
+              <!-- User 2 -->
+              <tr>
+                <td class="d-flex align-items-center gap-2">
+                  <img
+                    src="https://images.unsplash.com/photo-1544005313-94ddf0286df2?w=500&auto=format&fit=crop&q=60&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxzZWFyY2h8M3x8cG9ydHJhaXR8ZW58MHx8MHx8fDA%3D"
+                    alt="Sarah Agronomist"
+                    class="rounded-circle"
+                    style="width: 45px; height: 45px; object-fit: cover"
+                  />
+                  <span class="profile-details">
+                    <h5 class="fs-6 mb-0">Sarah Agronomist</h5>
+                    <small class="text-muted">sarah@example.com</small>
+                  </span>
+                </td>
+                <td>
+                  <span class="badge bg-warning text-dark">Agronomist</span>
+                </td>
+                <td><span class="badge bg-success">Active</span></td>
+                <td>1 day ago</td>
+                <td>
+                  <div class="d-flex">
+                    <button
+                      class="btn btn-sm btn-outline-primary me-1"
+                      data-bs-toggle="modal"
+                      data-bs-target="#userModal2"
+                    >
+                      <i class="fas fa-eye"></i>
+                    </button>
+                    <button class="btn btn-sm btn-outline-danger">
+                      <i class="fas fa-trash"></i>
+                    </button>
+                  </div>
+                </td>
+              </tr>
+              <!-- User 3 -->
+              <tr>
+                <td class="d-flex align-items-center gap-2">
+                  <img
+                    src="https://plus.unsplash.com/premium_photo-1682096252599-e8536cd97d2b?w=500&auto=format&fit=crop&q=60&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxzZWFyY2h8NXx8cG9ydHJhaXR8ZW58MHx8MHx8fDA%3D"
+                    alt="Michael Extension"
+                    class="rounded-circle"
+                    style="width: 45px; height: 45px; object-fit: cover"
+                  />
+                  <span class="profile-details">
+                    <h5 class="fs-6 mb-0">Michael Extension</h5>
+                    <small class="text-muted">michael@example.com</small>
+                  </span>
+                </td>
+                <td><span class="badge bg-info">Extension</span></td>
+                <td><span class="badge bg-secondary">Inactive</span></td>
+                <td>1 week ago</td>
+                <td>
+                  <div class="d-flex">
+                    <button
+                      class="btn btn-sm btn-outline-primary me-1"
+                      data-bs-toggle="modal"
+                      data-bs-target="#userModal3"
+                    >
+                      <i class="fas fa-eye"></i>
+                    </button>
+                    <button class="btn btn-sm btn-outline-danger">
+                      <i class="fas fa-trash"></i>
+                    </button>
+                  </div>
+                </td>
+              </tr>
+              <!-- User 4 -->
+              <tr>
+                <td class="d-flex align-items-center gap-2">
+                  <img
+                    src="https://images.unsplash.com/photo-1580489944761-15a19d654956?w=500&auto=format&fit=crop&q=60&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxzZWFyY2h8N3x8cG9ydHJhaXR8ZW58MHx8MHx8fDA%3D"
+                    alt="Emma Farmer"
+                    class="rounded-circle"
+                    style="width: 45px; height: 45px; object-fit: cover"
+                  />
+                  <span class="profile-details">
+                    <h5 class="fs-6 mb-0">Emma Farmer</h5>
+                    <small class="text-muted">emma@example.com</small>
+                  </span>
+                </td>
+                <td><span class="badge bg-primary">Farmer</span></td>
+                <td><span class="badge bg-success">Active</span></td>
+                <td>3 hours ago</td>
+                <td>
+                  <div class="d-flex">
+                    <button
+                      class="btn btn-sm btn-outline-primary me-1"
+                      data-bs-toggle="modal"
+                      data-bs-target="#userModal4"
+                    >
+                      <i class="fas fa-eye"></i>
+                    </button>
+                    <button class="btn btn-sm btn-outline-danger">
+                      <i class="fas fa-trash"></i>
+                    </button>
+                  </div>
+                </td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+
+        <nav aria-label="Page navigation">
+          <ul class="pagination justify-content-center">
+            <li class="page-item disabled">
+              <a class="page-link" href="#" tabindex="-1">Previous</a>
+            </li>
+            <li class="page-item active">
+              <a class="page-link" href="#">1</a>
+            </li>
+            <li class="page-item"><a class="page-link" href="#">2</a></li>
+            <li class="page-item"><a class="page-link" href="#">3</a></li>
+            <li class="page-item">
+              <a class="page-link" href="#">Next</a>
+            </li>
+          </ul>
+        </nav>
       </div>
-
-      <div class="table-responsive">
-        <table class="table table-hover">
-          <thead>
-            <tr>
-              <th>Profile</th>
-              <th>Role</th>
-              <th>Status</th>
-              <th>Last Active</th>
-              <th>Actions</th>
-            </tr>
-          </thead>
-          <tbody>
-            <tr>
-              <td class="d-flex align-items-center gap-2">
-                <img
-                  src="https://plus.unsplash.com/premium_photo-1671656349322-41de944d259b?w=500&auto=format&fit=crop&q=60&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxzZWFyY2h8MXx8cG9ydHJhaXR8ZW58MHx8MHx8fDA%3D"
-                  alt="John Farmer"
-                  class="rounded-circle"
-                />
-                <span class="profile-details">
-                  <h5 class="fs-6">John Farmer</h5>
-                  <small class="text-muted">john@example.com</small>
-                </span>
-              </td>
-              <td><span class="badge bg-primary">Farmer</span></td>
-              <td><span class="badge bg-success">Active</span></td>
-              <td>2 hours ago</td>
-              <td>
-                <div class="d-flex">
-                  <button class="btn btn-sm btn-outline-primary me-1">
-                    <i class="fas fa-eye"></i>
-                  </button>
-                  <button class="btn btn-sm btn-outline-secondary me-1">
-                    <i class="fas fa-edit"></i>
-                  </button>
-                  <button class="btn btn-sm btn-outline-danger">
-                    <i class="fas fa-trash"></i>
-                  </button>
-                </div>
-              </td>
-            </tr>
-            <tr>
-              <td class="d-flex align-items-center gap-2">
-                <img
-                  src="https://images.unsplash.com/photo-1544005313-94ddf0286df2?w=500&auto=format&fit=crop&q=60&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxzZWFyY2h8M3x8cG9ydHJhaXR8ZW58MHx8MHx8fDA%3D"
-                  alt="Sarah Agronomist"
-                  class="rounded-circle"
-                />
-                <span class="profile-details">
-                  <h5 class="fs-6">Sarah Agronomist</h5>
-                  <small class="text-muted">sarah@example.com</small>
-                </span>
-              </td>
-
-              <td>
-                <span class="badge bg-warning text-dark">Agronomist</span>
-              </td>
-              <td><span class="badge bg-success">Active</span></td>
-              <td>1 day ago</td>
-              <td>
-                <div class="d-flex">
-                  <button class="btn btn-sm btn-outline-primary me-1">
-                    <i class="fas fa-eye"></i>
-                  </button>
-                  <button class="btn btn-sm btn-outline-secondary me-1">
-                    <i class="fas fa-edit"></i>
-                  </button>
-                  <button class="btn btn-sm btn-outline-danger">
-                    <i class="fas fa-trash"></i>
-                  </button>
-                </div>
-              </td>
-            </tr>
-            <tr>
-              <td class="d-flex align-items-center gap-2">
-                <img
-                  src="https://plus.unsplash.com/premium_photo-1682096252599-e8536cd97d2b?w=500&auto=format&fit=crop&q=60&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxzZWFyY2h8NXx8cG9ydHJhaXR8ZW58MHx8MHx8fDA%3D"
-                  alt="Michael Extension"
-                  class="rounded-circle"
-                />
-                <span class="profile-details">
-                  <h5 class="fs-6">Michael Extension</h5>
-                  <small class="text-muted">michael@example.com</small>
-                </span>
-              </td>
-              <td><span class="badge bg-info">Extension</span></td>
-              <td><span class="badge bg-secondary">Inactive</span></td>
-              <td>1 week ago</td>
-              <td>
-                <div class="d-flex">
-                  <button class="btn btn-sm btn-outline-primary me-1">
-                    <i class="fas fa-eye"></i>
-                  </button>
-                  <button class="btn btn-sm btn-outline-secondary me-1">
-                    <i class="fas fa-edit"></i>
-                  </button>
-                  <button class="btn btn-sm btn-outline-danger">
-                    <i class="fas fa-trash"></i>
-                  </button>
-                </div>
-              </td>
-            </tr>
-            <tr>
-              <td class="d-flex align-items-center gap-2">
-                <img
-                  src="https://images.unsplash.com/photo-1580489944761-15a19d654956?w=500&auto=format&fit=crop&q=60&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxzZWFyY2h8N3x8cG9ydHJhaXR8ZW58MHx8MHx8fDA%3D"
-                  alt="Emma Farmer"
-                  class="rounded-circle"
-                />
-                <span class="profile-details">
-                  <h5 class="fs-6">Emma Farmer</h5>
-                  <small class="text-muted">emma@example.com</small>
-                </span>
-              </td>
-              <td><span class="badge bg-primary">Farmer</span></td>
-              <td><span class="badge bg-success">Active</span></td>
-              <td>3 hours ago</td>
-              <td>
-                <div class="d-flex">
-                  <button class="btn btn-sm btn-outline-primary me-1">
-                    <i class="fas fa-eye"></i>
-                  </button>
-                  <button class="btn btn-sm btn-outline-secondary me-1">
-                    <i class="fas fa-edit"></i>
-                  </button>
-                  <button class="btn btn-sm btn-outline-danger">
-                    <i class="fas fa-trash"></i>
-                  </button>
-                </div>
-              </td>
-            </tr>
-          </tbody>
-        </table>
-      </div>
-
-      <nav aria-label="Page navigation">
-        <ul class="pagination justify-content-center">
-          <li class="page-item disabled">
-            <a class="page-link" href="#" tabindex="-1">Previous</a>
-          </li>
-          <li class="page-item active"><a class="page-link" href="#">1</a></li>
-          <li class="page-item"><a class="page-link" href="#">2</a></li>
-          <li class="page-item"><a class="page-link" href="#">3</a></li>
-          <li class="page-item">
-            <a class="page-link" href="#">Next</a>
-          </li>
-        </ul>
-      </nav>
     </div>
   </div>
 
-  <div
-    class="modal fade"
+  <style>
+    input:focus,
+    select:focus,
+    textarea:focus {
+      background-color: transparent;
+    }
+    .form-floating > .form-select {
+      padding-top: 1.625rem;
+      padding-bottom: 0.625rem;
+    }
+  </style>
+
+  <!-- Add User Modal -->
+  <divclass="modal fade"
     id="addUserModal"
     tabindex="-1"
     aria-labelledby="addUserModalLabel"
     aria-hidden="true"
   >
-    <div class="modal-dialog modal-lg">
+    <div class="modal-dialog">
       <div class="modal-content">
         <div class="modal-header">
-          <h5 class="modal-title" id="addUserModalLabel">Add New User</h5>
+          <h5
+            class="modal-title d-flex align-items-center gap-3 flex-direction-row"
+            id="addUserModalLabel"
+          >
+            <i class="fa-regular fa-user fs-4"></i>
+            Add New User
+          </h5>
           <button
             type="button"
             class="btn-close"
@@ -249,124 +267,59 @@
         </div>
         <div class="modal-body">
           <form>
-            <div class="row mb-3">
-              <div class="col-md-6">
-                <label for="firstName" class="form-label">First Name</label>
-                <input
-                  type="text"
-                  class="form-control"
-                  id="firstName"
-                  required
-                />
-              </div>
-              <div class="col-md-6">
-                <label for="lastName" class="form-label">Last Name</label>
-                <input
-                  type="text"
-                  class="form-control"
-                  id="lastName"
-                  required
-                />
-              </div>
-            </div>
-
-            <div class="row mb-3">
-              <div class="col-md-6">
-                <label for="email" class="form-label">Email Address</label>
-                <input type="email" class="form-control" id="email" required />
-              </div>
-              <div class="col-md-6">
-                <label for="phone" class="form-label">Phone Number</label>
-                <input type="tel" class="form-control" id="phone" />
-              </div>
-            </div>
-
-            <div class="row mb-3">
-              <div class="col-md-6">
-                <label for="userRole" class="form-label">Role</label>
-                <select class="form-select" id="userRole" required>
-                  <option value="">Select Role</option>
-                  <option value="farmer">Farmer</option>
-                  <option value="agronomist">Agronomist</option>
-                  <option value="extension">Extension Worker</option>
-                  <option value="admin">Administrator</option>
-                </select>
-              </div>
-              <div class="col-md-6">
-                <label for="userStatus" class="form-label">Status</label>
-                <select class="form-select" id="userStatus" required>
-                  <option value="active" selected>Active</option>
-                  <option value="inactive">Inactive</option>
-                  <option value="pending">Pending</option>
-                </select>
-              </div>
-            </div>
-
-            <div class="row mb-3">
-              <div class="col-md-6">
-                <label for="password" class="form-label">Password</label>
-                <input
-                  type="password"
-                  class="form-control"
-                  id="password"
-                  required
-                />
-                <div class="form-text">Minimum 8 characters</div>
-              </div>
-              <div class="col-md-6">
-                <label for="confirmPassword" class="form-label"
-                  >Confirm Password</label
-                >
-                <input
-                  type="password"
-                  class="form-control"
-                  id="confirmPassword"
-                  required
-                />
-              </div>
-            </div>
-
-            <div class="mb-3">
-              <label for="userLocation" class="form-label">Location</label>
-              <input type="text" class="form-control" id="userLocation" />
-            </div>
-
-            <div class="mb-3">
-              <label for="userBio" class="form-label">Bio/Description</label>
-              <textarea class="form-control" id="userBio" rows="3"></textarea>
-            </div>
-
-            <div class="mb-3">
-              <label class="form-label">Profile Picture</label>
-              <div class="border rounded p-3 text-center">
-                <i class="fas fa-user-circle fa-3x text-muted mb-2"></i>
-                <div class="d-flex justify-content-center">
-                  <button
-                    type="button"
-                    class="btn btn-sm btn-outline-primary me-2"
-                  >
-                    <i class="fas fa-upload me-1"></i> Upload Image
-                  </button>
-                  <button
-                    type="button"
-                    class="btn btn-sm btn-outline-secondary"
-                  >
-                    <i class="fas fa-link me-1"></i> From URL
-                  </button>
-                </div>
-              </div>
-            </div>
-
-            <div class="form-check mb-3">
+            <div class="form-floating mb-3">
               <input
-                class="form-check-input"
-                type="checkbox"
-                id="sendWelcomeEmail"
-                checked
+                type="text"
+                class="form-control"
+                id="userName"
+                placeholder="Enter full name"
               />
-              <label class="form-check-label" for="sendWelcomeEmail">
-                Send welcome email with login instructions
-              </label>
+              <label for="userName">Full Name</label>
+            </div>
+            <div class="form-floating mb-3">
+              <input
+                type="email"
+                class="form-control"
+                id="userEmail"
+                placeholder="Enter email"
+              />
+              <label for="userEmail">Email Address</label>
+            </div>
+            <div class="form-floating mb-3">
+              <select class="form-select" id="userRole" aria-label="User role">
+                <option value=""></option>
+                <option value="Farmer">Farmer</option>
+                <option value="Agronomist">Agronomist</option>
+                <option value="Extension">Extension Worker</option>
+              </select>
+              <label for="userRole">User Role</label>
+            </div>
+            <div class="form-floating mb-3">
+              <input
+                type="tel"
+                class="form-control"
+                id="userPhone"
+                placeholder="Enter phone number"
+              />
+              <label for="userPhone">Phone Number</label>
+            </div>
+            <div class="form-floating mb-3">
+              <input
+                type="text"
+                class="form-control"
+                id="userLocation"
+                placeholder="Enter location"
+              />
+              <label for="userLocation">Location</label>
+            </div>
+            <div class="form-floating mb-3">
+              <input
+                type="password"
+                class="form-control"
+                id="userPassword"
+                placeholder="Enter password"
+              />
+              <label for="userPassword">Password</label>
             </div>
           </form>
         </div>
@@ -376,9 +329,358 @@
             class="btn btn-secondary"
             data-bs-dismiss="modal"
           >
-            Cancel
+            Close
           </button>
-          <button type="button" class="btn btn-primary">Add User</button>
+          <button type="button" class="btn btn-primary">Save User</button>
+        </div>
+      </div>
+    </div>
+  </divclass=>
+
+  <!-- Custom CSS for transparent background on focus -->
+  <style>
+    .form-control:focus,
+    .form-select:focus {
+      background-color: transparent !important;
+      border-color: #0d6efd; /* Bootstrap primary color for consistency */
+      box-shadow: 0 0 0 0.25rem rgba(13, 110, 253, 0.25); /* Maintain Bootstrap's focus ring */
+    }
+  </style>
+  <!-- User 1 Modal -->
+  <div
+    class="modal fade"
+    id="userModal1"
+    tabindex="-1"
+    aria-labelledby="userModalLabel1"
+    aria-hidden="true"
+  >
+    <div class="modal-dialog modal-lg">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="userModalLabel1">User Details</h5>
+          <button
+            type="button"
+            class="btn-close"
+            data-bs-dismiss="modal"
+            aria-label="Close"
+          ></button>
+        </div>
+        <div class="modal-body">
+          <div class="row">
+            <div class="col-md-3 text-center mb-3">
+              <img
+                src="https://plus.unsplash.com/premium_photo-1671656349322-41de944d259b?w=500&auto=format&fit=crop&q=60&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxzZWFyY2h8MXx8cG9ydHJhaXR8ZW58MHx8MHx8fDA%3D"
+                alt="John Farmer"
+                class="rounded-circle mb-2"
+                style="
+                  width: 120px;
+                  height: 120px;
+                  object-fit: cover;
+                  border: 4px solid #fff;
+                  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+                "
+              />
+              <h5>John Farmer</h5>
+              <p class="text-muted mb-1">Farmer</p>
+              <span class="badge bg-success">Active</span>
+            </div>
+            <div class="col-md-9">
+              <div class="row">
+                <div class="col-md-6 mb-3">
+                  <p class="mb-1 text-muted">Email</p>
+                  <p class="mb-0">john@example.com</p>
+                </div>
+                <div class="col-md-6 mb-3">
+                  <p class="mb-1 text-muted">Phone</p>
+                  <p class="mb-0">+1 (555) 123-4567</p>
+                </div>
+                <div class="col-md-6 mb-3">
+                  <p class="mb-1 text-muted">Location</p>
+                  <p class="mb-0">Nairobi, Kenya</p>
+                </div>
+                <div class="col-md-6 mb-3">
+                  <p class="mb-1 text-muted">Last Active</p>
+                  <p class="mb-0">2 hours ago</p>
+                </div>
+                <div class="col-12 mb-3">
+                  <p class="mb-1 text-muted">Bio</p>
+                  <p class="mb-0">
+                    John is a passionate farmer with over 10 years of experience
+                    in sustainable agriculture. He specializes in maize and
+                    vegetable farming.
+                  </p>
+                </div>
+                <div class="col-12">
+                  <p class="mb-1 text-muted">Farm Size</p>
+                  <p class="mb-0">5 acres</p>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="modal-footer">
+          <button
+            type="button"
+            class="btn btn-secondary"
+            data-bs-dismiss="modal"
+          >
+            Close
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- User 2 Modal -->
+  <div
+    class="modal fade"
+    id="userModal2"
+    tabindex="-1"
+    aria-labelledby="userModalLabel2"
+    aria-hidden="true"
+  >
+    <div class="modal-dialog modal-lg">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="userModalLabel2">User Details</h5>
+          <button
+            type="button"
+            class="btn-close"
+            data-bs-dismiss="modal"
+            aria-label="Close"
+          ></button>
+        </div>
+        <div class="modal-body">
+          <div class="row">
+            <div class="col-md-3 text-center mb-3">
+              <img
+                src="https://images.unsplash.com/photo-1544005313-94ddf0286df2?w=500&auto=format&fit=crop&q=60&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxzZWFyY2h8M3x8cG9ydHJhaXR8ZW58MHx8MHx8fDA%3D"
+                alt="Sarah Agronomist"
+                class="rounded-circle mb-2"
+                style="
+                  width: 120px;
+                  height: 120px;
+                  object-fit: cover;
+                  border: 4px solid #fff;
+                  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+                "
+              />
+              <h5>Sarah Agronomist</h5>
+              <p class="text-muted mb-1">Agronomist</p>
+              <span class="badge bg-success">Active</span>
+            </div>
+            <div class="col-md-9">
+              <div class="row">
+                <div class="col-md-6 mb-3">
+                  <p class="mb-1 text-muted">Email</p>
+                  <p class="mb-0">sarah@example.com</p>
+                </div>
+                <div class="col-md-6 mb-3">
+                  <p class="mb-1 text-muted">Phone</p>
+                  <p class="mb-0">+1 (555) 987-6543</p>
+                </div>
+                <div class="col-md-6 mb-3">
+                  <p class="mb-1 text-muted">Location</p>
+                  <p class="mb-0">Nakuru, Kenya</p>
+                </div>
+                <div class="col-md-6 mb-3">
+                  <p class="mb-1 text-muted">Last Active</p>
+                  <p class="mb-0">1 day ago</p>
+                </div>
+                <div class="col-12 mb-3">
+                  <p class="mb-1 text-muted">Bio</p>
+                  <p class="mb-0">
+                    Sarah is a certified agronomist with expertise in soil
+                    management and crop production. She holds a Master's degree
+                    in Agricultural Science.
+                  </p>
+                </div>
+                <div class="col-12">
+                  <p class="mb-1 text-muted">Specialization</p>
+                  <p class="mb-0">Soil fertility, Crop rotation</p>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="modal-footer">
+          <button
+            type="button"
+            class="btn btn-secondary"
+            data-bs-dismiss="modal"
+          >
+            Close
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- User 3 Modal -->
+  <div
+    class="modal fade"
+    id="userModal3"
+    tabindex="-1"
+    aria-labelledby="userModalLabel3"
+    aria-hidden="true"
+  >
+    <div class="modal-dialog modal-lg">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="userModalLabel3">User Details</h5>
+          <button
+            type="button"
+            class="btn-close"
+            data-bs-dismiss="modal"
+            aria-label="Close"
+          ></button>
+        </div>
+        <div class="modal-body">
+          <div class="row">
+            <div class="col-md-3 text-center mb-3">
+              <img
+                src="https://plus.unsplash.com/premium_photo-1682096252599-e8536cd97d2b?w=500&auto=format&fit=crop&q=60&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxzZWFyY2h8NXx8cG9ydHJhaXR8ZW58MHx8MHx8fDA%3D"
+                alt="Michael Extension"
+                class="rounded-circle mb-2"
+                style="
+                  width: 120px;
+                  height: 120px;
+                  object-fit: cover;
+                  border: 4px solid #fff;
+                  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+                "
+              />
+              <h5>Michael Extension</h5>
+              <p class="text-muted mb-1">Extension Worker</p>
+              <span class="badge bg-secondary">Inactive</span>
+            </div>
+            <div class="col-md-9">
+              <div class="row">
+                <div class="col-md-6 mb-3">
+                  <p class="mb-1 text-muted">Email</p>
+                  <p class="mb-0">michael@example.com</p>
+                </div>
+                <div class="col-md-6 mb-3">
+                  <p class="mb-1 text-muted">Phone</p>
+                  <p class="mb-0">+1 (555) 456-7890</p>
+                </div>
+                <div class="col-md-6 mb-3">
+                  <p class="mb-1 text-muted">Location</p>
+                  <p class="mb-0">Kisumu, Kenya</p>
+                </div>
+                <div class="col-md-6 mb-3">
+                  <p class="mb-1 text-muted">Last Active</p>
+                  <p class="mb-0">1 week ago</p>
+                </div>
+                <div class="col-12 mb-3">
+                  <p class="mb-1 text-muted">Bio</p>
+                  <p class="mb-0">
+                    Michael is an extension worker who helps farmers implement
+                    modern agricultural techniques. He has been working in the
+                    field for over 8 years.
+                  </p>
+                </div>
+                <div class="col-12">
+                  <p class="mb-1 text-muted">Region Covered</p>
+                  <p class="mb-0">Western Kenya</p>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="modal-footer">
+          <button
+            type="button"
+            class="btn btn-secondary"
+            data-bs-dismiss="modal"
+          >
+            Close
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- User 4 Modal -->
+  <div
+    class="modal fade"
+    id="userModal4"
+    tabindex="-1"
+    aria-labelledby="userModalLabel4"
+    aria-hidden="true"
+  >
+    <div class="modal-dialog modal-lg">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="userModalLabel4">User Details</h5>
+          <button
+            type="button"
+            class="btn-close"
+            data-bs-dismiss="modal"
+            aria-label="Close"
+          ></button>
+        </div>
+        <div class="modal-body">
+          <div class="row">
+            <div class="col-md-3 text-center mb-3">
+              <img
+                src="https://images.unsplash.com/photo-1580489944761-15a19d654956?w=500&auto=format&fit=crop&q=60&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxzZWFyY2h8N3x8cG9ydHJhaXR8ZW58MHx8MHx8fDA%3D"
+                alt="Emma Farmer"
+                class="rounded-circle mb-2"
+                style="
+                  width: 120px;
+                  height: 120px;
+                  object-fit: cover;
+                  border: 4px solid #fff;
+                  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+                "
+              />
+              <h5>Emma Farmer</h5>
+              <p class="text-muted mb-1">Farmer</p>
+              <span class="badge bg-success">Active</span>
+            </div>
+            <div class="col-md-9">
+              <div class="row">
+                <div class="col-md-6 mb-3">
+                  <p class="mb-1 text-muted">Email</p>
+                  <p class="mb-0">emma@example.com</p>
+                </div>
+                <div class="col-md-6 mb-3">
+                  <p class="mb-1 text-muted">Phone</p>
+                  <p class="mb-0">+1 (555) 234-5678</p>
+                </div>
+                <div class="col-md-6 mb-3">
+                  <p class="mb-1 text-muted">Location</p>
+                  <p class="mb-0">Eldoret, Kenya</p>
+                </div>
+                <div class="col-md-6 mb-3">
+                  <p class="mb-1 text-muted">Last Active</p>
+                  <p class="mb-0">3 hours ago</p>
+                </div>
+                <div class="col-12 mb-3">
+                  <p class="mb-1 text-muted">Bio</p>
+                  <p class="mb-0">
+                    Emma is a dairy farmer who also grows crops for animal feed.
+                    She has implemented modern farming techniques to increase
+                    her yield and productivity.
+                  </p>
+                </div>
+                <div class="col-12">
+                  <p class="mb-1 text-muted">Farm Size</p>
+                  <p class="mb-0">8 acres</p>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="modal-footer">
+          <button
+            type="button"
+            class="btn btn-secondary"
+            data-bs-dismiss="modal"
+          >
+            Close
+          </button>
         </div>
       </div>
     </div>

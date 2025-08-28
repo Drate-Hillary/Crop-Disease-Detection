@@ -1,6 +1,6 @@
 from django.shortcuts import render, redirect
 from django.contrib import messages
-from django.contrib.auth import login, authenticate
+from django.contrib.auth import login, authenticate, logout
 from .forms import FarmerRegistrationForm, ProfileUpdateForm
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth import update_session_auth_hash
@@ -31,7 +31,7 @@ def signUp(request):
             if user is not None:
                 login(request, user)
                 messages.success(request, 'Account created successfully! Welcome to our platform.')
-                return redirect('farmer_app/farmer_home.html')  # Redirect to farmer dashboard
+                return redirect('farmer_home')  # Redirect to farmer dashboard
 
         else:
             # Add form errors to messages
@@ -44,10 +44,48 @@ def signUp(request):
     return render(request, 'signInSignUp/sign_up.html')
 
 def signIn(request):
-    # Your existing sign in view
-    return render(request, 'signInSignUp/sign_up.html')
+    print(f"DEBUG: SignIn view called - Method: {request.method}")
+    print(f"DEBUG: User authenticated: {request.user.is_authenticated}")
 
-# profile update view
+    if request.user.is_authenticated:
+        print("DEBUG: User already authenticated, redirecting to farmer_home")
+        return redirect('farmer_home')
+    
+    if request.method == 'POST':
+        email = request.POST.get('email')
+        password = request.POST.get('password')
+        
+        print(f"DEBUG: Login attempt - Email: {email}")
+        
+        user = authenticate(request, email=email, password=password)
+        print(f"DEBUG: Authenticate result: {user}")
+        
+        if user is not None:
+            login(request, user)
+            if user.is_superuser:
+                print("DEBUG: Login successful, redirecting to admin dashboard")
+                return redirect('admin_home')
+            
+            print("DEBUG: Login successful, redirecting to farmer_home")
+            messages.success(request, 'Successfully logged in!')
+            return redirect('farmer_home') 
+        else:
+            print("DEBUG: Authentication failed")
+            messages.error(request, 'Invalid email or password.')
+            return redirect('sign_in')
+        
+    return render(request, 'signInSignUp/sign_in.html')
+
+
+# view for signing out
+@login_required
+def sign_out(request):
+    logout(request)
+    messages.success(request, 'You have been logged out.')
+    return redirect('sign_in')
+
+
+# view for editing profile
 @login_required
 def edit_profile(request):
     if request.method == 'POST':

@@ -19,15 +19,30 @@
       href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"
     />
     <!-- Custom CSS -->
-    <link rel="stylesheet" href="{% static "CSS/sign_in.css" %}" />
+    <link rel="stylesheet" href="{% static 'CSS/sign_in.css' %}" />
+    <!-- custom JS -->
+    <!-- <script defer src="{% static "JS/sign_in.js" %}"></script> -->
+
   </head>
   <body>
     <div class="container card login-card">
+
+      {% if messages %}
+        <div class="mt-3">
+          {% for message in messages %}
+            <div class="alert {% if message.tags == 'success' %}alert-success{% else %}alert-danger{% endif %} alert-dismissible fade show" role="alert">
+              {{ message }}
+              <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+            </div>
+          {% endfor %}
+        </div>
+      {% endif %}
+
       <div class="d-flex align-items-center gap-1">
         <i class="fas fa-leaf me-2"></i>
         <h2>Welcome back</h2>
       </div>
-      <small class="mt-0 mb-4 text-muted">Please enter your details to sign in?</small>
+      <small class="mt-0 mb-4 text-muted">Please enter your details to sign in</small>
       <form id="loginForm" action="{% url 'sign_in' %}" method="post">
         {% csrf_token %}
         <div class="mb-3 form-floating">
@@ -35,11 +50,12 @@
             type="email"
             class="form-control"
             id="email"
+            name="email"
             placeholder="name@example.com"
             required
           />
           <label for="email" class="d-flex align-items-center gap-1">
-            <img src="{% static "images/email.svg" %}" class="icon" alt="Email icon" />
+            <img src="{% static 'images/email.svg' %}" class="icon" alt="Email icon" />
             Email address
           </label>
         </div>
@@ -48,37 +64,37 @@
             type="password"
             class="form-control"
             id="password"
+            name="password"
             placeholder="Password"
             required
           />
           <label for="password" class="d-flex align-items-center gap-1">
-            <img src="{% static "images/lock.svg" %}" class="icon" alt="Lock icon" />
+            <img src="{% static 'images/lock.svg' %}" class="icon" alt="Lock icon" />
             Password
           </label>
-          <img src="{% static 'images/visibilityOff.svg' %}" class="toggle-password" id="togglePassword"
-                data-visibility-on="{% static "images/visibilityOn.svg" %}"
-                data-visibility-off="{% static "images/visibilityOff.svg" %}"
-                alt="Toggle password visibility" 
+          <img
+            src="{% static 'images/visibilityOff.svg' %}"
+            class="toggle-password"
+            id="togglePassword"
+            data-visibility-on="{% static 'images/visibilityOn.svg' %}"
+            data-visibility-off="{% static 'images/visibilityOff.svg' %}"
+            alt="Toggle password visibility"
           />
         </div>
         <div class="mt-4">
           <div class="d-flex align-items-center justify-content-between">
             <div class="form-check">
-              <input type="checkbox" class="form-check-input" id="rememberMe" />
-              <label class="form-check-label" for="rememberMe"
-                >Remember Me</label
-              >
+              <input type="checkbox" class="form-check-input" id="rememberMe" name="remember_me" />
+              <label class="form-check-label" for="rememberMe">Remember Me</label>
             </div>
             <div>
-              <a href="forgot-password.html" class="text-decoration-none"
-                >Forgot Password?</a
-              >
+              <a href="#" class="text-decoration-none">Forgot Password?</a>
             </div>
           </div>
           <div class="d-grid">
             <button type="submit" class="btn btn-primary" id="signInBtn">
               <img
-                src="{% static "images/signIn.svg" %}"
+                src="{% static 'images/signIn.svg' %}"
                 class="btn-icon"
                 alt="Sign in icon"
                 id="signInIcon"
@@ -99,8 +115,5 @@
       integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz"
       crossorigin="anonymous"
     ></script>
-    <!-- Custom JS -->
-    <script src="{% static "JS/sign_in.js" %}"></script>
-    
   </body>
 </html>

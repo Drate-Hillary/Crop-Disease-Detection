@@ -38,6 +38,7 @@ class Farmer(AbstractBaseUser, PermissionsMixin):
     newsletter = models.BooleanField(default=False)
     terms_accepted = models.BooleanField(default=False)
     terms_accepted_date = models.DateTimeField(null=True, blank=True)
+    profile_image = models.ImageField(upload_to='profile_image/', null=True, blank=True, default="profile_pics/default_profile.png")
     
     # Django auth fields
     is_active = models.BooleanField(default=True)
@@ -47,7 +48,7 @@ class Farmer(AbstractBaseUser, PermissionsMixin):
     objects = FarmerManager()
     
     USERNAME_FIELD = 'email'
-    REQUIRED_FIELDS = ['user_name']
+    REQUIRED_FIELDS = []
     
     class Meta:
         verbose_name = 'Farmer'

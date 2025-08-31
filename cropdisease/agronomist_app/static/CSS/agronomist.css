@@ -160,7 +160,7 @@ body {
   width: 250px !important;
 }
 
-/* Add this to your style section */
+/* Add this to your style section
 .dark-mode {
   background-color: #121212;
   color: #e0e0e0;
@@ -248,7 +248,7 @@ body {
 
 .dark-mode .progress {
   background-color: #333;
-}
+} */
 
 @media (max-width: 991.98px) {
   .search-group {

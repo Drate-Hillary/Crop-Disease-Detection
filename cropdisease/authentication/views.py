@@ -1,55 +1,79 @@
 from django.shortcuts import render, redirect
 from django.contrib import messages
 from django.contrib.auth import login, authenticate, logout
-from .forms import FarmerRegistrationForm, ProfileUpdateForm
-from django.contrib.auth.decorators import login_required
+from .forms import UserRegistrationForm, ProfileUpdateForm
+from django.contrib.auth.decorators import login_required, user_passes_test
 from django.contrib.auth import update_session_auth_hash
 from django.contrib.auth.forms import PasswordChangeForm
 from django.core.files.storage import FileSystemStorage
 import os
+from .forms import AdminUserCreationForm
 
+
+# view for farmer signing up
 def signUp(request):
     if request.method == 'POST':
-        form = FarmerRegistrationForm(request.POST)
+        form = UserRegistrationForm(request.POST)
         
         if form.is_valid():
-            # Create user but don't save yet
             user = form.save(commit=False)
             
-            # Set additional fields
             user.terms_accepted = form.cleaned_data['agree_terms']
             user.is_newsletter_subscribed = form.cleaned_data['newsletter']
             
-            # Save the user
             user.save()
             
-            # Authenticate and login the user
-            email = form.cleaned_data.get('email')
-            password = form.cleaned_data.get('password')
-            user = authenticate(request, email=email, password=password)
-            
-            if user is not None:
-                login(request, user)
-                messages.success(request, 'Account created successfully! Welcome to our platform.')
-                return redirect('farmer_home')  # Redirect to farmer dashboard
+            login(request, user, backend='authentication.backends.EmailBackend')
+            messages.success(request, 'Account created successfully!')
+            return redirect('farmer_home')
 
         else:
-            # Add form errors to messages
             for field, errors in form.errors.items():
                 for error in errors:
                     messages.error(request, f"{field}: {error}")
     else:
-        form = FarmerRegistrationForm()
+        form = UserRegistrationForm()
     
     return render(request, 'signInSignUp/sign_up.html')
+
+
+
+# Only allow access to admin users
+def is_admin(user):
+    return user.is_superuser
+
+# Administrator to add a user
+@login_required
+@user_passes_test(is_admin)
+def admin_add_user(request):
+    if request.method == 'POST':
+        form = AdminUserCreationForm(request.POST)
+        if form.is_valid():
+            user = form.save()
+            messages.success(request, f'User {user.user_name} created successfully!')
+            return redirect('admin_home')  
+        else:
+            for field, errors in form.errors.items():
+                for error in errors:
+                    messages.error(request,f'{field}: {error}')
+    return redirect('admin_home')
+
+
 
 def signIn(request):
     print(f"DEBUG: SignIn view called - Method: {request.method}")
     print(f"DEBUG: User authenticated: {request.user.is_authenticated}")
 
     if request.user.is_authenticated:
-        print("DEBUG: User already authenticated, redirecting to farmer_home")
-        return redirect('farmer_home')
+        if request.user.is_superuser:
+            print("DEBUG: User already authenticated, redirecting to admin dashboard")
+            return redirect('admin_home')
+        elif request.user.role == 'farmer':
+            print("DEBUG: User already authenticated, redirecting to farmer_home")
+            return redirect('farmer_home')
+        elif request.user.role == 'agronomist':
+            print("DEBUG: User already authenticated, redirecting to expert_home")
+            return redirect('agronomist_home')
     
     if request.method == 'POST':
         email = request.POST.get('email')
@@ -65,10 +89,14 @@ def signIn(request):
             if user.is_superuser:
                 print("DEBUG: Login successful, redirecting to admin dashboard")
                 return redirect('admin_home')
+            elif user.role == 'agronomist':
+                print("DEBUG: Login successful, redirecting to agronomist_home")
+                return redirect('agronomist_home')
+            elif user.role == 'farmer':
+                print("DEBUG: Login successful, redirecting to farmer_home")
+                messages.success(request, 'Successfully logged in!')
+                return redirect('farmer_home') 
             
-            print("DEBUG: Login successful, redirecting to farmer_home")
-            messages.success(request, 'Successfully logged in!')
-            return redirect('farmer_home') 
         else:
             print("DEBUG: Authentication failed")
             messages.error(request, 'Invalid email or password.')

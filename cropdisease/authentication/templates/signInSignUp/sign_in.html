@@ -21,7 +21,7 @@
     <!-- Custom CSS -->
     <link rel="stylesheet" href="{% static 'CSS/sign_in.css' %}" />
     <!-- custom JS -->
-    <!-- <script defer src="{% static "JS/sign_in.js" %}"></script> -->
+    <script defer src="{% static "JS/sign_in.js" %}"></script>
 
   </head>
   <body>
@@ -52,7 +52,7 @@
             id="email"
             name="email"
             placeholder="name@example.com"
-            required
+            autocomplete="off"
           />
           <label for="email" class="d-flex align-items-center gap-1">
             <img src="{% static 'images/email.svg' %}" class="icon" alt="Email icon" />
@@ -66,7 +66,7 @@
             id="password"
             name="password"
             placeholder="Password"
-            required
+            autocomplete="off"
           />
           <label for="password" class="d-flex align-items-center gap-1">
             <img src="{% static 'images/lock.svg' %}" class="icon" alt="Lock icon" />

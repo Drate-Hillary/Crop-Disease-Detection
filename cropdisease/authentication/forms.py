@@ -1,11 +1,10 @@
 from django import forms
 from django.contrib.auth.forms import UserCreationForm
-from .models import Farmer
 from django.core.exceptions import ValidationError
 import re
-from .models import Farmer
+from .models import User, ROLE_CHOICE
 
-class FarmerRegistrationForm(UserCreationForm):
+class UserRegistrationForm(UserCreationForm):
     password1 = forms.CharField(
         widget=forms.PasswordInput(attrs={'class': 'form-control', 'placeholder': 'Password'}),
         label='Password'
@@ -21,7 +20,7 @@ class FarmerRegistrationForm(UserCreationForm):
     newsletter = forms.BooleanField(required=False)
     
     class Meta:
-        model = Farmer
+        model = User
         fields = ['user_name', 'email', 'phone', 'password1', 'password2', 'agree_terms', 'newsletter']
         widgets = {
             'user_name': forms.TextInput(attrs={'class': 'form-control', 'placeholder': 'User Name'}),
@@ -43,7 +42,7 @@ class FarmerRegistrationForm(UserCreationForm):
     
     def clean_email(self):
         email = self.cleaned_data.get('email')
-        if Farmer.objects.filter(email=email).exists():
+        if User.objects.filter(email=email).exists():
             raise ValidationError("This email is already registered")
         return email
     
@@ -56,6 +55,57 @@ class FarmerRegistrationForm(UserCreationForm):
             raise ValidationError("Passwords do not match")
         
         return cleaned_data
+
+
+class AdminUserCreationForm(forms.ModelForm):
+    
+    password1 = forms.CharField(
+        widget=forms.PasswordInput(attrs={'class': 'form-control', 'placeholder': 'Password'}),
+        label='Password'
+    )
+    password2 = forms.CharField(
+        widget=forms.PasswordInput(attrs={'class': 'form-control', 'placeholder': 'Confirm Password'}),
+        label='Confirm Password'
+    )
+
+    class Meta:
+        model = User
+        fields = ['user_name', 'email', 'phone', 'role', 'experience', 'password1', 'password2']
+        widgets = {
+            'user_name': forms.TextInput(attrs={'class': 'form-control', 'placeholder': 'User Name'}),
+            'email': forms.EmailInput(attrs={'class': 'form-control', 'placeholder': 'Email Address'}),
+            'phone': forms.TextInput(attrs={'class': 'form-control', 'placeholder': 'Phone Number'}),
+            'role': forms.Select(attrs={'class': 'form-select'}),
+            'experience': forms.NumberInput(attrs={'class': 'form-control', 'placeholder': 'Years of Experience'}),
+            'password': forms.PasswordInput(attrs={'class': 'form-control', 'placeholder': 'Password'}),
+        }
+
+    def clean(self):
+        cleaned_data = super().clean()
+        password1 = cleaned_data.get("password1")
+        password2 = cleaned_data.get("password2")
+        if password1 and password2 and password1 != password2:
+            raise ValidationError("Passwords do not match")
+        
+        return cleaned_data
+
+    def save(self, commit=True):
+        user = super().save(commit=False)
+        password = self.cleaned_data["password1"]
+        user.set_password(password)
+        if commit:
+            user.save()
+        return user
+
+    def save(self, commit=True):
+        user = super().save(commit=False)
+        password = self.cleaned_data["password1"]
+        user.set_password(password)
+        if commit:
+            user.save()
+        return user
+
+
     
 
 # profile editing
@@ -85,17 +135,17 @@ class ProfileUpdateForm(forms.ModelForm):
     )
 
     class Meta:
-        model = Farmer
+        model = User
         fields = ['user_name', 'email', 'phone', 'profile_image']
     
     def clean_user_name(self):
         user_name = self.cleaned_data.get('user_name')
-        if Farmer.objects.filter(user_name=user_name).exclude(pk=self.instance.pk).exists():
+        if User.objects.filter(user_name=user_name).exclude(pk=self.instance.pk).exists():
             raise forms.ValidationError('This user name is already taken.')
         return user_name
 
     def clean_email(self):
         email = self.cleaned_data.get('email')
-        if Farmer.objects.filter(email=email).exclude(pk=self.instance.pk).exists():
+        if User.objects.filter(email=email).exclude(pk=self.instance.pk).exists():
             raise forms.ValidationError('This email is already registered.')
         return email

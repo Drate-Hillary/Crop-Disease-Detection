@@ -174,3 +174,8 @@ MESSAGE_TAGS = {
 # Media files (Uploaded by users)
 MEDIA_URL = '/media/'
 MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
+
+# Session settings - 20 minutes timeout
+SESSION_COOKIE_AGE = 1200  # 20 minutes in seconds
+SESSION_EXPIRE_AT_BROWSER_CLOSE = True
+SESSION_SAVE_EVERY_REQUEST = True

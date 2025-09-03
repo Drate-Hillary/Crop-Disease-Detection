@@ -128,6 +128,11 @@ class ProfileUpdateForm(forms.ModelForm):
         required=False,
         widget=forms.ClearableFileInput(attrs={'class': 'd-none', 'id': 'profileImageInput'})
     )
+    bio = forms.CharField(
+        required=False,
+        widget=forms.Textarea(attrs={'class': 'form-control', 'placeholder': 'Short Bio', 'rows': 5}),
+        label="Bio"
+    )
     new_password = forms.CharField(
         required=False,
         widget=forms.PasswordInput(attrs={'class': 'form-control', 'id': 'userLocation', 'placeholder': 'Enter new password'}),
@@ -136,7 +141,7 @@ class ProfileUpdateForm(forms.ModelForm):
 
     class Meta:
         model = User
-        fields = ['user_name', 'email', 'phone', 'profile_image']
+        fields = ['user_name', 'email', 'phone', 'bio', 'profile_image']
     
     def clean_user_name(self):
         user_name = self.cleaned_data.get('user_name')

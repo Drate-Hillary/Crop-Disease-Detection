@@ -172,12 +172,20 @@
               <div class="d-flex align-items-center">
 
                 <div class="dropdown">
-                  <button class="btn btn-light dropdown-toggle" type="button" id="userDropdown" data-bs-toggle="dropdown" aria-expanded="false" >
-                    {% if user.profile_image %}
-                      <img src="{{ user.profile_image.url }}" class="profile-image" alt="profile-image">
-                    {% else %}
-                      <span class="profile-initial">{{ user.get_first_initial }}</span>
-                    {% endif %}
+                  <button class="btn btn-light dropdown-toggle d-flex align-items-center gap-1" type="button" id="userDropdown" data-bs-toggle="dropdown" aria-expanded="false" >
+                    {% if 'default_profile.png' in user.profile_image.name %}
+                    <div class="rounded-circle d-flex align-items-center justify-content-center" 
+                         style="width: 30px; height: 30px; background-color: #1e720f; color: white; font-weight: bold;">
+                      {{ user.get_first_initial }}
+                    </div>
+                  {% else %}
+                    <img
+                      src="{{ user.profile_image.url }}"
+                      alt="{{ user.user_name }}"
+                      class="rounded-circle"
+                      style="width: 35px; height: 35px; object-fit: cover"
+                    />
+                  {% endif %}
                   </button>
                   <ul class="dropdown-menu" aria-labelledby="userDropdown">
                     <li>
@@ -226,12 +234,12 @@
                       <div class="row two-column-form">
                         <div class="col-md-5 d-flex align-items-center justify-content-center">
                           <div class="text-center mb-3">
-                            {% if user.profile_image %}
-                              <img src="{{ user.profile_image.url }}" class="profile-image-preview mb-2" id="profileImagePreview" alt="Profile Image">
-                            {% else %}
+                            {% if 'default_profile.png' in user.profile_image.name %}
                               <div class="profile-image-placeholder mx-auto mb-2" id="profileImagePlaceholder">
                                 {{ user.get_first_initial }}
                               </div>
+                            {% else %}
+                              <img src="{{ user.profile_image.url }}" class="profile-image-preview mb-2" id="profileImagePreview" alt="{{user.user_name}}">
                             {% endif %}
                             <label for="profileImageInput" class="btn btn-outline-primary btn-sm mt-2">
                               <i class="bi bi-camera-fill me-1 fs-6"></i> Change Photo

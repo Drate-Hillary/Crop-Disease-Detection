@@ -1,0 +1,787 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Farm Registration</title>
+    <!-- Bootstrap 5 CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet">
+    <!-- Bootstrap Icons -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.0/font/bootstrap-icons.css">
+    <style>
+        .step-indicator {
+            padding: 20px 0;
+        }
+        .step-circle {
+            width: 40px;
+            height: 40px;
+            line-height: 40px;
+            border-radius: 50%;
+            background-color: #e9ecef;
+            display: inline-block;
+            margin-bottom: 5px;
+            font-weight: bold;
+        }
+        .step.active .step-circle {
+            background-color: #0d6efd;
+            color: white;
+        }
+        .upload-card {
+            border: 2px dashed #dee2e6;
+            border-radius: 10px;
+        }
+        .form-section-title {
+            border-bottom: 2px solid #0d6efd;
+            padding-bottom: 10px;
+            margin-bottom: 20px;
+        }
+        .crop-selection-pill {
+            border-radius: 20px;
+        }
+        .farm-size-input .form-select {
+            width: 120px;
+        }
+        .location-map {
+            background-color: #f8f9fa;
+            border-radius: 5px;
+            overflow: hidden;
+        }
+        .list-group-item h6 {
+            color: #0d6efd;
+        }
+        .farm-detail-label {
+            font-weight: 600;
+            color: #495057;
+            width: 140px;
+        }
+        .farm-detail-icon {
+            width: 24px;
+            text-align: center;
+            margin-right: 8px;
+            color: #6c757d;
+        }
+    </style>
+</head>
+<body class="bg-light">
+    <!-- Farm Registration Section -->
+    <section id="farm-registration-section" class="py-5">
+        <div class="container">
+            <!-- Top Navigation -->
+            <div class="d-flex justify-content-between align-items-center mb-4">
+                <h2>Farm Registration</h2>
+            </div>
+
+            <div class="farm-registration-container">
+                <h2 class="mb-0">Register New Farm</h2>
+
+                <!-- Step indicator -->
+                <div class="step-indicator mb-4">
+                    <div class="row text-center">
+                        <div class="col step active">
+                            <div class="step-circle">1</div>
+                            <small>Basic Information</small>
+                        </div>
+                        <div class="col step">
+                            <div class="step-circle">2</div>
+                            <small>Location Details</small>
+                        </div>
+                        <div class="col step">
+                            <div class="step-circle">3</div>
+                            <small>Crop Details</small>
+                        </div>
+                        <div class="col step">
+                            <div class="step-circle">4</div>
+                            <small>Review & Submit</small>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Farm Registration Form -->
+                <div class="card upload-card">
+                    <div class="card-body p-4">
+                        <form id="farmRegistrationForm">
+                            <!-- Step 1: Basic Information -->
+                            <div class="form-section" id="step1">
+                                <h4 class="form-section-title">Basic Farm Information</h4>
+                                <div class="row">
+                                    <div class="col-md-6 mb-3">
+                                        <label for="farmName" class="form-label">Farm Name <span class="text-danger">*</span></label>
+                                        <input type="text" class="form-control" id="farmName" required placeholder="Enter farm name" />
+                                    </div>
+                                    <div class="col-md-6 mb-3">
+                                        <label for="farmType" class="form-label">Farm Type <span class="text-danger">*</span></label>
+                                        <select class="form-select" id="farmType" required>
+                                            <option value="" selected disabled>Select farm type</option>
+                                            <option value="organic">Organic Farm</option>
+                                            <option value="commercial">Commercial Farm</option>
+                                            <option value="subsistence">Subsistence Farm</option>
+                                            <option value="greenhouse">Greenhouse</option>
+                                            <option value="hydroponic">Hydroponic Farm</option>
+                                            <option value="other">Other</option>
+                                        </select>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-md-12 mb-3">
+                                        <label for="farmDescription" class="form-label">Farm Description</label>
+                                        <textarea class="form-control" id="farmDescription" rows="3" placeholder="Describe your farm, its history, and any special features"></textarea>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-md-6 mb-3">
+                                        <label for="establishedDate" class="form-label">Established Date</label>
+                                        <input type="date" class="form-control" id="establishedDate" />
+                                    </div>
+                                    <div class="col-md-6 mb-3">
+                                        <label for="ownershipType" class="form-label">Ownership Type <span class="text-danger">*</span></label>
+                                        <select class="form-select" id="ownershipType" required>
+                                            <option value="" selected disabled>Select ownership type</option>
+                                            <option value="owned">Owned</option>
+                                            <option value="leased">Leased</option>
+                                            <option value="rented">Rented</option>
+                                            <option value="family">Family Land</option>
+                                            <option value="cooperative">Cooperative</option>
+                                        </select>
+                                    </div>
+                                </div>
+                                <div class="d-flex justify-content-end">
+                                    <button type="button" class="btn btn-primary next-step" data-next="step2">
+                                        Next <i class="bi bi-chevron-right"></i>
+                                    </button>
+                                </div>
+                            </div>
+
+                            <!-- Step 2: Location Details -->
+                            <div class="form-section" id="step2" style="display: none">
+                                <h4 class="form-section-title">Farm Location Details</h4>
+                                <div class="row">
+                                    <div class="col-md-6 mb-3">
+                                        <label for="country" class="form-label">Country <span class="text-danger">*</span></label>
+                                        <select class="form-select" id="country" required>
+                                            <option value="" selected disabled>Select country</option>
+                                            <option value="india">India</option>
+                                            <option value="usa">United States</option>
+                                            <option value="uk">United Kingdom</option>
+                                            <option value="australia">Australia</option>
+                                            <option value="brazil">Brazil</option>
+                                            <option value="nigeria">Nigeria</option>
+                                            <option value="other">Other</option>
+                                        </select>
+                                    </div>
+                                    <div class="col-md-6 mb-3">
+                                        <label for="state" class="form-label">State/Region <span class="text-danger">*</span></label>
+                                        <input type="text" class="form-control" id="state" required placeholder="Enter state or region" />
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-md-6 mb-3">
+                                        <label for="city" class="form-label">City/District <span class="text-danger">*</span></label>
+                                        <input type="text" class="form-control" id="city" required placeholder="Enter city or district" />
+                                    </div>
+                                    <div class="col-md-6 mb-3">
+                                        <label for="zipCode" class="form-label">ZIP/Postal Code</label>
+                                        <input type="text" class="form-control" id="zipCode" placeholder="Enter ZIP or postal code" />
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-md-12 mb-3">
+                                        <label for="address" class="form-label">Full Address <span class="text-danger">*</span></label>
+                                        <textarea class="form-control" id="address" rows="2" required placeholder="Enter full address"></textarea>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-md-12 mb-4">
+                                        <label class="form-label">Location on Map</label>
+                                        <div class="location-map" style="height: 300px">
+                                            <div id="map" style="height: 100%; background-color: #e9ecef; display: flex; align-items: center; justify-content: center; color: #6c757d;">
+                                                <i class="bi bi-map me-2"></i> Map will appear here
+                                            </div>
+                                        </div>
+                                        <div class="mt-2">
+                                            <button type="button" class="btn btn-outline-primary me-2" id="useCurrentLocation">
+                                                <i class="bi bi-geo-alt"></i> Use Current Location
+                                            </button>
+                                            <input type="hidden" id="latitude" name="latitude" />
+                                            <input type="hidden" id="longitude" name="longitude" />
+                                            <div id="locationFeedback" class="text-muted mt-2"></div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="d-flex justify-content-between">
+                                    <button type="button" class="btn btn-outline-secondary prev-step" data-prev="step1">
+                                        <i class="bi bi-chevron-left"></i> Previous
+                                    </button>
+                                    <button type="button" class="btn btn-primary next-step" data-next="step3">
+                                        Next <i class="bi bi-chevron-right"></i>
+                                    </button>
+                                </div>
+                            </div>
+
+                            <!-- Step 3: Crop Details -->
+                            <div class="form-section" id="step3" style="display: none">
+                                <h4 class="form-section-title">Crop Information</h4>
+                                <div class="row">
+                                    <div class="col-md-6 mb-3">
+                                        <label for="primaryCrop" class="form-label">Primary Crop <span class="text-danger">*</span></label>
+                                        <select class="form-select" id="primaryCrop" required>
+                                            <option value="" selected disabled>Select primary crop</option>
+                                            <option value="wheat">Wheat</option>
+                                            <option value="rice">Rice</option>
+                                            <option value="corn">Corn</option>
+                                            <option value="soybean">Soybean</option>
+                                            <option value="cotton">Cotton</option>
+                                            <option value="vegetables">Vegetables</option>
+                                            <option value="fruits">Fruits</option>
+                                            <option value="other">Other</option>
+                                        </select>
+                                    </div>
+                                    <div class="col-md-6 mb-3">
+                                        <label class="form-label">Additional Crops</label>
+                                        <div class="d-flex flex-wrap">
+                                            <button type="button" class="btn btn-outline-secondary crop-selection-pill me-2 mb-2">
+                                                <i class="bi bi-plus"></i> Wheat
+                                            </button>
+                                            <button type="button" class="btn btn-outline-secondary crop-selection-pill me-2 mb-2">
+                                                <i class="bi bi-plus"></i> Rice
+                                            </button>
+                                            <button type="button" class="btn btn-outline-secondary crop-selection-pill me-2 mb-2">
+                                                <i class="bi bi-plus"></i> Corn
+                                            </button>
+                                            <button type="button" class="btn btn-outline-secondary crop-selection-pill me-2 mb-2">
+                                                <i class="bi bi-plus"></i> Soybean
+                                            </button>
+                                            <button type="button" class="btn btn-outline-secondary crop-selection-pill me-2 mb-2">
+                                                <i class="bi bi-plus"></i> Vegetables
+                                            </button>
+                                            <button type="button" class="btn btn-outline-secondary crop-selection-pill me-2 mb-2">
+                                                <i class="bi bi-plus"></i> Fruits
+                                            </button>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-md-6 mb-3">
+                                        <label for="farmingMethod" class="form-label">Farming Method <span class="text-danger">*</span></label>
+                                        <select class="form-select" id="farmingMethod" required>
+                                            <option value="" selected disabled>Select farming method</option>
+                                            <option value="traditional">Traditional</option>
+                                            <option value="modern">Modern</option>
+                                            <option value="organic">Organic</option>
+                                            <option value="hydroponic">Hydroponic</option>
+                                            <option value="aquaponic">Aquaponic</option>
+                                            <option value="other">Other</option>
+                                        </select>
+                                    </div>
+                                    <div class="col-md-6 mb-3">
+                                        <label for="irrigationMethod" class="form-label">Irrigation Method</label>
+                                        <select class="form-select" id="irrigationMethod">
+                                            <option value="" selected disabled>Select irrigation method</option>
+                                            <option value="rainfed">Rainfed</option>
+                                            <option value="flood">Flood Irrigation</option>
+                                            <option value="sprinkler">Sprinkler System</option>
+                                            <option value="drip">Drip Irrigation</option>
+                                            <option value="other">Other</option>
+                                        </select>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-md-6 mb-3">
+                                        <label for="farmSize" class="form-label">Farm Size <span class="text-danger">*</span></label>
+                                        <div class="input-group farm-size-input">
+                                            <input type="number" class="form-control" id="farmSize" required placeholder="Enter farm size" />
+                                            <select class="form-select" id="sizeUnit" required>
+                                                <option value="acres" selected>Acres</option>
+                                                <option value="hectares">Hectares</option>
+                                                <option value="sqm">Square Meters</option>
+                                            </select>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-6 mb-3">
+                                        <label for="soilType" class="form-label">Soil Type</label>
+                                        <select class="form-select" id="soilType">
+                                            <option value="" selected disabled>Select soil type</option>
+                                            <option value="sandy">Sandy</option>
+                                            <option value="clay">Clay</option>
+                                            <option value="silt">Silt</option>
+                                            <option value="loam">Loam</option>
+                                            <option value="peat">Peat</option>
+                                            <option value="chalk">Chalk</option>
+                                            <option value="other">Other</option>
+                                        </select>
+                                    </div>
+                                </div>
+                                <div class="d-flex justify-content-between">
+                                    <button type="button" class="btn btn-outline-secondary prev-step" data-prev="step2">
+                                        <i class="bi bi-chevron-left"></i> Previous
+                                    </button>
+                                    <button type="button" class="btn btn-primary next-step" data-next="step4">
+                                        Next <i class="bi bi-chevron-right"></i>
+                                    </button>
+                                </div>
+                            </div>
+
+                            <!-- Step 4: Review & Submit -->
+                            <div class="form-section" id="step4" style="display: none">
+                                <h4 class="form-section-title">Review Farm Information</h4>
+                                <div class="card mb-4">
+                                    <div class="card-body">
+                                        <h5 class="card-title">Farm Details</h5>
+                                        <div class="row">
+                                            <div class="col-md-6">
+                                                <p>
+                                                    <strong>Farm Name:</strong>
+                                                    <span id="review-farmName">-</span>
+                                                </p>
+                                                <p>
+                                                    <strong>Farm Type:</strong>
+                                                    <span id="review-farmType">-</span>
+                                                </p>
+                                                <p>
+                                                    <strong>Ownership Type:</strong>
+                                                    <span id="review-ownershipType">-</span>
+                                                </p>
+                                                <p>
+                                                    <strong>Established Date:</strong>
+                                                    <span id="review-establishedDate">-</span>
+                                                </p>
+                                            </div>
+                                            <div class="col-md-6">
+                                                <p>
+                                                    <strong>Farm Size:</strong>
+                                                    <span id="review-farmSize">-</span>
+                                                </p>
+                                                <p>
+                                                    <strong>Primary Crop:</strong>
+                                                    <span id="review-primaryCrop">-</span>
+                                                </p>
+                                                <p>
+                                                    <strong>Farming Method:</strong>
+                                                    <span id="review-farmingMethod">-</span>
+                                                </p>
+                                                <p>
+                                                    <strong>Irrigation Method:</strong>
+                                                    <span id="review-irrigationMethod">-</span>
+                                                </p>
+                                            </div>
+                                        </div>
+                                        <p>
+                                            <strong>Description:</strong>
+                                            <span id="review-farmDescription">-</span>
+                                        </p>
+                                    </div>
+                                </div>
+                                <div class="card mb-4">
+                                    <div class="card-body">
+                                        <h5 class="card-title">Location Details</h5>
+                                        <p>
+                                            <strong>Address:</strong>
+                                            <span id="review-address">-</span>
+                                        </p>
+                                        <p>
+                                            <strong>City/District:</strong>
+                                            <span id="review-city">-</span>,
+                                            <span id="review-state">-</span>
+                                        </p>
+                                        <p>
+                                            <strong>Country:</strong>
+                                            <span id="review-country">-</span>
+                                        </p>
+                                        <p>
+                                            <strong>ZIP/Postal Code:</strong>
+                                            <span id="review-zipCode">-</span>
+                                        </p>
+                                    </div>
+                                </div>
+                                <div class="form-check mb-4">
+                                    <input class="form-check-input" type="checkbox" id="termsAgreement" required />
+                                    <label class="form-check-label" for="termsAgreement">
+                                        I confirm that all the information provided is accurate to the best of my knowledge
+                                    </label>
+                                </div>
+                                <div class="d-flex justify-content-between">
+                                    <button type="button" class="btn btn-outline-secondary prev-step" data-prev="step3">
+                                        <i class="bi bi-chevron-left"></i> Previous
+                                    </button>
+                                    <button type="submit" class="btn btn-success">
+                                        <i class="bi bi-check-circle"></i> Submit Registration
+                                    </button>
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+
+                <!-- Recently Registered Farms -->
+                <div class="card upload-card mt-4">
+                    <div class="card-body p-4">
+                        <h5 class="card-title mb-3">
+                            <i class="bi bi-house-check me-2"></i> Your Registered Farms
+                        </h5>
+                        <div class="list-group">
+                            <a href="#" class="list-group-item list-group-item-action d-flex justify-content-between align-items-center">
+                                <div>
+                                    <div class="d-flex align-items-center mb-1">
+                                        <h6 class="mb-0 me-2">River Side Vegetables</h6>
+                                        <span class="badge rounded-pill bg-success fw-normal">Active</span>
+                                    </div>
+                                    <p class="mb-1 text-muted">
+                                        <span class="me-3"><i class="bi bi-rulers me-1"></i> 10 Acres</span>
+                                        <span class="me-3"><i class="bi bi-flower1 me-1"></i> Vegetables</span>
+                                        <span><i class="bi bi-gear me-1"></i> Organic Farming</span>
+                                    </p>
+                                    <small class="text-muted">Registered: 1 Month ago</small>
+                                </div>
+                            
+                                <div class="d-flex gap-2">
+                                    <button type="button" class="btn btn-sm btn-outline-primary" title="View Details" data-bs-toggle="modal" data-bs-target="#farmDetailsModal" data-farm-id="1">
+                                        <i class="bi bi-binoculars"></i>
+                                    </button>
+                                    <button type="button" class="btn btn-sm btn-outline-danger" title="Delete">
+                                        <i class="bi bi-trash"></i>
+                                    </button>
+                                </div>
+                            </a>
+
+                            <a href="#" class="list-group-item list-group-item-action d-flex justify-content-between align-items-center">
+                                <div>
+                                    <div class="d-flex align-items-center mb-1">
+                                        <h6 class="mb-0 me-2">Green Valley Organic Farm</h6>
+                                        <span class="badge rounded-pill bg-success fw-normal">Active</span>
+                                    </div>
+                                    <p class="mb-1 text-muted">
+                                        <span class="me-3"><i class="bi bi-rulers me-1"></i> 25 Acres</span>
+                                        <span class="me-3"><i class="bi bi-flower1 me-1"></i> Wheat</span>
+                                        <span class="me-3"><i class="bi bi-flower1 me-1"></i> Corn</span>
+                                        <span><i class="bi bi-gear me-1"></i> Traditional Farming</span>
+                                    </p>
+                                    <small class="text-muted">Registered: 3 Months ago</small>
+                                </div>
+                            
+                                <div class="d-flex gap-2">
+                                    <button type="button" class="btn btn-sm btn-outline-primary" title="View Details" data-bs-toggle="modal" data-bs-target="#farmDetailsModal" data-farm-id="2">
+                                        <i class="bi bi-binoculars"></i>
+                                    </button>
+                                    <button type="button" class="btn btn-sm btn-outline-danger" title="Delete">
+                                        <i class="bi bi-trash"></i>
+                                    </button>
+                                </div>
+                            </a>
+
+                            <a href="#" class="list-group-item list-group-item-action d-flex justify-content-between align-items-center">
+                                <div>
+                                    <div class="d-flex align-items-center mb-1">
+                                        <h6 class="mb-0 me-2">Sunshine Orchard</h6>
+                                        <span class="badge rounded-pill bg-secondary fw-normal">Inactive</span>
+                                    </div>
+                                    <p class="mb-1 text-muted">
+                                        <span class="me-3"><i class="bi bi-rulers me-1"></i> 5 Acres</span>
+                                        <span class="me-3"><i class="bi bi-flower1 me-1"></i> Fruits</span>
+                                        <span><i class="bi bi-gear me-1"></i> Modern Farming</span>
+                                    </p>
+                                    <small class="text-muted">Registered: 2 years ago</small>
+                                </div>
+                            
+                                <div class="d-flex gap-2">
+                                    <button type="button" class="btn btn-sm btn-outline-primary" title="View Details" data-bs-toggle="modal" data-bs-target="#farmDetailsModal" data-farm-id="3">
+                                        <i class="bi bi-binoculars"></i>
+                                    </button>
+                                    <button type="button" class="btn btn-sm btn-outline-warning" title="Delete">
+                                        <i class="bi bi-trash"></i>
+                                    </button>
+                                </div>
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Farm Details Modal -->
+    <div class="modal fade" id="farmDetailsModal" tabindex="-1" aria-labelledby="farmDetailsModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-lg">
+            <div class="modal-content">
+                <div class="modal-header bg-light">
+                    <h5 class="modal-title" id="farmDetailsModalLabel">
+                        <i class="bi bi-info-circle me-2"></i>
+                        Farm Details
+                    </h5>
+                    <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <div id="farmDetailsContent" style="display: none;">
+                        <div class="row mb-4">
+                            <div class="col-md-8">
+                                <h4 id="modalFarmName" class="text-success mb-1">Farm Name</h4>
+                                <div class="d-flex align-items-center mb-3">
+                                    <span id="modalFarmStatus" class="badge bg-success me-2">Active</span>
+                                    <small class="text-muted" id="modalRegistrationDate">Registered: 1 Month ago</small>
+                                </div>
+                            </div>
+                            <div class="col-md-4 text-md-end">
+                                <div class="h5 mb-0" id="modalFarmSize">10 Acres</div>
+                                <small class="text-muted">Total Area</small>
+                            </div>
+                        </div>
+
+                        <div class="row">
+                            <div class="col-md-6">
+                                <h6 class="border-bottom pb-2 mb-3">Basic Information</h6>
+                                <div class="d-flex mb-2">
+                                    <span class="farm-detail-icon"><i class="bi bi-house"></i></span>
+                                    <span class="farm-detail-label">Farm Type:</span>
+                                    <span id="modalFarmType">Organic Farm</span>
+                                </div>
+                                <div class="d-flex mb-2">
+                                    <span class="farm-detail-icon"><i class="bi bi-calendar"></i></span>
+                                    <span class="farm-detail-label">Established:</span>
+                                    <span id="modalEstablishedDate">January 2018</span>
+                                </div>
+                                <div class="d-flex mb-2">
+                                    <span class="farm-detail-icon"><i class="bi bi-person-badge"></i></span>
+                                    <span class="farm-detail-label">Ownership:</span>
+                                    <span id="modalOwnershipType">Owned</span>
+                                </div>
+                                <div class="d-flex mb-3">
+                                    <span class="farm-detail-icon"><i class="bi bi-gear"></i></span>
+                                    <span class="farm-detail-label">Farming Method:</span>
+                                    <span id="modalFarmingMethod">Organic</span>
+                                </div>
+                                
+                                <h6 class="border-bottom pb-2 mb-3 mt-4">Crop Details</h6>
+                                <div class="d-flex mb-2">
+                                    <span class="farm-detail-icon"><i class="bi bi-flower1"></i></span>
+                                    <span class="farm-detail-label">Primary Crop:</span>
+                                    <span id="modalPrimaryCrop">Vegetables</span>
+                                </div>
+                                <div class="mb-3">
+                                    <span class="farm-detail-icon"><i class="bi bi-plus-circle"></i></span>
+                                    <span class="farm-detail-label">Additional Crops:</span>
+                                    <div id="modalAdditionalCrops" class="mt-1">
+                                        <span class="badge bg-light text-dark me-1 mb-1">Tomatoes</span>
+                                        <span class="badge bg-light text-dark me-1 mb-1">Lettuce</span>
+                                        <span class="badge bg-light text-dark me-1 mb-1">Carrots</span>
+                                    </div>
+                                </div>
+                            </div>
+                            
+                            <div class="col-md-6">
+                                <h6 class="border-bottom pb-2 mb-3">Location Details</h6>
+                                <div class="d-flex mb-2">
+                                    <span class="farm-detail-icon"><i class="bi bi-geo-alt"></i></span>
+                                    <span class="farm-detail-label">Address:</span>
+                                    <span id="modalAddress">123 Farm Road, Countryside</span>
+                                </div>
+                                <div class="d-flex mb-2">
+                                    <span class="farm-detail-icon"><i class="bi bi-building"></i></span>
+                                    <span class="farm-detail-label">City:</span>
+                                    <span id="modalCity">Green Valley</span>
+                                </div>
+                                <div class="d-flex mb-2">
+                                    <span class="farm-detail-icon"><i class="bi bi-map"></i></span>
+                                    <span class="farm-detail-label">State:</span>
+                                    <span id="modalState">California</span>
+                                </div>
+                                <div class="d-flex mb-2">
+                                    <span class="farm-detail-icon"><i class="bi bi-globe"></i></span>
+                                    <span class="farm-detail-label">Country:</span>
+                                    <span id="modalCountry">United States</span>
+                                </div>
+                                <div class="d-flex mb-3">
+                                    <span class="farm-detail-icon"><i class="bi bi-postcard"></i></span>
+                                    <span class="farm-detail-label">ZIP Code:</span>
+                                    <span id="modalZipCode">12345</span>
+                                </div>
+                                
+                                <h6 class="border-bottom pb-2 mb-3 mt-4">Additional Information</h6>
+                                <div class="d-flex mb-2">
+                                    <span class="farm-detail-icon"><i class="bi bi-droplet"></i></span>
+                                    <span class="farm-detail-label">Irrigation:</span>
+                                    <span id="modalIrrigationMethod">Drip Irrigation</span>
+                                </div>
+                                <div class="d-flex mb-3">
+                                    <span class="farm-detail-icon"><i class="bi bi-cloud-rain"></i></span>
+                                    <span class="farm-detail-label">Soil Type:</span>
+                                    <span id="modalSoilType">Loam</span>
+                                </div>
+                                
+                                <div class="mt-3">
+                                    <span class="farm-detail-label">Description:</span>
+                                    <p id="modalDescription" class="mt-1 p-2 bg-light rounded">This is a beautiful farm specializing in organic vegetables, using sustainable farming practices.</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                    <button type="button" class="btn btn-light">
+                        <i class="bi bi-pencil me-1"></i> Edit Details
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Bootstrap & jQuery JS -->
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js"></script>
+    
+    <script>
+        $(document).ready(function() {
+            // Sample farm data (in a real application, this would come from a server)
+            const farmData = {
+                1: {
+                    name: "River Side Vegetables",
+                    status: "Active",
+                    registrationDate: "1 Month ago",
+                    size: "10 Acres",
+                    type: "Organic Farm",
+                    established: "January 2018",
+                    ownership: "Owned",
+                    farmingMethod: "Organic",
+                    primaryCrop: "Vegetables",
+                    additionalCrops: ["Tomatoes", "Lettuce", "Carrots"],
+                    address: "123 Farm Road, Countryside",
+                    city: "Green Valley",
+                    state: "California",
+                    country: "United States",
+                    zipCode: "12345",
+                    irrigation: "Drip Irrigation",
+                    soilType: "Loam",
+                    description: "This is a beautiful farm specializing in organic vegetables, using sustainable farming practices. Located by the river, it has natural irrigation advantages."
+                },
+                2: {
+                    name: "Green Valley Organic Farm",
+                    status: "Active",
+                    registrationDate: "3 Months ago",
+                    size: "25 Acres",
+                    type: "Commercial Farm",
+                    established: "March 2015",
+                    ownership: "Family Land",
+                    farmingMethod: "Traditional",
+                    primaryCrop: "Wheat",
+                    additionalCrops: ["Corn", "Barley"],
+                    address: "456 Country Lane, Rural Area",
+                    city: "Green Valley",
+                    state: "Nebraska",
+                    country: "United States",
+                    zipCode: "67890",
+                    irrigation: "Sprinkler System",
+                    soilType: "Clay",
+                    description: "A family-owned farm that has been operating for generations. We specialize in wheat and corn production using traditional farming methods."
+                },
+                3: {
+                    name: "Sunshine Orchard",
+                    status: "Inactive",
+                    registrationDate: "2 years ago",
+                    size: "5 Acres",
+                    type: "Orchard",
+                    established: "May 2010",
+                    ownership: "Leased",
+                    farmingMethod: "Modern",
+                    primaryCrop: "Fruits",
+                    additionalCrops: ["Apples", "Peaches", "Pears"],
+                    address: "789 Orchard Road, Sunnyvale",
+                    city: "Sunnyvale",
+                    state: "Florida",
+                    country: "United States",
+                    zipCode: "54321",
+                    irrigation: "Rainfed",
+                    soilType: "Sandy",
+                    description: "A small orchard specializing in seasonal fruits. Currently inactive due to market conditions."
+                }
+            };
+
+            // Handle farm details modal show event
+            $('#farmDetailsModal').on('show.bs.modal', function (event) {
+                var button = $(event.relatedTarget);
+                var farmId = button.data('farm-id');
+                var modal = $(this);
+                
+                // Show loading, hide content
+                $('#modalLoading').show();
+                $('#farmDetailsContent').hide();
+                
+                // Simulate loading delay
+                setTimeout(function() {
+                    const farm = farmData[farmId];
+                    
+                    if (farm) {
+                        // Populate modal with farm data
+                        modal.find('#modalFarmName').text(farm.name);
+                        modal.find('#modalFarmStatus').text(farm.status);
+                        modal.find('#modalFarmStatus').removeClass('bg-success bg-secondary').addClass(farm.status === 'Active' ? 'bg-success' : 'bg-secondary');
+                        modal.find('#modalRegistrationDate').text('Registered: ' + farm.registrationDate);
+                        modal.find('#modalFarmSize').text(farm.size);
+                        modal.find('#modalFarmType').text(farm.type);
+                        modal.find('#modalEstablishedDate').text(farm.established);
+                        modal.find('#modalOwnershipType').text(farm.ownership);
+                        modal.find('#modalFarmingMethod').text(farm.farmingMethod);
+                        modal.find('#modalPrimaryCrop').text(farm.primaryCrop);
+                        
+                        // Additional crops
+                        let additionalCropsHtml = '';
+                        farm.additionalCrops.forEach(crop => {
+                            additionalCropsHtml += `<span class="badge bg-light text-dark me-1 mb-1">${crop}</span>`;
+                        });
+                        modal.find('#modalAdditionalCrops').html(additionalCropsHtml || '<span class="text-muted">None</span>');
+                        
+                        // Location details
+                        modal.find('#modalAddress').text(farm.address);
+                        modal.find('#modalCity').text(farm.city);
+                        modal.find('#modalState').text(farm.state);
+                        modal.find('#modalCountry').text(farm.country);
+                        modal.find('#modalZipCode').text(farm.zipCode);
+                        
+                        // Additional information
+                        modal.find('#modalIrrigationMethod').text(farm.irrigation);
+                        modal.find('#modalSoilType').text(farm.soilType);
+                        modal.find('#modalDescription').text(farm.description);
+                    }
+                    
+                    // Hide loading, show content
+                    $('#modalLoading').hide();
+                    $('#farmDetailsContent').show();
+                }, 500);
+            });
+            
+            // Form navigation
+            $('.next-step').click(function() {
+                var nextStep = $(this).data('next');
+                $('.form-section').hide();
+                $('#' + nextStep).show();
+                
+                // Update step indicator
+                $('.step').removeClass('active');
+                $('.step-circle').each(function() {
+                    if ($(this).text() === nextStep.charAt(4)) {
+                        $(this).closest('.step').addClass('active');
+                    }
+                });
+            });
+            
+            $('.prev-step').click(function() {
+                var prevStep = $(this).data('prev');
+                $('.form-section').hide();
+                $('#' + prevStep).show();
+                
+                // Update step indicator
+                $('.step').removeClass('active');
+                $('.step-circle').each(function() {
+                    if ($(this).text() === prevStep.charAt(4)) {
+                        $(this).closest('.step').addClass('active');
+                    }
+                });
+            });
+            
+            // Form submission
+            $('#farmRegistrationForm').on('submit', function(e) {
+                e.preventDefault();
+                alert('Farm registration submitted successfully!');
+                // Here you would typically send the data to the server
+            });
+        });
+    </script>
+</body>
+</html>

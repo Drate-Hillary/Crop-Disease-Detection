@@ -84,6 +84,10 @@ def signIn(request):
         print(f"DEBUG: Authenticate result: {user}")
         
         if user is not None:
+            if not user.is_active and not user.is_superuser:
+                messages.error(request, 'Your account has been deactivated. Please contact the administrator.')
+                return redirect('sign_in')
+            
             login(request, user)
             if user.is_superuser:
                 print("DEBUG: Login successful, redirecting to admin dashboard")

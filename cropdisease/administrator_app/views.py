@@ -8,6 +8,18 @@ from datetime import timedelta
 def admin_home(request):
     users = User.objects.filter(is_superuser=False)
     
+    # Apply filters
+    role_filter = request.GET.get('role')
+    status_filter = request.GET.get('status')
+    
+    if role_filter:
+        users = users.filter(role=role_filter)
+    
+    if status_filter == 'active':
+        users = users.filter(is_active=True)
+    elif status_filter == 'inactive':
+        users = users.filter(is_active=False)
+    
     # Calculate user growth percentage
     today = timezone.now()
     last_week = today - timedelta(days=7)

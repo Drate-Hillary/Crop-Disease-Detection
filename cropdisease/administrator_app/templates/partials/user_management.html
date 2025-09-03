@@ -1,4 +1,4 @@
-{% block content %} {% load static %}
+{% block content %} {% load static %}{% load humanize %}
 
 <!-- User Management Tab -->
 <div class="tab-pane" id="users">
@@ -65,7 +65,7 @@
         </div>
 
         <div class="table-responsive">
-          <table class="table table-hover">
+          <table class="table table-hover" >
             <thead>
               <tr>
                 <th>Profile</th>
@@ -76,152 +76,81 @@
               </tr>
             </thead>
             <tbody>
-              <!-- User 1 -->
+              {% for user in users %}
               <tr>
                 <td class="d-flex align-items-center gap-2">
-                  <img
-                    src="https://plus.unsplash.com/premium_photo-1671656349322-41de944d259b?w=500&auto=format&fit=crop&q=60&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxzZWFyY2h8MXx8cG9ydHJhaXR8ZW58MHx8MHx8fDA%3D"
-                    alt="John Farmer"
-                    class="rounded-circle"
-                    style="width: 45px; height: 45px; object-fit: cover"
-                  />
+                  {% if 'default_profile.png' in user.profile_image.name %}
+                    <div class="rounded-circle d-flex align-items-center justify-content-center" 
+                         style="width: 45px; height: 45px; background-color: #1e720f; color: white; font-weight: bold;">
+                      {{ user.get_first_initial }}
+                    </div>
+                  {% else %}
+                    <img
+                      src="{{ user.profile_image.url }}"
+                      alt="{{ user.user_name }}"
+                      class="rounded-circle"
+                      style="width: 45px; height: 45px; object-fit: cover"
+                    />
+                  {% endif %}
                   <span class="profile-details">
-                    <h5 class="fs-6 mb-0">John Farmer</h5>
-                    <small class="text-muted">john@example.com</small>
-                  </span>
-                </td>
-                <td><span class="badge bg-primary">Farmer</span></td>
-                <td><span class="badge bg-success">Active</span></td>
-                <td>2 hours ago</td>
-                <td>
-                  <div class="d-flex">
-                    <button
-                      class="btn btn-sm btn-outline-primary me-1"
-                      data-bs-toggle="modal"
-                      data-bs-target="#userModal1"
-                    >
-                      <i class="fas fa-eye"></i>
-                    </button>
-                    <button
-                      class="btn btn-sm btn-outline-danger"
-                      data-bs-toggle="modal"
-                      data-bs-target="#deleteConfirmationModal"
-                    >
-                      <i class="fas fa-trash"></i>
-                    </button>
-                  </div>
-                </td>
-              </tr>
-              <!-- User 2 -->
-              <tr>
-                <td class="d-flex align-items-center gap-2">
-                  <img
-                    src="https://images.unsplash.com/photo-1544005313-94ddf0286df2?w=500&auto=format&fit=crop&q=60&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxzZWFyY2h8M3x8cG9ydHJhaXR8ZW58MHx8MHx8fDA%3D"
-                    alt="Sarah Agronomist"
-                    class="rounded-circle"
-                    style="width: 45px; height: 45px; object-fit: cover"
-                  />
-                  <span class="profile-details">
-                    <h5 class="fs-6 mb-0">Sarah Agronomist</h5>
-                    <small class="text-muted">sarah@example.com</small>
+                    <h5 class="fs-6 mb-0">{{user.user_name}}</h5>
+                    <small class="text-muted">{{user.email}}</small>
                   </span>
                 </td>
                 <td>
-                  <span class="badge bg-warning text-dark">Agronomist</span>
+                    <span class="badge 
+                        {% if user.role == 'farmer' %}bg-primary
+                        {% else %}bg-warning
+                        {% endif %}">
+                        {{ user.get_role_display }}
+                    </span>
                 </td>
-                <td><span class="badge bg-success">Active</span></td>
-                <td>1 day ago</td>
                 <td>
-                  <div class="d-flex">
+                    <span class="badge 
+                        {% if user.is_active %}bg-success
+                        {% else %}bg-secondary
+                        {% endif %}">
+                        {{ user.is_active|yesno:'Active,Inactive' }}
+                    </span>
+                </td>
+
+                <!-- Date Joined Column (used instead of Last Active) -->
+                <td>{{ user.date_joined|naturaltime }}</td>
+
+                <td>
+                  <div class="d-flex gap-1">
                     <button
                       class="btn btn-sm btn-outline-primary me-1"
                       data-bs-toggle="modal"
-                      data-bs-target="#userModal2"
+                      data-bs-target="#userModal{{ user.id }}"
                     >
-                      <i class="fas fa-eye"></i>
+                      <i class="fas fa-expand"></i>
                     </button>
-                    <button
-                      class="btn btn-sm btn-outline-danger"
-                      data-bs-toggle="modal"
-                      data-bs-target="#deleteConfirmationModal"
-                    >
-                      <i class="fas fa-trash"></i>
-                    </button>
+                    {% if user.is_active %}
+                      <button
+                        class="btn btn-sm btn-outline-warning"
+                        data-bs-toggle="modal"
+                        data-bs-target="#deactivateConfirmationModal{{ user.id }}"
+                      >
+                        <i class="fa-solid fa-user-slash"></i>
+                      </button>
+                    {% else %}
+                      <button
+                        class="btn btn-sm btn-outline-success"
+                        data-bs-toggle="modal"
+                        data-bs-target="#reactivateConfirmationModal{{ user.id }}"
+                      >
+                        <i class="fa-solid fa-user-check"></i>
+                      </button>
+                    {% endif %}
                   </div>
                 </td>
               </tr>
-              <!-- User 3 -->
+              {% empty %}
               <tr>
-                <td class="d-flex align-items-center gap-2">
-                  <img
-                    src="https://plus.unsplash.com/premium_photo-1682096252599-e8536cd97d2b?w=500&auto=format&fit=crop&q=60&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxzZWFyY2h8NXx8cG9ydHJhaXR8ZW58MHx8MHx8fDA%3D"
-                    alt="Michael Extension"
-                    class="rounded-circle"
-                    style="width: 45px; height: 45px; object-fit: cover"
-                  />
-                  <span class="profile-details">
-                    <h5 class="fs-6 mb-0">Michael Extension</h5>
-                    <small class="text-muted">michael@example.com</small>
-                  </span>
-                </td>
-                <td><span class="badge bg-info">Extension</span></td>
-                <td><span class="badge bg-secondary">Inactive</span></td>
-                <td>1 week ago</td>
-                <td>
-                  <div class="d-flex">
-                    <button
-                      class="btn btn-sm btn-outline-primary me-1"
-                      data-bs-toggle="modal"
-                      data-bs-target="#userModal3"
-                    >
-                      <i class="fas fa-eye"></i>
-                    </button>
-                    <button
-                      class="btn btn-sm btn-outline-danger"
-                      data-bs-toggle="modal"
-                      data-bs-target="#deleteConfirmationModal"
-                    >
-                      <i class="fas fa-trash"></i>
-                    </button>
-                  </div>
-                </td>
+                <td colspan="5" class="text-center">No users found.</td>
               </tr>
-              <!-- User 4 -->
-              <tr>
-                <td class="d-flex align-items-center gap-2">
-                  <img
-                    src="https://images.unsplash.com/photo-1580489944761-15a19d654956?w=500&auto=format&fit=crop&q=60&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxzZWFyY2h8N3x8cG9ydHJhaXR8ZW58MHx8MHx8fDA%3D"
-                    alt="Emma Farmer"
-                    class="rounded-circle"
-                    style="width: 45px; height: 45px; object-fit: cover"
-                  />
-                  <span class="profile-details">
-                    <h5 class="fs-6 mb-0">Emma Farmer</h5>
-                    <small class="text-muted">emma@example.com</small>
-                  </span>
-                </td>
-                <td><span class="badge bg-primary">Farmer</span></td>
-                <td><span class="badge bg-success">Active</span></td>
-                <td>3 hours ago</td>
-                <td>
-                  <div class="d-flex">
-                    <button
-                      class="btn btn-sm btn-outline-primary me-1"
-                      data-bs-toggle="modal"
-                      data-bs-target="#userModal4"
-                    >
-                      <i class="fas fa-eye"></i>
-                    </button>
-                    <button
-                      class="btn btn-sm btn-outline-danger"
-                      data-bs-toggle="modal"
-                      data-bs-target="#deleteConfirmationModal"
-                    >
-                      <i class="fas fa-trash"></i>
-                    </button>
-                  </div>
-                </td>
-              </tr>
+              {% endfor %}
             </tbody>
           </table>
         </div>
@@ -244,6 +173,112 @@
       </div>
     </div>
   </div>
+
+    <!-- Deactivate Confirmation Modal -->
+  {% for user in users %}
+  <div
+    class="modal fade"
+    id="deactivateConfirmationModal{{ user.id }}"
+    tabindex="-1"
+    aria-labelledby="deactivateConfirmationModalLabel{{ user.id }}"
+    aria-hidden="true"
+  >
+    <div class="modal-dialog modal-dialog-centered">
+      <div class="modal-content">
+        <div class="modal-header bg-danger text-white">
+          <h5 class="modal-title" id="deactivateConfirmationModalLabel{{ user.id }}">
+            <i class="fas fa-exclamation-triangle me-2"></i>
+            Confirmation to Deactivate
+          </h5>
+          <button
+            type="button"
+            class="btn-close btn-close-white"
+            data-bs-dismiss="modal"
+            aria-label="Close"
+          ></button>
+        </div>
+        <div class="modal-body">
+          <p>
+            Are you sure you want to deactivate {{user.user_name}}?
+          </p>
+          <div class="alert alert-warning" role="alert">
+            <i class="fas fa-exclamation-circle me-2"></i>
+            The user will be marked as inactive and cannot log in.
+          </div>
+        </div>
+        <div class="modal-footer">
+          <button
+            type="button"
+            class="btn btn-secondary"
+            data-bs-dismiss="modal"
+          >
+            Cancel
+          </button>
+          <form method="POST" style="display: inline;">
+            {% csrf_token %}
+            <input type="hidden" name="user_id" value="{{ user.id }}">
+            <button type="submit" class="btn btn-danger" id="confirmDeactivateBtn{{ user.id }}">
+              Deactivate User
+            </button>
+          </form>
+        </div>
+      </div>
+    </div>
+  </div>
+  {% endfor %}
+
+  <!-- Reactivate Confirmation Modal -->
+  {% for user in users %}
+  <div
+    class="modal fade"
+    id="reactivateConfirmationModal{{ user.id }}"
+    tabindex="-1"
+    aria-labelledby="reactivateConfirmationModalLabel{{ user.id }}"
+    aria-hidden="true"
+  >
+    <div class="modal-dialog modal-dialog-centered">
+      <div class="modal-content">
+        <div class="modal-header bg-success text-white">
+          <h5 class="modal-title" id="reactivateConfirmationModalLabel{{ user.id }}">
+            <i class="fas fa-check-circle me-2"></i>
+            Confirmation to Reactivate
+          </h5>
+          <button
+            type="button"
+            class="btn-close btn-close-white"
+            data-bs-dismiss="modal"
+            aria-label="Close"
+          ></button>
+        </div>
+        <div class="modal-body">
+          <p>
+            Are you sure you want to reactivate {{user.user_name}}?
+          </p>
+          <div class="alert alert-info" role="alert">
+            <i class="fas fa-info-circle me-2"></i>
+            The user will be marked as active and can log in again.
+          </div>
+        </div>
+        <div class="modal-footer">
+          <button
+            type="button"
+            class="btn btn-secondary"
+            data-bs-dismiss="modal"
+          >
+            Cancel
+          </button>
+          <form method="POST" style="display: inline;">
+            {% csrf_token %}
+            <input type="hidden" name="user_id" value="{{ user.id }}">
+            <button type="submit" class="btn btn-success" id="confirmReactivateBtn{{ user.id }}">
+              Reactivate User
+            </button>
+          </form>
+        </div>
+      </div>
+    </div>
+  </div>
+  {% endfor %}
 
   <style>
     input:focus,
@@ -298,7 +333,7 @@
                       <div class="form-floating mb-3">
                           <input type="tel" class="form-control" id="userPhone" name="phone" placeholder="Enter phone number" />
                           <label for="userPhone" class="d-flex align-items-center gap-1">
-                              <i class="fa-solid fa-phone"></i> Phone Number
+                            <i class="fa-solid fa-phone"></i> Phone Number
                           </label>
                       </div>
 
@@ -348,96 +383,53 @@
 
 
   <script>
-    document.addEventListener("DOMContentLoaded", function () {
-        const roleDropdownItems = document.querySelectorAll("#addUserModal .dropdown-item");
-        const userRoleDisplayInput = document.getElementById("userRoleDisplay");
-        const userRoleValueInput = document.getElementById("userRoleValue"); // The hidden input
-        const experienceWrapper = document.getElementById("experience-wrapper");
-        const experienceInput = document.getElementById("experience");
+      document.addEventListener("DOMContentLoaded", function () {
+          const roleDropdownItems = document.querySelectorAll("#addUserModal .dropdown-item");
+          const userRoleDisplayInput = document.getElementById("userRoleDisplay");
+          const userRoleValueInput = document.getElementById("userRoleValue"); // The hidden input
+          const experienceWrapper = document.getElementById("experience-wrapper");
+          const experienceInput = document.getElementById("experience");
 
-        roleDropdownItems.forEach((item) => {
-            item.addEventListener("click", function (event) {
-                event.preventDefault();
-                const roleValue = this.getAttribute("data-role");
-                const displayText = this.textContent;
+          roleDropdownItems.forEach((item) => {
+              item.addEventListener("click", function (event) {
+                  event.preventDefault();
+                  const roleValue = this.getAttribute("data-role");
+                  const displayText = this.textContent;
 
-                // Update both the visible and hidden inputs
-                userRoleDisplayInput.value = displayText;
-                userRoleValueInput.value = roleValue; // This sends the correct value to Django
+                  // Update both the visible and hidden inputs
+                  userRoleDisplayInput.value = displayText;
+                  userRoleValueInput.value = roleValue; // This sends the correct value to Django
 
-                // Toggle experience field
-                if (roleValue === 'agronomist') {
-                    experienceWrapper.style.display = 'block';
-                    experienceInput.required = true;
-                } else {
-                    experienceWrapper.style.display = 'none';
-                    experienceInput.required = false;
-                    experienceInput.value = '';
-                }
-            });
-        });
-    });
-</script>
+                  // Toggle experience field
+                  if (roleValue === 'agronomist') {
+                      experienceWrapper.style.display = 'block';
+                      experienceInput.required = true;
+                  } else {
+                      experienceWrapper.style.display = 'none';
+                      experienceInput.required = false;
+                      experienceInput.value = '';
+                  }
+              });
+          });
+      });
 
-  <!-- Delete Confirmation Modal -->
+
+  </script>
+
+
+  <!-- Individual User Modals -->
+  {% for user in users %}
   <div
     class="modal fade"
-    id="deleteConfirmationModal"
+    id="userModal{{ user.id }}"
     tabindex="-1"
-    aria-labelledby="deleteConfirmationModalLabel"
-    aria-hidden="true"
-  >
-    <div class="modal-dialog modal-dialog-centered">
-      <div class="modal-content">
-        <div class="modal-header bg-danger text-white">
-          <h5 class="modal-title" id="deleteConfirmationModalLabel">
-            <i class="fas fa-exclamation-triangle me-2"></i>
-            Confirm Deletion
-          </h5>
-          <button
-            type="button"
-            class="btn-close btn-close-white"
-            data-bs-dismiss="modal"
-            aria-label="Close"
-          ></button>
-        </div>
-        <div class="modal-body">
-          <p>
-            Are you sure you want to delete this user? This action cannot be
-            undone.
-          </p>
-          <div class="alert alert-warning" role="alert">
-            <i class="fas fa-exclamation-circle me-2"></i>
-            All user data will be permanently removed from the system.
-          </div>
-        </div>
-        <div class="modal-footer">
-          <button
-            type="button"
-            class="btn btn-secondary"
-            data-bs-dismiss="modal"
-          >
-            Cancel
-          </button>
-          <button type="button" class="btn btn-danger" id="confirmDeleteBtn">
-            Delete User
-          </button>
-        </div>
-      </div>
-    </div>
-  </div>
-  <!-- User 1 Modal -->
-  <div
-    class="modal fade"
-    id="userModal1"
-    tabindex="-1"
-    aria-labelledby="userModalLabel1"
+    aria-labelledby="userModalLabel{{ user.id }}"
     aria-hidden="true"
   >
     <div class="modal-dialog modal-lg">
       <div class="modal-content">
         <div class="modal-header">
-          <h5 class="modal-title" id="userModalLabel1">User Details</h5>
+          <h5 class="modal-title" id="userModalLabel{{ user.id }}">User Details</h5>
           <button
             type="button"
             class="btn-close"
@@ -448,307 +440,61 @@
         <div class="modal-body">
           <div class="row">
             <div class="col-md-3 text-center mb-3">
-              <img
-                src="https://plus.unsplash.com/premium_photo-1671656349322-41de944d259b?w=500&auto=format&fit=crop&q=60&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxzZWFyY2h8MXx8cG9ydHJhaXR8ZW58MHx8MHx8fDA%3D"
-                alt="John Farmer"
-                class="rounded-circle mb-2"
-                style="
-                  width: 120px;
-                  height: 120px;
-                  object-fit: cover;
-                  border: 4px solid #fff;
-                  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
-                "
-              />
-              <h5>John Farmer</h5>
-              <p class="text-muted mb-1">Farmer</p>
-              <span class="badge bg-success">Active</span>
+              {% if 'default_profile.png' in user.profile_image.name %}
+                <div class="rounded-circle d-flex align-items-center justify-content-center mb-2" 
+                     style="width: 120px; height: 120px; background-color: #1e720f; color: white; font-weight: bold; font-size: 2rem; margin: 0 auto;">
+                  {{ user.get_first_initial }}
+                </div>
+              {% else %}
+                <img
+                  src="{{ user.profile_image.url }}"
+                  alt="{{ user.user_name }}"
+                  class="rounded-circle mb-2"
+                  style="width: 120px; height: 120px; object-fit: cover; border: 4px solid #fff; box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);"
+                />
+              {% endif %}
+              <h5>{{ user.user_name }}</h5>
+              <p class="text-muted mb-1">{{ user.get_role_display }}</p>
+              <span class="badge {% if user.is_active %}bg-success{% else %}bg-secondary{% endif %}">
+                {{ user.is_active|yesno:'Active,Inactive' }}
+              </span>
             </div>
             <div class="col-md-9">
               <div class="row">
                 <div class="col-md-6 mb-3">
                   <p class="mb-1 text-muted">Email</p>
-                  <p class="mb-0">john@example.com</p>
+                  <p class="mb-0">{{ user.email }}</p>
                 </div>
                 <div class="col-md-6 mb-3">
                   <p class="mb-1 text-muted">Phone</p>
-                  <p class="mb-0">+1 (555) 123-4567</p>
+                  <p class="mb-0">{{ user.phone|default:'N/A' }}</p>
                 </div>
+                {% if user.role == 'farmer' %}
                 <div class="col-md-6 mb-3">
                   <p class="mb-1 text-muted">Location</p>
-                  <p class="mb-0">Nairobi, Kenya</p>
+                  <p class="mb-0">{{user.location|default:'No Location'}}</p>
                 </div>
+                {% endif %}
+                {% if user.role == 'agronomist' %}
                 <div class="col-md-6 mb-3">
-                  <p class="mb-1 text-muted">Last Active</p>
-                  <p class="mb-0">2 hours ago</p>
+                  <p class="mb-1 text-muted">Experience</p>
+                  <p class="mb-0">{{ user.experience|default:'N/A' }} years</p>
+                </div>
+                {% endif %}
+                <div class="col-md-6 mb-3">
+                  <p class="mb-1 text-muted">Date Joined</p>
+                  <p class="mb-0">{{ user.date_joined|date:'M j, Y' }}</p>
                 </div>
                 <div class="col-12 mb-3">
                   <p class="mb-1 text-muted">Bio</p>
-                  <p class="mb-0">
-                    John is a passionate farmer with over 10 years of experience
-                    in sustainable agriculture. He specializes in maize and
-                    vegetable farming.
-                  </p>
+                  <p class="mb-0">{{ user.bio|default:'No bio available' }}</p>
                 </div>
-                <div class="col-12">
-                  <p class="mb-1 text-muted">Farm Size</p>
-                  <p class="mb-0">5 acres</p>
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
-        <div class="modal-footer">
-          <button
-            type="button"
-            class="btn btn-secondary"
-            data-bs-dismiss="modal"
-          >
-            Close
-          </button>
-        </div>
-      </div>
-    </div>
-  </div>
-
-  <!-- User 2 Modal -->
-  <div
-    class="modal fade"
-    id="userModal2"
-    tabindex="-1"
-    aria-labelledby="userModalLabel2"
-    aria-hidden="true"
-  >
-    <div class="modal-dialog modal-lg">
-      <div class="modal-content">
-        <div class="modal-header">
-          <h5 class="modal-title" id="userModalLabel2">User Details</h5>
-          <button
-            type="button"
-            class="btn-close"
-            data-bs-dismiss="modal"
-            aria-label="Close"
-          ></button>
-        </div>
-        <div class="modal-body">
-          <div class="row">
-            <div class="col-md-3 text-center mb-3">
-              <img
-                src="https://images.unsplash.com/photo-1544005313-94ddf0286df2?w=500&auto=format&fit=crop&q=60&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxzZWFyY2h8M3x8cG9ydHJhaXR8ZW58MHx8MHx8fDA%3D"
-                alt="Sarah Agronomist"
-                class="rounded-circle mb-2"
-                style="
-                  width: 120px;
-                  height: 120px;
-                  object-fit: cover;
-                  border: 4px solid #fff;
-                  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
-                "
-              />
-              <h5>Sarah Agronomist</h5>
-              <p class="text-muted mb-1">Agronomist</p>
-              <span class="badge bg-success">Active</span>
-            </div>
-            <div class="col-md-9">
-              <div class="row">
-                <div class="col-md-6 mb-3">
-                  <p class="mb-1 text-muted">Email</p>
-                  <p class="mb-0">sarah@example.com</p>
-                </div>
-                <div class="col-md-6 mb-3">
-                  <p class="mb-1 text-muted">Phone</p>
-                  <p class="mb-0">+1 (555) 987-6543</p>
-                </div>
-                <div class="col-md-6 mb-3">
-                  <p class="mb-1 text-muted">Location</p>
-                  <p class="mb-0">Nakuru, Kenya</p>
-                </div>
-                <div class="col-md-6 mb-3">
-                  <p class="mb-1 text-muted">Last Active</p>
-                  <p class="mb-0">1 day ago</p>
-                </div>
-                <div class="col-12 mb-3">
-                  <p class="mb-1 text-muted">Bio</p>
-                  <p class="mb-0">
-                    Sarah is a certified agronomist with expertise in soil
-                    management and crop production. She holds a Master's degree
-                    in Agricultural Science.
-                  </p>
-                </div>
-                <div class="col-12">
-                  <p class="mb-1 text-muted">Specialization</p>
-                  <p class="mb-0">Soil fertility, Crop rotation</p>
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
-        <div class="modal-footer">
-          <button
-            type="button"
-            class="btn btn-secondary"
-            data-bs-dismiss="modal"
-          >
-            Close
-          </button>
-        </div>
-      </div>
-    </div>
-  </div>
-
-  <!-- User 3 Modal -->
-  <div
-    class="modal fade"
-    id="userModal3"
-    tabindex="-1"
-    aria-labelledby="userModalLabel3"
-    aria-hidden="true"
-  >
-    <div class="modal-dialog modal-lg">
-      <div class="modal-content">
-        <div class="modal-header">
-          <h5 class="modal-title" id="userModalLabel3">User Details</h5>
-          <button
-            type="button"
-            class="btn-close"
-            data-bs-dismiss="modal"
-            aria-label="Close"
-          ></button>
-        </div>
-        <div class="modal-body">
-          <div class="row">
-            <div class="col-md-3 text-center mb-3">
-              <img
-                src="https://plus.unsplash.com/premium_photo-1682096252599-e8536cd97d2b?w=500&auto=format&fit=crop&q=60&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxzZWFyY2h8NXx8cG9ydHJhaXR8ZW58MHx8MHx8fDA%3D"
-                alt="Michael Extension"
-                class="rounded-circle mb-2"
-                style="
-                  width: 120px;
-                  height: 120px;
-                  object-fit: cover;
-                  border: 4px solid #fff;
-                  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
-                "
-              />
-              <h5>Michael Extension</h5>
-              <p class="text-muted mb-1">Extension Worker</p>
-              <span class="badge bg-secondary">Inactive</span>
-            </div>
-            <div class="col-md-9">
-              <div class="row">
-                <div class="col-md-6 mb-3">
-                  <p class="mb-1 text-muted">Email</p>
-                  <p class="mb-0">michael@example.com</p>
-                </div>
-                <div class="col-md-6 mb-3">
-                  <p class="mb-1 text-muted">Phone</p>
-                  <p class="mb-0">+1 (555) 456-7890</p>
-                </div>
-                <div class="col-md-6 mb-3">
-                  <p class="mb-1 text-muted">Location</p>
-                  <p class="mb-0">Kisumu, Kenya</p>
-                </div>
-                <div class="col-md-6 mb-3">
-                  <p class="mb-1 text-muted">Last Active</p>
-                  <p class="mb-0">1 week ago</p>
-                </div>
-                <div class="col-12 mb-3">
-                  <p class="mb-1 text-muted">Bio</p>
-                  <p class="mb-0">
-                    Michael is an extension worker who helps farmers implement
-                    modern agricultural techniques. He has been working in the
-                    field for over 8 years.
-                  </p>
-                </div>
-                <div class="col-12">
-                  <p class="mb-1 text-muted">Region Covered</p>
-                  <p class="mb-0">Western Kenya</p>
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
-        <div class="modal-footer">
-          <button
-            type="button"
-            class="btn btn-secondary"
-            data-bs-dismiss="modal"
-          >
-            Close
-          </button>
-        </div>
-      </div>
-    </div>
-  </div>
-
-  <!-- User 4 Modal -->
-  <div
-    class="modal fade"
-    id="userModal4"
-    tabindex="-1"
-    aria-labelledby="userModalLabel4"
-    aria-hidden="true"
-  >
-    <div class="modal-dialog modal-lg">
-      <div class="modal-content">
-        <div class="modal-header">
-          <h5 class="modal-title" id="userModalLabel4">User Details</h5>
-          <button
-            type="button"
-            class="btn-close"
-            data-bs-dismiss="modal"
-            aria-label="Close"
-          ></button>
-        </div>
-        <div class="modal-body">
-          <div class="row">
-            <div class="col-md-3 text-center mb-3">
-              <img
-                src="https://images.unsplash.com/photo-1580489944761-15a19d654956?w=500&auto=format&fit=crop&q=60&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxzZWFyY2h8N3x8cG9ydHJhaXR8ZW58MHx8MHx8fDA%3D"
-                alt="Emma Farmer"
-                class="rounded-circle mb-2"
-                style="
-                  width: 120px;
-                  height: 120px;
-                  object-fit: cover;
-                  border: 4px solid #fff;
-                  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
-                "
-              />
-              <h5>Emma Farmer</h5>
-              <p class="text-muted mb-1">Farmer</p>
-              <span class="badge bg-success">Active</span>
-            </div>
-            <div class="col-md-9">
-              <div class="row">
-                <div class="col-md-6 mb-3">
-                  <p class="mb-1 text-muted">Email</p>
-                  <p class="mb-0">emma@example.com</p>
-                </div>
-                <div class="col-md-6 mb-3">
-                  <p class="mb-1 text-muted">Phone</p>
-                  <p class="mb-0">+1 (555) 234-5678</p>
-                </div>
-                <div class="col-md-6 mb-3">
-                  <p class="mb-1 text-muted">Location</p>
-                  <p class="mb-0">Eldoret, Kenya</p>
-                </div>
-                <div class="col-md-6 mb-3">
-                  <p class="mb-1 text-muted">Last Active</p>
-                  <p class="mb-0">3 hours ago</p>
-                </div>
-                <div class="col-12 mb-3">
-                  <p class="mb-1 text-muted">Bio</p>
-                  <p class="mb-0">
-                    Emma is a dairy farmer who also grows crops for animal feed.
-                    She has implemented modern farming techniques to increase
-                    her yield and productivity.
-                  </p>
-                </div>
+                {% if user.role == 'farmer' %}
                 <div class="col-12">
                   <p class="mb-1 text-muted">Farm Size</p>
                   <p class="mb-0">8 acres</p>
                 </div>
+                {% endif %}
               </div>
             </div>
           </div>
@@ -765,5 +511,7 @@
       </div>
     </div>
   </div>
+  {% endfor %}
+
 </div>
 {% endblock %}

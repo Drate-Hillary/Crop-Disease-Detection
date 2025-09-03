@@ -3,10 +3,10 @@ from django.db import models
 from django.utils import timezone
 from django.core.validators import RegexValidator
 
-ROLE_CHOICE = {
+ROLE_CHOICE = (
     ('farmer', 'Farmer'),
     ('agronomist', 'Agronomist'),
-}
+)
 
 class UserManager(BaseUserManager):
     def create_user(self, email, password=None, **extra_fields):

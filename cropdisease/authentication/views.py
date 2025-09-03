@@ -72,7 +72,6 @@ def signIn(request):
             print("DEBUG: User already authenticated, redirecting to farmer_home")
             return redirect('farmer_home')
         elif request.user.role == 'agronomist':
-            print("DEBUG: User already authenticated, redirecting to expert_home")
             return redirect('agronomist_home')
     
     if request.method == 'POST':

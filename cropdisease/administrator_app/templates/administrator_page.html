@@ -1,4 +1,5 @@
 {% load static %}
+{% load humanize %}
 
 <!DOCTYPE html>
 <html lang="en">
@@ -183,10 +184,19 @@
                         <div class="col-6 col-md-3">
                             <div class="card card-primary">
                                 <div class="card-body">
-                                    <div class="stat-number">1,248</div>
-                                    <div class="stat-label d-flex align-items-center gap-1"><i class="fa-regular fa-user"></i>Total Users</div>
+                                    <div class="d-flex justify-content-between align-items-start mb-2">
+                                        <div>
+                                            <div class="stat-number">{{ users.count }}</div>
+                                            <div class="stat-label d-flex align-items-center gap-1">
+                                                <i class="fa-solid fa-users"></i>Total Users
+                                            </div>
+                                        </div>
+                                    </div>
                                     <div class="mt-2">
-                                        <span class="trend-up"><i class="fas fa-arrow-up"></i> 12%</span> from last week
+                                        <span class="{% if user_growth >= 0 %}trend-up{% else %}trend-down{% endif %}">
+                                            <i class="fas fa-arrow-{% if user_growth >= 0 %}up{% else %}down{% endif %}"></i> 
+                                            {{ user_growth|floatformat:1 }}%
+                                        </span> from {{ user.date_joined.count }}
                                     </div>
                                 </div>
                             </div>

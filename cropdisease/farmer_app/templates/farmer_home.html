@@ -178,14 +178,14 @@
                          style="width: 30px; height: 30px; background-color: #1e720f; color: white; font-weight: bold;">
                       {{ user.get_first_initial }}
                     </div>
-                  {% else %}
-                    <img
-                      src="{{ user.profile_image.url }}"
-                      alt="{{ user.user_name }}"
-                      class="rounded-circle"
-                      style="width: 35px; height: 35px; object-fit: cover"
-                    />
-                  {% endif %}
+                    {% else %}
+                      <img
+                        src="{{ user.profile_image.url }}"
+                        alt="{{ user.user_name }}"
+                        class="rounded-circle"
+                        style="width: 35px; height: 35px; object-fit: cover"
+                      />
+                    {% endif %}
                   </button>
                   <ul class="dropdown-menu" aria-labelledby="userDropdown">
                     <li>

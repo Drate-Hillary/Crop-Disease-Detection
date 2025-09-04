@@ -24,101 +24,98 @@
 </head>
 
 <body>
-    <!-- Top Navigation -->
-    <nav class="navbar navbar-expand-lg navbar-light bg-white shadow-sm">
-        <div class="container-fluid">
-            <button class="navbar-toggler" type="button" data-bs-toggle="offcanvas" data-bs-target="#offcanvasSidebar"
-                aria-controls="offcanvasSidebar">
-                <span class="navbar-toggler-icon"></span>
-            </button>
-            <a class="navbar-brand" href="#">
-                <i class="fas fa-leaf me-2"></i> Crop Guard
-            </a>
-
-            <div class="d-flex align-items-center gap-3">
-                <div class="dropdown me-3">
-                    <a class="position-relative d-flex align-items-center" href="#" id="notificationDropdown" role="button" data-bs-toggle="dropdown"
-                        aria-label="Notifications (3 unread)" aria-expanded="false" >
-                        <i class="fas fa-bell text-muted fs-5"></i>
-                        <span class="position-absolute top-0 start-100 translate-middle badge rounded-pill counter">
-                            3
-                            <span class="visually-hidden">unread notifications</span>
-                        </span>
-                    </a>
-                    <ul class="dropdown-menu dropdown-menu-end shadow-sm" aria-labelledby="notificationDropdown" style="min-width: 150px; ">
-                        <li>
-                            <h6 class="dropdown-header fw-bold">Notifications</h6>
-                        </li>
-                        <li>
-                            <a class="dropdown-item d-flex align-items-center gap-3 py-2" href="#">
-                                <i class="fas fa-virus text-danger"></i>
-                                <div>
-                                    <span class="fw-medium fs-10">New disease reported</span>
-                                    <small class="d-block text-muted">In your region · 2h ago</small>
-                                </div>
-                            </a>
-                        </li>
-                        <li>
-                            <a class="dropdown-item d-flex align-items-center gap-3 py-2" href="#">
-                                <i class="fas fa-users text-warning"></i>
-                                <div>
-                                    <span class="fw-medium">2 farmers need follow-up</span>
-                                    <small class="d-block text-muted">Pending tasks · 5h ago</small>
-                                </div>
-                            </a>
-                        </li>
-                        <li>
-                            <a class="dropdown-item d-flex align-items-center gap-3 py-2" href="#">
-                                <i class="fas fa-cloud-rain text-info"></i>
-                                <div>
-                                    <span class="fw-medium">Weather alert</span>
-                                    <small class="d-block text-muted">Heavy rain expected · 1d ago</small>
-                                </div>
-                            </a>
-                        </li>
-                        <li>
-                            <hr class="dropdown-divider">
-                        </li>
-                        <li>
-                            <a class="dropdown-item text-center fw-medium"
-                                style="color: var(--primary-green); font-size: 0.9rem;" href="#">View all notifications
-                            </a>
-                        </li>
-                    </ul>
-                </div>
-
-                <div class="dropdown">
-                    <button class="btn btn-light dropdown-toggle" type="button" id="profileDropdown" data-bs-toggle="dropdown" aria-expanded="false">
-                    </button>
-                    <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="profileDropdown">
-                        <li>
-                            <a class="dropdown-item fw-medium" href="#">
-                                <i class="fas fa-user me-2"></i>Profile
-                            </a>
-                        </li>
-                        <li>
-                            <div class="form-check form-switch me-3">
-                                <input class="form-check-input" type="checkbox" id="themeSwitch">
-                                <label class="form-check-label" for="themeSwitch">
-                                    <i class="fas fa-moon"></i>
-                                </label>
-                            </div>
-                        </li>
-                        <li>
-                            <hr class="dropdown-divider">
-                        </li>
-                        <li>
-                            <a class="dropdown-item fw-medium" style="color: var(--red-color);" href="#">
-                                <i class="fas fa-sign-out-alt me-2 fs-6"></i>Logout
-                            </a>
-                        </li>
-                    </ul>
-                </div>
-            </div>
-        </div>
-    </nav>
-
+  <!-- Top Navigation -->
+  <nav class="navbar navbar-expand-lg navbar-light bg-white">
     <div class="container-fluid">
+       
+      <a class="navbar-brand" href="#">
+        <i class="fas fa-leaf me-2"></i> Crop Guard
+      </a>
+
+      <div class="d-flex align-items-center gap-3">
+          <div class="dropdown me-3">
+              <a class="position-relative d-flex align-items-center" href="#" id="notificationDropdown" role="button" data-bs-toggle="dropdown"
+                  aria-label="Notifications (3 unread)" aria-expanded="false" >
+                  <i class="fas fa-bell text-muted fs-5"></i>
+                  <span class="position-absolute top-0 start-100 translate-middle badge rounded-pill counter">
+                      3
+                      <span class="visually-hidden">unread notifications</span>
+                  </span>
+              </a>
+              <ul class="dropdown-menu dropdown-menu-end shadow-sm" aria-labelledby="notificationDropdown" style="min-width: 150px; ">
+                  <li>
+                      <h6 class="dropdown-header fw-bold">Notifications</h6>
+                  </li>
+                  <li>
+                      <a class="dropdown-item d-flex align-items-center gap-3 py-2" href="#">
+                          <i class="fas fa-virus text-danger"></i>
+                          <div>
+                              <span class="fw-medium fs-10">New disease reported</span>
+                              <small class="d-block text-muted">In your region · 2h ago</small>
+                          </div>
+                      </a>
+                  </li>
+                  <li>
+                      <a class="dropdown-item d-flex align-items-center gap-3 py-2" href="#">
+                          <i class="fas fa-users text-warning"></i>
+                          <div>
+                              <span class="fw-medium">2 farmers need follow-up</span>
+                              <small class="d-block text-muted">Pending tasks · 5h ago</small>
+                          </div>
+                      </a>
+                  </li>
+                  <li>
+                      <a class="dropdown-item d-flex align-items-center gap-3 py-2" href="#">
+                          <i class="fas fa-cloud-rain text-info"></i>
+                          <div>
+                              <span class="fw-medium">Weather alert</span>
+                              <small class="d-block text-muted">Heavy rain expected · 1d ago</small>
+                          </div>
+                      </a>
+                  </li>
+                  <li>
+                      <hr class="dropdown-divider">
+                  </li>
+                  <li>
+                      <a class="dropdown-item text-center fw-medium"
+                          style="color: var(--primary-green); font-size: 0.9rem;" href="#">View all notifications
+                      </a>
+                  </li>
+              </ul>
+          </div>
+          <div class="dropdown">
+              <button class="btn btn-light dropdown-toggle" type="button" id="profileDropdown" data-bs-toggle="dropdown" aria-expanded="false">
+                  <i class="fas fa-user me-2"></i>Profile
+              </button>
+              <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="profileDropdown">
+                  <li>
+                      <a class="dropdown-item fw-medium" href="#">
+                          <i class="fas fa-user me-2"></i>Profile
+                      </a>
+                  </li>
+                  <li>
+                      <div class="form-check form-switch me-3">
+                          <input class="form-check-input" type="checkbox" id="themeSwitch">
+                          <label class="form-check-label" for="themeSwitch">
+                              <i class="fas fa-moon"></i>
+                          </label>
+                      </div>
+                  </li>
+                  <li>
+                      <hr class="dropdown-divider">
+                  </li>
+                  <li>
+                      <a class="dropdown-item fw-medium" style="color: var(--red-color);" href="#">
+                          <i class="fas fa-sign-out-alt me-2 fs-6"></i>Logout
+                      </a>
+                  </li>
+              </ul>
+          </div>
+      </div>
+    </div>
+  </nav>
+
+  <div class="container-fluid">
         <div class="row">
             <!-- Sidebar Navigation -->
             <div class="col-lg-2 p-0 sidebar d-none d-lg-block">
@@ -427,10 +424,51 @@
         integrity="sha256-20nQCchB9co0qIjJZRGuk2/Z9VM+kNiyxNV1lvTlZBo=" crossorigin=""></script>
 
     <!-- Custom JS -->
-    <script src="{% static 'JS/agronomist.js' %}"></script>
+    <script src="{% static 'agronomist_app/JS/agronomist.js' %}"></script>
 
     <!-- Initialize Bootstrap components -->
     <script>
+      // --- Handles sidebar navigation ---
+  const sidebarLinks = document.querySelectorAll('.sidebar .nav-link[href^="#"]');
+  const contentSections = document.querySelectorAll(".dashboard-section, .content-section");
+
+  // Function to hide all content sections
+  function hideAllSections() {
+    contentSections.forEach((section) => {
+      section.style.display = "none";
+    });
+  }
+
+  // Find the initially active link and show its corresponding section
+  const activeLink = document.querySelector('.sidebar .nav-link.active');
+  if (activeLink) {
+    const activeSectionId = activeLink.getAttribute("href").substring(1);
+    const activeSection = document.getElementById(activeSectionId);
+    if (activeSection) {
+      activeSection.style.display = "block"; // Or ""
+    }
+  }
+
+  // Add click event listeners to sidebar links
+  sidebarLinks.forEach((link) => {
+    link.addEventListener("click", function (e) {
+      e.preventDefault();
+
+      // Remove 'active' class from all links and hide all sections
+      sidebarLinks.forEach((l) => l.classList.remove("active"));
+      hideAllSections();
+
+      // Add 'active' class to the clicked link
+      this.classList.add("active");
+
+      // Show the target section
+      const targetId = this.getAttribute("href").substring(1);
+      const targetSection = document.getElementById(targetId);
+      if (targetSection) {
+        targetSection.style.display = "block"; // Or ""
+      }
+    });
+  });
         document.addEventListener("DOMContentLoaded", function() {
             // Initialize all dropdowns
             var dropdownElementList = [].slice.call(document.querySelectorAll('.dropdown-toggle'))

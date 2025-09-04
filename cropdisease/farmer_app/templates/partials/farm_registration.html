@@ -1,4 +1,26 @@
 {% block content %} {% load static %}
+
+<style>
+  /* Position the custom chevron icon */
+  .dropdown-chevron {
+    position: absolute;
+    top: 50%;
+    right: 1.25rem; /* Adjust horizontal position */
+    transform: translateY(-50%);
+    pointer-events: none; /* Make the icon non-clickable */
+    color: #6c757d;
+  }
+
+  /* Override Bootstrap's default arrow on our readonly inputs */
+  input.dropdown-toggle {
+    background-image: none !important; /* Remove the default SVG arrow */
+    user-select: none; /* Prevent text selection on the input */
+  }
+  a:focus, a:active{
+    background-color: rgba(30,114,15, 0.2);
+  }
+</style>
+
 <!-- Farm Registration Section -->
 <section id="farm-registration-section">
   <div class="farm-registration-container">
@@ -38,12 +60,12 @@
           <form id="farmRegistrationForm">
             <!-- Step 1: Basic Information -->
             <div class="form-section" id="step1">
-              <h4 class="form-section-title">Basic Farm Information</h4>
+              <h4 class="form-section-title mb-3 border-bottom pb-2">
+                <i class="bi bi-info-circle me-2"></i> Basic Farm Information
+              </h4>
               <div class="row">
                 <div class="col-md-6 mb-3">
-                  <label for="farmName" class="form-label"
-                    >Farm Name <span class="text-danger">*</span></label
-                  >
+                  <label for="farmName" class="form-label">Farm Name </label>
                   <input
                     type="text"
                     class="form-control"
@@ -52,26 +74,39 @@
                     placeholder="Enter farm name"
                   />
                 </div>
-                <div class="col-md-6 mb-3">
-                  <label for="farmType" class="form-label"
-                    >Farm Type <span class="text-danger">*</span></label
-                  >
-                  <select class="form-select" id="farmType" required>
-                    <option value="" selected disabled>Select farm type</option>
-                    <option value="organic">Organic Farm</option>
-                    <option value="commercial">Commercial Farm</option>
-                    <option value="subsistence">Subsistence Farm</option>
-                    <option value="greenhouse">Greenhouse</option>
-                    <option value="hydroponic">Hydroponic Farm</option>
-                    <option value="other">Other</option>
-                  </select>
+                 <div class="col-md-6 mb-3">
+                    <label for="farmTypeDropdown" class="form-label">Farm Type</label>
+                    <div class="dropdown position-relative">
+                      <input
+                        type="text"
+                        class="form-control dropdown-toggle"
+                        id="farmTypeDropdown"
+                        placeholder="Select farm type"
+                        data-bs-toggle="dropdown"
+                        aria-expanded="false"
+                        readonly
+                        style="cursor: pointer;"
+                      />
+                      <i class="bi bi-chevron-down dropdown-chevron"></i>
+                      <ul
+                        class="dropdown-menu w-100"
+                        aria-labelledby="farmTypeDropdown"
+                      >
+                        <li><a class="dropdown-item" href="#">Organic Farm</a></li>
+                        <li><a class="dropdown-item" href="#">Commercial Farm</a></li>
+                        <li><a class="dropdown-item" href="#">Subsistence Farm</a></li>
+                        <li><a class="dropdown-item" href="#">Greenhouse</a></li>
+                        <li><a class="dropdown-item" href="#">Hydroponic Farm</a></li>
+                        <li><a class="dropdown-item" href="#">Other</a></li>
+                      </ul>
+                    </div>
+                    <input type="hidden" name="farm_type" id="farmType" />
+                  </div>
                 </div>
               </div>
               <div class="row">
                 <div class="col-md-12 mb-3">
-                  <label for="farmDescription" class="form-label"
-                    >Farm Description</label
-                  >
+                  <label for="farmDescription" class="form-label">Farm Description</label>
                   <textarea
                     class="form-control"
                     id="farmDescription"
@@ -82,9 +117,7 @@
               </div>
               <div class="row">
                 <div class="col-md-6 mb-3">
-                  <label for="establishedDate" class="form-label"
-                    >Established Date</label
-                  >
+                  <label for="establishedDate" class="form-label">Established Date</label>
                   <input
                     type="date"
                     class="form-control"
@@ -92,22 +125,32 @@
                   />
                 </div>
                 <div class="col-md-6 mb-3">
-                  <label for="ownershipType" class="form-label"
-                    >Ownership Type <span class="text-danger">*</span></label
-                  >
-                  <select class="form-select" id="ownershipType" required>
-                    <option value="" selected disabled>
-                      Select ownership type
-                    </option>
-                    <option value="owned">Owned</option>
-                    <option value="leased">Leased</option>
-                    <option value="rented">Rented</option>
-                    <option value="family">Family Land</option>
-                    <option value="cooperative">Cooperative</option>
-                  </select>
-                </div>
+                    <label for="ownershipTypeDropdown" class="form-label">Ownership Type</label>
+                    <div class="dropdown position-relative">
+                      <input
+                        type="text"
+                        class="form-control dropdown-toggle"
+                        id="ownershipTypeDropdown"
+                        placeholder="Select ownership type"
+                        data-bs-toggle="dropdown"
+                        aria-expanded="false"
+                        readonly
+                        style="cursor: pointer;"
+                      />
+                      <i class="bi bi-chevron-down dropdown-chevron"></i>
+                      <ul class="dropdown-menu w-100" aria-labelledby="ownershipTypeDropdown">
+                        <li><a class="dropdown-item" href="#">Owned</a></li>
+                        <li><a class="dropdown-item" href="#">Leased</a></li>
+                        <li><a class="dropdown-item" href="#">Rented</a></li>
+                        <li><a class="dropdown-item" href="#">Family Land</a></li>
+                        <li><a class="dropdown-item" href="#">Cooperative</a></li>
+                      </ul>
+                    </div>
+                    <input type="hidden" name="ownership_type" id="ownershipType" />
+                  </div>
+                </div>         
               </div>
-              <div class="d-flex justify-content-end">
+              <div class="d-flex justify-content-end mb-3 me-4">
                 <button
                   type="button"
                   class="btn btn-success next-step"
@@ -119,28 +162,40 @@
             </div>
 
             <!-- Step 2: Location Details -->
-            <div class="form-section" id="step2" style="display: none">
-              <h4 class="form-section-title">Farm Location Details</h4>
+            <div class="form-section" id="step2" style="display: none;">
+              <h4 class="mt-4 mb-3 border-bottom pb-2 form-section-title">
+                <i class="bi bi-geo-alt me-2"></i>Farm Location Details
+              </h4>
               <div class="row">
                 <div class="col-md-6 mb-3">
-                  <label for="country" class="form-label"
-                    >Country <span class="text-danger">*</span></label
-                  >
-                  <select class="form-select" id="country" required>
-                    <option value="" selected disabled>Select country</option>
-                    <option value="india">India</option>
-                    <option value="usa">United States</option>
-                    <option value="uk">United Kingdom</option>
-                    <option value="australia">Australia</option>
-                    <option value="brazil">Brazil</option>
-                    <option value="nigeria">Nigeria</option>
-                    <option value="other">Other</option>
-                  </select>
+                  <label for="countryDropdown" class="form-label">Country</label>
+                  <div class="dropdown position-relative">
+                    <input
+                      type="text"
+                      class="form-control dropdown-toggle"
+                      id="countryDropdown"
+                      placeholder="Select country"
+                      data-bs-toggle="dropdown"
+                      aria-expanded="false"
+                      readonly
+                      style="cursor: pointer;"
+                    />
+                    <i class="bi bi-chevron-down dropdown-chevron"></i>
+                    <ul class="dropdown-menu w-100" aria-labelledby="countryDropdown">
+                      <li><a class="dropdown-item" href="#">India</a></li>
+                      <li><a class="dropdown-item" href="#">United States</a></li>
+                      <li><a class="dropdown-item" href="#">United Kingdom</a></li>
+                      <li><a class="dropdown-item" href="#">Australia</a></li>
+                      <li><a class="dropdown-item" href="#">Brazil</a></li>
+                      <li><a class="dropdown-item" href="#">Nigeria</a></li>
+                      <li><a class="dropdown-item" href="#">Other</a></li>
+                    </ul>
+                  </div>
+                  <input type="hidden" name="country" id="country" />
                 </div>
+            
                 <div class="col-md-6 mb-3">
-                  <label for="state" class="form-label"
-                    >State/Region <span class="text-danger">*</span></label
-                  >
+                  <label for="state" class="form-label">State/Region</label>
                   <input
                     type="text"
                     class="form-control"
@@ -152,9 +207,7 @@
               </div>
               <div class="row">
                 <div class="col-md-6 mb-3">
-                  <label for="city" class="form-label"
-                    >City/District <span class="text-danger">*</span></label
-                  >
+                  <label for="city" class="form-label">City/District</label>
                   <input
                     type="text"
                     class="form-control"
@@ -164,9 +217,7 @@
                   />
                 </div>
                 <div class="col-md-6 mb-3">
-                  <label for="zipCode" class="form-label"
-                    >ZIP/Postal Code</label
-                  >
+                  <label for="zipCode" class="form-label">ZIP/Postal Code</label>
                   <input
                     type="text"
                     class="form-control"
@@ -177,9 +228,7 @@
               </div>
               <div class="row">
                 <div class="col-md-12 mb-3">
-                  <label for="address" class="form-label"
-                    >Full Address <span class="text-danger">*</span></label
-                  >
+                  <label for="address" class="form-label">Full Address </label>
                   <textarea
                     class="form-control"
                     id="address"
@@ -228,27 +277,36 @@
             </div>
 
             <!-- Step 3: Crop Details -->
-            <div class="form-section" id="step3" style="display: none">
+            <div class="form-section" id="step3" style="display: none;">
               <h4 class="form-section-title">Crop Information</h4>
               <div class="row">
                 <div class="col-md-6 mb-3">
-                  <label for="primaryCrop" class="form-label"
-                    >Primary Crop <span class="text-danger">*</span></label
-                  >
-                  <select class="form-select" id="primaryCrop" required>
-                    <option value="" selected disabled>
-                      Select primary crop
-                    </option>
-                    <option value="wheat">Wheat</option>
-                    <option value="rice">Rice</option>
-                    <option value="corn">Corn</option>
-                    <option value="soybean">Soybean</option>
-                    <option value="cotton">Cotton</option>
-                    <option value="vegetables">Vegetables</option>
-                    <option value="fruits">Fruits</option>
-                    <option value="other">Other</option>
-                  </select>
-                </div>
+              <label for="primaryCropDropdown" class="form-label">Primary Crop</label>
+              <div class="dropdown position-relative">
+                <input
+                  type="text"
+                  class="form-control dropdown-toggle"
+                  id="primaryCropDropdown"
+                  placeholder="Select primary crop"
+                  data-bs-toggle="dropdown"
+                  aria-expanded="false"
+                  readonly
+                  style="cursor: pointer;"
+                />
+                <i class="bi bi-chevron-down dropdown-chevron"></i>
+                <ul class="dropdown-menu w-100" aria-labelledby="primaryCropDropdown">
+                  <li><a class="dropdown-item" href="#">Wheat</a></li>
+                  <li><a class="dropdown-item" href="#">Rice</a></li>
+                  <li><a class="dropdown-item" href="#">Corn</a></li>
+                  <li><a class="dropdown-item" href="#">Soybean</a></li>
+                  <li><a class="dropdown-item" href="#">Cotton</a></li>
+                  <li><a class="dropdown-item" href="#">Vegetables</a></li>
+                  <li><a class="dropdown-item" href="#">Fruits</a></li>
+                  <li><a class="dropdown-item" href="#">Other</a></li>
+                </ul>
+              </div>
+              <input type="hidden" name="primary_crop" id="primaryCrop" />
+            </div>
                 <div class="col-md-6 mb-3">
                   <label class="form-label">Additional Crops</label>
                   <div class="d-flex flex-wrap">
@@ -293,42 +351,58 @@
               </div>
               <div class="row">
                 <div class="col-md-6 mb-3">
-                  <label for="farmingMethod" class="form-label"
-                    >Farming Method <span class="text-danger">*</span></label
-                  >
-                  <select class="form-select" id="farmingMethod" required>
-                    <option value="" selected disabled>
-                      Select farming method
-                    </option>
-                    <option value="traditional">Traditional</option>
-                    <option value="modern">Modern</option>
-                    <option value="organic">Organic</option>
-                    <option value="hydroponic">Hydroponic</option>
-                    <option value="aquaponic">Aquaponic</option>
-                    <option value="other">Other</option>
-                  </select>
+                  <label for="farmingMethodDropdown" class="form-label">Farming Method</label>
+                  <div class="dropdown position-relative">
+                    <input
+                      type="text"
+                      class="form-control dropdown-toggle"
+                      id="farmingMethodDropdown"
+                      placeholder="Select farming method"
+                      data-bs-toggle="dropdown"
+                      aria-expanded="false"
+                      readonly
+                      style="cursor: pointer;"
+                    />
+                    <i class="bi bi-chevron-down dropdown-chevron"></i>
+                    <ul class="dropdown-menu w-100" aria-labelledby="farmingMethodDropdown">
+                      <li><a class="dropdown-item" href="#">Traditional</a></li>
+                      <li><a class="dropdown-item" href="#">Modern</a></li>
+                      <li><a class="dropdown-item" href="#">Organic</a></li>
+                      <li><a class="dropdown-item" href="#">Hydroponic</a></li>
+                      <li><a class="dropdown-item" href="#">Aquaponic</a></li>
+                      <li><a class="dropdown-item" href="#">Other</a></li>
+                    </ul>
+                  </div>
+                  <input type="hidden" name="farming_method"id="farmingMethod"/>
                 </div>
                 <div class="col-md-6 mb-3">
-                  <label for="irrigationMethod" class="form-label"
-                    >Irrigation Method</label
-                  >
-                  <select class="form-select" id="irrigationMethod">
-                    <option value="" selected disabled>
-                      Select irrigation method
-                    </option>
-                    <option value="rainfed">Rainfed</option>
-                    <option value="flood">Flood Irrigation</option>
-                    <option value="sprinkler">Sprinkler System</option>
-                    <option value="drip">Drip Irrigation</option>
-                    <option value="other">Other</option>
-                  </select>
+                  <label for="irrigationMethodDropdown" class="form-label">Irrigation Method</label>
+                  <div class="dropdown position-relative">
+                    <input
+                      type="text"
+                      class="form-control dropdown-toggle"
+                      id="irrigationMethodDropdown"
+                      placeholder="Select irrigation method"
+                      data-bs-toggle="dropdown"
+                      aria-expanded="false"
+                      readonly
+                      style="cursor: pointer;"
+                    />
+                    <i class="bi bi-chevron-down dropdown-chevron"></i>
+                    <ul class="dropdown-menu w-100" aria-labelledby="irrigationMethodDropdown">
+                      <li><a class="dropdown-item" href="#">Rainfed</a></li>
+                      <li><a class="dropdown-item" href="#">Flood Irrigation</a></li>
+                      <li><a class="dropdown-item" href="#">Sprinkler System</a></li>
+                      <li><a class="dropdown-item" href="#">Drip Irrigation</a></li>
+                      <li><a class="dropdown-item" href="#">Other</a></li>
+                    </ul>
+                  </div>
+                  <input type="hidden" name="irrigation_method" id="irrigationMethod"/>
                 </div>
               </div>
               <div class="row">
                 <div class="col-md-6 mb-3">
-                  <label for="farmSize" class="form-label"
-                    >Farm Size <span class="text-danger">*</span></label
-                  >
+                  <label for="farmSize" class="form-label">Farm Size </label>
                   <div class="input-group farm-size-input">
                     <input
                       type="number"
@@ -345,17 +419,35 @@
                   </div>
                 </div>
                 <div class="col-md-6 mb-3">
-                  <label for="soilType" class="form-label">Soil Type</label>
-                  <select class="form-select" id="soilType">
-                    <option value="" selected disabled>Select soil type</option>
-                    <option value="sandy">Sandy</option>
-                    <option value="clay">Clay</option>
-                    <option value="silt">Silt</option>
-                    <option value="loam">Loam</option>
-                    <option value="peat">Peat</option>
-                    <option value="chalk">Chalk</option>
-                    <option value="other">Other</option>
-                  </select>
+                  <label for="soilTypeDropdown" class="form-label"
+                    >Soil Type</label
+                  >
+                  <div class="dropdown position-relative">
+                    <input
+                      type="text"
+                      class="form-control dropdown-toggle"
+                      id="soilTypeDropdown"
+                      placeholder="Select soil type"
+                      data-bs-toggle="dropdown"
+                      aria-expanded="false"
+                      readonly
+                      style="cursor: pointer;"
+                    />
+                    <i class="bi bi-chevron-down dropdown-chevron"></i>
+                    <ul
+                      class="dropdown-menu w-100"
+                      aria-labelledby="soilTypeDropdown"
+                    >
+                      <li><a class="dropdown-item" href="#">Sandy</a></li>
+                      <li><a class="dropdown-item" href="#">Clay</a></li>
+                      <li><a class="dropdown-item" href="#">Silt</a></li>
+                      <li><a class="dropdown-item" href="#">Loam</a></li>
+                      <li><a class="dropdown-item" href="#">Peat</a></li>
+                      <li><a class="dropdown-item" href="#">Chalk</a></li>
+                      <li><a class="dropdown-item" href="#">Other</a></li>
+                    </ul>
+                  </div>
+                  <input type="hidden" name="soil_type" id="soilType" />
                 </div>
               </div>
               <div class="d-flex justify-content-between">
@@ -575,7 +667,7 @@
                         <i class="bi bi-exclamation-triangle-fill me-2"></i>
                         Confirm Deactivation
                       </h5>
-                      <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal" aria-label="Close"></button>
+                      <button type="button" class="btn-close btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                   </div>
                   <div class="modal-body">
                       <p>Are you sure you want to deactivate the farm "<strong id="farmNameToDeactivate"></strong>"?</p>
@@ -726,4 +818,28 @@
     </div>
   </div>
 </section>
+
+<script>
+  document.addEventListener('DOMContentLoaded', function () {
+    const dropdownItems = document.querySelectorAll('.dropdown-item');
+    dropdownItems.forEach(item => {
+      item.addEventListener('click', function (e) {
+        e.preventDefault();
+
+        const selectedText = this.textContent;
+        const dropdownContainer = this.closest('.dropdown');
+        const visibleInput = dropdownContainer.querySelector('.dropdown-toggle');
+        const hiddenInput = dropdownContainer.parentElement.querySelector('input[type="hidden"]');
+
+        if (visibleInput) {
+          visibleInput.value = selectedText;
+        }
+
+        if (hiddenInput) {
+          hiddenInput.value = selectedText.trim();
+        }
+      });
+    });
+  });
+</script>
 {% endblock content %}

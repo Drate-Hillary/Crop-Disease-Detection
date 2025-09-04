@@ -1,54 +1,54 @@
-// document.addEventListener("DOMContentLoaded", function () {
-//   // --- Initialize tooltips ---
-//   var tooltipTriggerList = [].slice.call(
-//     document.querySelectorAll('[data-bs-toggle="tooltip"]')
-//   );
-//   var tooltipList = tooltipTriggerList.map(function (tooltipTriggerEl) {
-//     return new bootstrap.Tooltip(tooltipTriggerEl);
-//   });
+document.addEventListener("DOMContentLoaded", function () {
+  // --- Initialize tooltips ---
+  var tooltipTriggerList = [].slice.call(
+    document.querySelectorAll('[data-bs-toggle="tooltip"]')
+  );
+  var tooltipList = tooltipTriggerList.map(function (tooltipTriggerEl) {
+    return new bootstrap.Tooltip(tooltipTriggerEl);
+  });
 
-//   // --- Handles sidebar navigation ---
-//   const sidebarLinks = document.querySelectorAll('.sidebar .nav-link[href^="#"]');
-//   const contentSections = document.querySelectorAll(".dashboard-section, .content-section");
+  // --- Handles sidebar navigation ---
+  const sidebarLinks = document.querySelectorAll('.sidebar .nav-link[href^="#"]');
+  const contentSections = document.querySelectorAll(".dashboard-section, .content-section");
 
-//   // Function to hide all content sections
-//   function hideAllSections() {
-//     contentSections.forEach((section) => {
-//       section.style.display = "none";
-//     });
-//   }
+  // Function to hide all content sections
+  function hideAllSections() {
+    contentSections.forEach((section) => {
+      section.style.display = "none";
+    });
+  }
 
-//   // Find the initially active link and show its corresponding section
-//   const activeLink = document.querySelector('.sidebar .nav-link.active');
-//   if (activeLink) {
-//     const activeSectionId = activeLink.getAttribute("href").substring(1);
-//     const activeSection = document.getElementById(activeSectionId);
-//     if (activeSection) {
-//       activeSection.style.display = "block"; // Or ""
-//     }
-//   }
+  // Find the initially active link and show its corresponding section
+  const activeLink = document.querySelector('.sidebar .nav-link.active');
+  if (activeLink) {
+    const activeSectionId = activeLink.getAttribute("href").substring(1);
+    const activeSection = document.getElementById(activeSectionId);
+    if (activeSection) {
+      activeSection.style.display = "block"; // Or ""
+    }
+  }
 
-//   // Add click event listeners to sidebar links
-//   sidebarLinks.forEach((link) => {
-//     link.addEventListener("click", function (e) {
-//       e.preventDefault();
+  // Add click event listeners to sidebar links
+  sidebarLinks.forEach((link) => {
+    link.addEventListener("click", function (e) {
+      e.preventDefault();
 
-//       // Remove 'active' class from all links and hide all sections
-//       sidebarLinks.forEach((l) => l.classList.remove("active"));
-//       hideAllSections();
+      // Remove 'active' class from all links and hide all sections
+      sidebarLinks.forEach((l) => l.classList.remove("active"));
+      hideAllSections();
 
-//       // Add 'active' class to the clicked link
-//       this.classList.add("active");
+      // Add 'active' class to the clicked link
+      this.classList.add("active");
 
-//       // Show the target section
-//       const targetId = this.getAttribute("href").substring(1);
-//       const targetSection = document.getElementById(targetId);
-//       if (targetSection) {
-//         targetSection.style.display = "block"; // Or ""
-//       }
-//     });
-//   });
-// });
+      // Show the target section
+      const targetId = this.getAttribute("href").substring(1);
+      const targetSection = document.getElementById(targetId);
+      if (targetSection) {
+        targetSection.style.display = "block"; // Or ""
+      }
+    });
+  });
+});
 
 // Handle image modal
 document.addEventListener("DOMContentLoaded", function () {

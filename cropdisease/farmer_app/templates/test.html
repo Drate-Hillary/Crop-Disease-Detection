@@ -4,9 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Farm Registration</title>
-    <!-- Bootstrap 5 CSS -->
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet">
-    <!-- Bootstrap Icons -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.0/font/bootstrap-icons.css">
     <style>
         .step-indicator {
@@ -17,53 +15,56 @@
             height: 40px;
             line-height: 40px;
             border-radius: 50%;
-            background-color: #e9ecef;
-            display: inline-block;
-            margin-bottom: 5px;
+            background-color: #f8f9fa;
+            border: 2px solid #dee2e6;
+            margin: 0 auto 10px;
             font-weight: bold;
         }
         .step.active .step-circle {
-            background-color: #0d6efd;
+            background-color: #198754;
             color: white;
+            border-color: #198754;
         }
         .upload-card {
             border: 2px dashed #dee2e6;
             border-radius: 10px;
+            transition: all 0.3s;
+        }
+        .upload-card:hover {
+            border-color: #198754;
         }
         .form-section-title {
-            border-bottom: 2px solid #0d6efd;
+            color: #198754;
             padding-bottom: 10px;
+            border-bottom: 2px solid #e9ecef;
             margin-bottom: 20px;
         }
         .crop-selection-pill {
             border-radius: 20px;
         }
-        .farm-size-input .form-select {
-            width: 120px;
+        .farm-detail-icon {
+            width: 24px;
+            margin-right: 10px;
+            color: #198754;
+        }
+        .farm-detail-label {
+            min-width: 140px;
+            font-weight: 500;
         }
         .location-map {
             background-color: #f8f9fa;
             border-radius: 5px;
-            overflow: hidden;
+            border: 1px solid #dee2e6;
         }
-        .list-group-item h6 {
-            color: #0d6efd;
+        .list-group-item {
+            transition: all 0.2s;
         }
-        .farm-detail-label {
-            font-weight: 600;
-            color: #495057;
-            width: 140px;
-        }
-        .farm-detail-icon {
-            width: 24px;
-            text-align: center;
-            margin-right: 8px;
-            color: #6c757d;
+        .list-group-item:hover {
+            background-color: #f8f9fa;
         }
     </style>
 </head>
-<body class="bg-light">
-    <!-- Farm Registration Section -->
+<body>
     <section id="farm-registration-section" class="py-5">
         <div class="container">
             <!-- Top Navigation -->
@@ -110,15 +111,15 @@
                                     </div>
                                     <div class="col-md-6 mb-3">
                                         <label for="farmType" class="form-label">Farm Type <span class="text-danger">*</span></label>
-                                        <select class="form-select" id="farmType" required>
-                                            <option value="" selected disabled>Select farm type</option>
-                                            <option value="organic">Organic Farm</option>
-                                            <option value="commercial">Commercial Farm</option>
-                                            <option value="subsistence">Subsistence Farm</option>
-                                            <option value="greenhouse">Greenhouse</option>
-                                            <option value="hydroponic">Hydroponic Farm</option>
-                                            <option value="other">Other</option>
-                                        </select>
+                                        <input class="form-control" list="farmTypeOptions" id="farmType" placeholder="Select or type farm type" required>
+                                        <datalist id="farmTypeOptions">
+                                            <option value="Organic Farm">
+                                            <option value="Commercial Farm">
+                                            <option value="Subsistence Farm">
+                                            <option value="Greenhouse">
+                                            <option value="Hydroponic Farm">
+                                            <option value="Other">
+                                        </datalist>
                                     </div>
                                 </div>
                                 <div class="row">
@@ -134,18 +135,18 @@
                                     </div>
                                     <div class="col-md-6 mb-3">
                                         <label for="ownershipType" class="form-label">Ownership Type <span class="text-danger">*</span></label>
-                                        <select class="form-select" id="ownershipType" required>
-                                            <option value="" selected disabled>Select ownership type</option>
-                                            <option value="owned">Owned</option>
-                                            <option value="leased">Leased</option>
-                                            <option value="rented">Rented</option>
-                                            <option value="family">Family Land</option>
-                                            <option value="cooperative">Cooperative</option>
-                                        </select>
+                                        <input class="form-control" list="ownershipTypeOptions" id="ownershipType" placeholder="Select or type ownership type" required>
+                                        <datalist id="ownershipTypeOptions">
+                                            <option value="Owned">
+                                            <option value="Leased">
+                                            <option value="Rented">
+                                            <option value="Family Land">
+                                            <option value="Cooperative">
+                                        </datalist>
                                     </div>
                                 </div>
                                 <div class="d-flex justify-content-end">
-                                    <button type="button" class="btn btn-primary next-step" data-next="step2">
+                                    <button type="button" class="btn btn-success next-step" data-next="step2">
                                         Next <i class="bi bi-chevron-right"></i>
                                     </button>
                                 </div>
@@ -157,16 +158,16 @@
                                 <div class="row">
                                     <div class="col-md-6 mb-3">
                                         <label for="country" class="form-label">Country <span class="text-danger">*</span></label>
-                                        <select class="form-select" id="country" required>
-                                            <option value="" selected disabled>Select country</option>
-                                            <option value="india">India</option>
-                                            <option value="usa">United States</option>
-                                            <option value="uk">United Kingdom</option>
-                                            <option value="australia">Australia</option>
-                                            <option value="brazil">Brazil</option>
-                                            <option value="nigeria">Nigeria</option>
-                                            <option value="other">Other</option>
-                                        </select>
+                                        <input class="form-control" list="countryOptions" id="country" placeholder="Select or type country" required>
+                                        <datalist id="countryOptions">
+                                            <option value="India">
+                                            <option value="United States">
+                                            <option value="United Kingdom">
+                                            <option value="Australia">
+                                            <option value="Brazil">
+                                            <option value="Nigeria">
+                                            <option value="Other">
+                                        </datalist>
                                     </div>
                                     <div class="col-md-6 mb-3">
                                         <label for="state" class="form-label">State/Region <span class="text-danger">*</span></label>
@@ -193,17 +194,17 @@
                                     <div class="col-md-12 mb-4">
                                         <label class="form-label">Location on Map</label>
                                         <div class="location-map" style="height: 300px">
-                                            <div id="map" style="height: 100%; background-color: #e9ecef; display: flex; align-items: center; justify-content: center; color: #6c757d;">
-                                                <i class="bi bi-map me-2"></i> Map will appear here
+                                            <div id="map" style="height: 100%; background-color: #e9ecef; display: flex; justify-content: center; align-items: center; color: #6c757d;">
+                                                <i class="bi bi-map me-2"></i>Map will be displayed here
                                             </div>
                                         </div>
                                         <div class="mt-2">
-                                            <button type="button" class="btn btn-outline-primary me-2" id="useCurrentLocation">
+                                            <button type="button" class="btn btn-light me-2" id="useCurrentLocation">
                                                 <i class="bi bi-geo-alt"></i> Use Current Location
                                             </button>
                                             <input type="hidden" id="latitude" name="latitude" />
                                             <input type="hidden" id="longitude" name="longitude" />
-                                            <div id="locationFeedback" class="text-muted mt-2"></div>
+                                            <div id="locationFeedback" class="text-muted mt-2">Location not selected</div>
                                         </div>
                                     </div>
                                 </div>
@@ -211,7 +212,7 @@
                                     <button type="button" class="btn btn-outline-secondary prev-step" data-prev="step1">
                                         <i class="bi bi-chevron-left"></i> Previous
                                     </button>
-                                    <button type="button" class="btn btn-primary next-step" data-next="step3">
+                                    <button type="button" class="btn btn-success next-step" data-next="step3">
                                         Next <i class="bi bi-chevron-right"></i>
                                     </button>
                                 </div>
@@ -223,17 +224,17 @@
                                 <div class="row">
                                     <div class="col-md-6 mb-3">
                                         <label for="primaryCrop" class="form-label">Primary Crop <span class="text-danger">*</span></label>
-                                        <select class="form-select" id="primaryCrop" required>
-                                            <option value="" selected disabled>Select primary crop</option>
-                                            <option value="wheat">Wheat</option>
-                                            <option value="rice">Rice</option>
-                                            <option value="corn">Corn</option>
-                                            <option value="soybean">Soybean</option>
-                                            <option value="cotton">Cotton</option>
-                                            <option value="vegetables">Vegetables</option>
-                                            <option value="fruits">Fruits</option>
-                                            <option value="other">Other</option>
-                                        </select>
+                                        <input class="form-control" list="primaryCropOptions" id="primaryCrop" placeholder="Select or type primary crop" required>
+                                        <datalist id="primaryCropOptions">
+                                            <option value="Wheat">
+                                            <option value="Rice">
+                                            <option value="Corn">
+                                            <option value="Soybean">
+                                            <option value="Cotton">
+                                            <option value="Vegetables">
+                                            <option value="Fruits">
+                                            <option value="Other">
+                                        </datalist>
                                     </div>
                                     <div class="col-md-6 mb-3">
                                         <label class="form-label">Additional Crops</label>
@@ -262,26 +263,26 @@
                                 <div class="row">
                                     <div class="col-md-6 mb-3">
                                         <label for="farmingMethod" class="form-label">Farming Method <span class="text-danger">*</span></label>
-                                        <select class="form-select" id="farmingMethod" required>
-                                            <option value="" selected disabled>Select farming method</option>
-                                            <option value="traditional">Traditional</option>
-                                            <option value="modern">Modern</option>
-                                            <option value="organic">Organic</option>
-                                            <option value="hydroponic">Hydroponic</option>
-                                            <option value="aquaponic">Aquaponic</option>
-                                            <option value="other">Other</option>
-                                        </select>
+                                        <input class="form-control" list="farmingMethodOptions" id="farmingMethod" placeholder="Select or type farming method" required>
+                                        <datalist id="farmingMethodOptions">
+                                            <option value="Traditional">
+                                            <option value="Modern">
+                                            <option value="Organic">
+                                            <option value="Hydroponic">
+                                            <option value="Aquaponic">
+                                            <option value="Other">
+                                        </datalist>
                                     </div>
                                     <div class="col-md-6 mb-3">
                                         <label for="irrigationMethod" class="form-label">Irrigation Method</label>
-                                        <select class="form-select" id="irrigationMethod">
-                                            <option value="" selected disabled>Select irrigation method</option>
-                                            <option value="rainfed">Rainfed</option>
-                                            <option value="flood">Flood Irrigation</option>
-                                            <option value="sprinkler">Sprinkler System</option>
-                                            <option value="drip">Drip Irrigation</option>
-                                            <option value="other">Other</option>
-                                        </select>
+                                        <input class="form-control" list="irrigationMethodOptions" id="irrigationMethod" placeholder="Select or type irrigation method">
+                                        <datalist id="irrigationMethodOptions">
+                                            <option value="Rainfed">
+                                            <option value="Flood Irrigation">
+                                            <option value="Sprinkler System">
+                                            <option value="Drip Irrigation">
+                                            <option value="Other">
+                                        </datalist>
                                     </div>
                                 </div>
                                 <div class="row">
@@ -289,32 +290,33 @@
                                         <label for="farmSize" class="form-label">Farm Size <span class="text-danger">*</span></label>
                                         <div class="input-group farm-size-input">
                                             <input type="number" class="form-control" id="farmSize" required placeholder="Enter farm size" />
-                                            <select class="form-select" id="sizeUnit" required>
-                                                <option value="acres" selected>Acres</option>
-                                                <option value="hectares">Hectares</option>
-                                                <option value="sqm">Square Meters</option>
-                                            </select>
+                                            <input class="form-control" list="sizeUnitOptions" id="sizeUnit" value="Acres" required>
+                                            <datalist id="sizeUnitOptions">
+                                                <option value="Acres">
+                                                <option value="Hectares">
+                                                <option value="Square Meters">
+                                            </datalist>
                                         </div>
                                     </div>
                                     <div class="col-md-6 mb-3">
                                         <label for="soilType" class="form-label">Soil Type</label>
-                                        <select class="form-select" id="soilType">
-                                            <option value="" selected disabled>Select soil type</option>
-                                            <option value="sandy">Sandy</option>
-                                            <option value="clay">Clay</option>
-                                            <option value="silt">Silt</option>
-                                            <option value="loam">Loam</option>
-                                            <option value="peat">Peat</option>
-                                            <option value="chalk">Chalk</option>
-                                            <option value="other">Other</option>
-                                        </select>
+                                        <input class="form-control" list="soilTypeOptions" id="soilType" placeholder="Select or type soil type">
+                                        <datalist id="soilTypeOptions">
+                                            <option value="Sandy">
+                                            <option value="Clay">
+                                            <option value="Silt">
+                                            <option value="Loam">
+                                            <option value="Peat">
+                                            <option value="Chalk">
+                                            <option value="Other">
+                                        </datalist>
                                     </div>
                                 </div>
                                 <div class="d-flex justify-content-between">
                                     <button type="button" class="btn btn-outline-secondary prev-step" data-prev="step2">
                                         <i class="bi bi-chevron-left"></i> Previous
                                     </button>
-                                    <button type="button" class="btn btn-primary next-step" data-next="step4">
+                                    <button type="button" class="btn btn-success next-step" data-next="step4">
                                         Next <i class="bi bi-chevron-right"></i>
                                     </button>
                                 </div>
@@ -431,12 +433,11 @@
                                     </p>
                                     <small class="text-muted">Registered: 1 Month ago</small>
                                 </div>
-                            
                                 <div class="d-flex gap-2">
-                                    <button type="button" class="btn btn-sm btn-outline-primary" title="View Details" data-bs-toggle="modal" data-bs-target="#farmDetailsModal" data-farm-id="1">
+                                    <button type="button" class="btn btn-sm btn-outline-primary" title="View Details" data-bs-toggle="modal" data-bs-target="#farmDetailsModal">
                                         <i class="bi bi-binoculars"></i>
                                     </button>
-                                    <button type="button" class="btn btn-sm btn-outline-danger" title="Delete">
+                                    <button type="button" class="btn btn-sm btn-warning" title="deactivate">
                                         <i class="bi bi-trash"></i>
                                     </button>
                                 </div>
@@ -456,12 +457,11 @@
                                     </p>
                                     <small class="text-muted">Registered: 3 Months ago</small>
                                 </div>
-                            
                                 <div class="d-flex gap-2">
-                                    <button type="button" class="btn btn-sm btn-outline-primary" title="View Details" data-bs-toggle="modal" data-bs-target="#farmDetailsModal" data-farm-id="2">
+                                    <button type="button" class="btn btn-sm btn-outline-primary" title="View Details">
                                         <i class="bi bi-binoculars"></i>
                                     </button>
-                                    <button type="button" class="btn btn-sm btn-outline-danger" title="Delete">
+                                    <button type="button" class="btn btn-sm btn-warning" title="deactivate">
                                         <i class="bi bi-trash"></i>
                                     </button>
                                 </div>
@@ -475,17 +475,16 @@
                                     </div>
                                     <p class="mb-1 text-muted">
                                         <span class="me-3"><i class="bi bi-rulers me-1"></i> 5 Acres</span>
-                                        <span class="me-3"><i class="bi bi-flower1 me-1"></i> Fruits</span>
+                                        <span class="me-3"><i class="bi bi-box-seam me-1"></i> Fruits</span>
                                         <span><i class="bi bi-gear me-1"></i> Modern Farming</span>
                                     </p>
                                     <small class="text-muted">Registered: 2 years ago</small>
                                 </div>
-                            
                                 <div class="d-flex gap-2">
-                                    <button type="button" class="btn btn-sm btn-outline-primary" title="View Details" data-bs-toggle="modal" data-bs-target="#farmDetailsModal" data-farm-id="3">
+                                    <button type="button" class="btn btn-sm btn-outline-primary" title="View Details">
                                         <i class="bi bi-binoculars"></i>
                                     </button>
-                                    <button type="button" class="btn btn-sm btn-outline-warning" title="Delete">
+                                    <button type="button" class="btn btn-sm btn-warning" title="Deactivate Farm" data-bs-toggle="modal" data-bs-target="#deactivateFarmModal" data-farm-name="Sunshine Orchard">
                                         <i class="bi bi-trash"></i>
                                     </button>
                                 </div>
@@ -493,294 +492,306 @@
                         </div>
                     </div>
                 </div>
-            </div>
-        </div>
-    </section>
 
-    <!-- Farm Details Modal -->
-    <div class="modal fade" id="farmDetailsModal" tabindex="-1" aria-labelledby="farmDetailsModalLabel" aria-hidden="true">
-        <div class="modal-dialog modal-lg">
-            <div class="modal-content">
-                <div class="modal-header bg-light">
-                    <h5 class="modal-title" id="farmDetailsModalLabel">
-                        <i class="bi bi-info-circle me-2"></i>
-                        Farm Details
-                    </h5>
-                    <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal" aria-label="Close"></button>
-                </div>
-                <div class="modal-body">
-                    <div id="farmDetailsContent" style="display: none;">
-                        <div class="row mb-4">
-                            <div class="col-md-8">
-                                <h4 id="modalFarmName" class="text-success mb-1">Farm Name</h4>
-                                <div class="d-flex align-items-center mb-3">
-                                    <span id="modalFarmStatus" class="badge bg-success me-2">Active</span>
-                                    <small class="text-muted" id="modalRegistrationDate">Registered: 1 Month ago</small>
+                <!-- Deactivate Farm Modal -->
+                <div class="modal fade" id="deactivateFarmModal" tabindex="-1" aria-labelledby="deactivateFarmModalLabel" aria-hidden="true">
+                    <div class="modal-dialog modal-dialog-centered">
+                        <div class="modal-content">
+                            <div class="modal-header bg-light">
+                                <h5 class="modal-title" id="deactivateFarmModalLabel">
+                                    <i class="bi bi-exclamation-triangle-fill me-2"></i>
+                                    Confirm Deactivation
+                                </h5>
+                                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                            </div>
+                            <div class="modal-body">
+                                <p>Are you sure you want to deactivate the farm "<strong id="farmNameToDeactivate"></strong>"?</p>
+                                <div class="alert alert-warning" role="alert">
+                                    <i class="bi bi-info-circle me-2"></i>
+                                    This action will mark the farm as inactive, but it will not be permanently deleted.
                                 </div>
                             </div>
-                            <div class="col-md-4 text-md-end">
-                                <div class="h5 mb-0" id="modalFarmSize">10 Acres</div>
-                                <small class="text-muted">Total Area</small>
-                            </div>
-                        </div>
-
-                        <div class="row">
-                            <div class="col-md-6">
-                                <h6 class="border-bottom pb-2 mb-3">Basic Information</h6>
-                                <div class="d-flex mb-2">
-                                    <span class="farm-detail-icon"><i class="bi bi-house"></i></span>
-                                    <span class="farm-detail-label">Farm Type:</span>
-                                    <span id="modalFarmType">Organic Farm</span>
-                                </div>
-                                <div class="d-flex mb-2">
-                                    <span class="farm-detail-icon"><i class="bi bi-calendar"></i></span>
-                                    <span class="farm-detail-label">Established:</span>
-                                    <span id="modalEstablishedDate">January 2018</span>
-                                </div>
-                                <div class="d-flex mb-2">
-                                    <span class="farm-detail-icon"><i class="bi bi-person-badge"></i></span>
-                                    <span class="farm-detail-label">Ownership:</span>
-                                    <span id="modalOwnershipType">Owned</span>
-                                </div>
-                                <div class="d-flex mb-3">
-                                    <span class="farm-detail-icon"><i class="bi bi-gear"></i></span>
-                                    <span class="farm-detail-label">Farming Method:</span>
-                                    <span id="modalFarmingMethod">Organic</span>
-                                </div>
-                                
-                                <h6 class="border-bottom pb-2 mb-3 mt-4">Crop Details</h6>
-                                <div class="d-flex mb-2">
-                                    <span class="farm-detail-icon"><i class="bi bi-flower1"></i></span>
-                                    <span class="farm-detail-label">Primary Crop:</span>
-                                    <span id="modalPrimaryCrop">Vegetables</span>
-                                </div>
-                                <div class="mb-3">
-                                    <span class="farm-detail-icon"><i class="bi bi-plus-circle"></i></span>
-                                    <span class="farm-detail-label">Additional Crops:</span>
-                                    <div id="modalAdditionalCrops" class="mt-1">
-                                        <span class="badge bg-light text-dark me-1 mb-1">Tomatoes</span>
-                                        <span class="badge bg-light text-dark me-1 mb-1">Lettuce</span>
-                                        <span class="badge bg-light text-dark me-1 mb-1">Carrots</span>
-                                    </div>
-                                </div>
-                            </div>
-                            
-                            <div class="col-md-6">
-                                <h6 class="border-bottom pb-2 mb-3">Location Details</h6>
-                                <div class="d-flex mb-2">
-                                    <span class="farm-detail-icon"><i class="bi bi-geo-alt"></i></span>
-                                    <span class="farm-detail-label">Address:</span>
-                                    <span id="modalAddress">123 Farm Road, Countryside</span>
-                                </div>
-                                <div class="d-flex mb-2">
-                                    <span class="farm-detail-icon"><i class="bi bi-building"></i></span>
-                                    <span class="farm-detail-label">City:</span>
-                                    <span id="modalCity">Green Valley</span>
-                                </div>
-                                <div class="d-flex mb-2">
-                                    <span class="farm-detail-icon"><i class="bi bi-map"></i></span>
-                                    <span class="farm-detail-label">State:</span>
-                                    <span id="modalState">California</span>
-                                </div>
-                                <div class="d-flex mb-2">
-                                    <span class="farm-detail-icon"><i class="bi bi-globe"></i></span>
-                                    <span class="farm-detail-label">Country:</span>
-                                    <span id="modalCountry">United States</span>
-                                </div>
-                                <div class="d-flex mb-3">
-                                    <span class="farm-detail-icon"><i class="bi bi-postcard"></i></span>
-                                    <span class="farm-detail-label">ZIP Code:</span>
-                                    <span id="modalZipCode">12345</span>
-                                </div>
-                                
-                                <h6 class="border-bottom pb-2 mb-3 mt-4">Additional Information</h6>
-                                <div class="d-flex mb-2">
-                                    <span class="farm-detail-icon"><i class="bi bi-droplet"></i></span>
-                                    <span class="farm-detail-label">Irrigation:</span>
-                                    <span id="modalIrrigationMethod">Drip Irrigation</span>
-                                </div>
-                                <div class="d-flex mb-3">
-                                    <span class="farm-detail-icon"><i class="bi bi-cloud-rain"></i></span>
-                                    <span class="farm-detail-label">Soil Type:</span>
-                                    <span id="modalSoilType">Loam</span>
-                                </div>
-                                
-                                <div class="mt-3">
-                                    <span class="farm-detail-label">Description:</span>
-                                    <p id="modalDescription" class="mt-1 p-2 bg-light rounded">This is a beautiful farm specializing in organic vegetables, using sustainable farming practices.</p>
-                                </div>
+                            <div class="modal-footer">
+                                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
+                                <form id="deactivateForm" method="POST" style="display: inline;">
+                                    <input type="hidden" name="farm_id" id="farmIdToDeactivate" value="">
+                                    <button type="submit" class="btn btn-warning">
+                                        <i class="bi bi-trash me-1"></i>
+                                        Deactivate Farm
+                                    </button>
+                                </form>
                             </div>
                         </div>
                     </div>
                 </div>
-                <div class="modal-footer">
-                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-                    <button type="button" class="btn btn-light">
-                        <i class="bi bi-pencil me-1"></i> Edit Details
-                    </button>
+
+                <!-- Farm Details Modal -->
+                <div class="modal fade" id="farmDetailsModal" tabindex="-1" aria-labelledby="farmDetailsModalLabel" aria-hidden="true">
+                    <div class="modal-dialog modal-lg">
+                        <div class="modal-content">
+                            <div class="modal-header bg-light">
+                                <h5 class="modal-title" id="farmDetailsModalLabel">
+                                    <i class="bi bi-info-circle me-2"></i>
+                                    Farm Details
+                                </h5>
+                                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                            </div>
+                            <div class="modal-body">
+                                <div id="farmDetailsContent">
+                                    <div class="row mb-4">
+                                        <div class="col-md-8">
+                                            <h4 id="modalFarmName" class="text-success mb-1">River Side Vegetables</h4>
+                                            <div class="d-flex align-items-center mb-3">
+                                                <span id="modalFarmStatus" class="badge bg-success me-2">Active</span>
+                                                <small class="text-muted" id="modalRegistrationDate">Registered: 1 Month ago</small>
+                                            </div>
+                                        </div>
+                                        <div class="col-md-4 text-md-end">
+                                            <div class="h5 mb-0" id="modalFarmSize">10 Acres</div>
+                                            <small class="text-muted">Total Area</small>
+                                        </div>
+                                    </div>
+
+                                    <div class="row">
+                                        <div class="col-md-6">
+                                            <h6 class="border-bottom pb-2 mb-3">Basic Information</h6>
+                                            <div class="d-flex mb-2">
+                                                <span class="farm-detail-icon"><i class="bi bi-house"></i></span>
+                                                <span class="farm-detail-label">Farm Type:</span>
+                                                <span id="modalFarmType">Organic Farm</span>
+                                            </div>
+                                            <div class="d-flex mb-2">
+                                                <span class="farm-detail-icon"><i class="bi bi-calendar"></i></span>
+                                                <span class="farm-detail-label">Established:</span>
+                                                <span id="modalEstablishedDate">January 2018</span>
+                                            </div>
+                                            <div class="d-flex mb-2">
+                                                <span class="farm-detail-icon"><i class="bi bi-person-badge"></i></span>
+                                                <span class="farm-detail-label">Ownership:</span>
+                                                <span id="modalOwnershipType">Owned</span>
+                                            </div>
+                                            <div class="d-flex mb-3">
+                                                <span class="farm-detail-icon"><i class="bi bi-gear"></i></span>
+                                                <span class="farm-detail-label">Farming Method:</span>
+                                                <span id="modalFarmingMethod">Organic</span>
+                                            </div>
+
+                                            <h6 class="border-bottom pb-2 mb-3 mt-4">Crop Details</h6>
+                                            <div class="d-flex mb-2">
+                                                <span class="farm-detail-icon"><i class="bi bi-flower1"></i></span>
+                                                <span class="farm-detail-label">Primary Crop:</span>
+                                                <span id="modalPrimaryCrop">Vegetables</span>
+                                            </div>
+                                            <div class="mb-3">
+                                                <span class="farm-detail-icon"><i class="bi bi-plus-circle"></i></span>
+                                                <span class="farm-detail-label">Additional Crops:</span>
+                                                <div id="modalAdditionalCrops" class="mt-1">
+                                                    <span class="badge bg-light text-dark me-1 mb-1">Tomatoes</span>
+                                                    <span class="badge bg-light text-dark me-1 mb-1">Lettuce</span>
+                                                    <span class="badge bg-light text-dark me-1 mb-1">Carrots</span>
+                                                </div>
+                                            </div>
+                                        </div>
+
+                                        <div class="col-md-6">
+                                            <h6 class="border-bottom pb-2 mb-3">Location Details</h6>
+                                            <div class="d-flex mb-2">
+                                                <span class="farm-detail-icon"><i class="bi bi-geo-alt"></i></span>
+                                                <span class="farm-detail-label">Address:</span>
+                                                <span id="modalAddress">123 Farm Road, Countryside</span>
+                                            </div>
+                                            <div class="d-flex mb-2">
+                                                <span class="farm-detail-icon"><i class="bi bi-building"></i></span>
+                                                <span class="farm-detail-label">City:</span>
+                                                <span id="modalCity">Green Valley</span>
+                                            </div>
+                                            <div class="d-flex mb-2">
+                                                <span class="farm-detail-icon"><i class="bi bi-map"></i></span>
+                                                <span class="farm-detail-label">State:</span>
+                                                <span id="modalState">California</span>
+                                            </div>
+                                            <div class="d-flex mb-2">
+                                                <span class="farm-detail-icon"><i class="bi bi-globe"></i></span>
+                                                <span class="farm-detail-label">Country:</span>
+                                                <span id="modalCountry">United States</span>
+                                            </div>
+                                            <div class="d-flex mb-3">
+                                                <span class="farm-detail-icon"><i class="bi bi-postcard"></i></span>
+                                                <span class="farm-detail-label">ZIP Code:</span>
+                                                <span id="modalZipCode">12345</span>
+                                            </div>
+
+                                            <h6 class="border-bottom pb-2 mb-3 mt-4">Additional Information</h6>
+                                            <div class="d-flex mb-2">
+                                                <span class="farm-detail-icon"><i class="bi bi-droplet"></i></span>
+                                                <span class="farm-detail-label">Irrigation:</span>
+                                                <span id="modalIrrigationMethod">Drip Irrigation</span>
+                                            </div>
+                                            <div class="d-flex mb-3">
+                                                <span class="farm-detail-icon"><i class="bi bi-cloud-rain"></i></span>
+                                                <span class="farm-detail-label">Soil Type:</span>
+                                                <span id="modalSoilType">Loam</span>
+                                            </div>
+
+                                            <div class="mt-3">
+                                                <span class="farm-detail-label">Description:</span>
+                                                <p id="modalDescription" class="mt-1 p-2 bg-light rounded">This is a beautiful farm specializing in organic vegetables, using sustainable farming practices.</p>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="modal-footer">
+                                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                                <button type="button" class="btn btn-light">
+                                    <i class="bi bi-pencil me-1"></i> Edit Details
+                                </button>
+                            </div>
+                        </div>
+                    </div>
                 </div>
             </div>
         </div>
-    </div>
+    </section>
 
-    <!-- Bootstrap & jQuery JS -->
-    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js"></script>
-    
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
     <script>
-        $(document).ready(function() {
-            // Sample farm data (in a real application, this would come from a server)
-            const farmData = {
-                1: {
-                    name: "River Side Vegetables",
-                    status: "Active",
-                    registrationDate: "1 Month ago",
-                    size: "10 Acres",
-                    type: "Organic Farm",
-                    established: "January 2018",
-                    ownership: "Owned",
-                    farmingMethod: "Organic",
-                    primaryCrop: "Vegetables",
-                    additionalCrops: ["Tomatoes", "Lettuce", "Carrots"],
-                    address: "123 Farm Road, Countryside",
-                    city: "Green Valley",
-                    state: "California",
-                    country: "United States",
-                    zipCode: "12345",
-                    irrigation: "Drip Irrigation",
-                    soilType: "Loam",
-                    description: "This is a beautiful farm specializing in organic vegetables, using sustainable farming practices. Located by the river, it has natural irrigation advantages."
-                },
-                2: {
-                    name: "Green Valley Organic Farm",
-                    status: "Active",
-                    registrationDate: "3 Months ago",
-                    size: "25 Acres",
-                    type: "Commercial Farm",
-                    established: "March 2015",
-                    ownership: "Family Land",
-                    farmingMethod: "Traditional",
-                    primaryCrop: "Wheat",
-                    additionalCrops: ["Corn", "Barley"],
-                    address: "456 Country Lane, Rural Area",
-                    city: "Green Valley",
-                    state: "Nebraska",
-                    country: "United States",
-                    zipCode: "67890",
-                    irrigation: "Sprinkler System",
-                    soilType: "Clay",
-                    description: "A family-owned farm that has been operating for generations. We specialize in wheat and corn production using traditional farming methods."
-                },
-                3: {
-                    name: "Sunshine Orchard",
-                    status: "Inactive",
-                    registrationDate: "2 years ago",
-                    size: "5 Acres",
-                    type: "Orchard",
-                    established: "May 2010",
-                    ownership: "Leased",
-                    farmingMethod: "Modern",
-                    primaryCrop: "Fruits",
-                    additionalCrops: ["Apples", "Peaches", "Pears"],
-                    address: "789 Orchard Road, Sunnyvale",
-                    city: "Sunnyvale",
-                    state: "Florida",
-                    country: "United States",
-                    zipCode: "54321",
-                    irrigation: "Rainfed",
-                    soilType: "Sandy",
-                    description: "A small orchard specializing in seasonal fruits. Currently inactive due to market conditions."
-                }
-            };
-
-            // Handle farm details modal show event
-            $('#farmDetailsModal').on('show.bs.modal', function (event) {
-                var button = $(event.relatedTarget);
-                var farmId = button.data('farm-id');
-                var modal = $(this);
-                
-                // Show loading, hide content
-                $('#modalLoading').show();
-                $('#farmDetailsContent').hide();
-                
-                // Simulate loading delay
-                setTimeout(function() {
-                    const farm = farmData[farmId];
-                    
-                    if (farm) {
-                        // Populate modal with farm data
-                        modal.find('#modalFarmName').text(farm.name);
-                        modal.find('#modalFarmStatus').text(farm.status);
-                        modal.find('#modalFarmStatus').removeClass('bg-success bg-secondary').addClass(farm.status === 'Active' ? 'bg-success' : 'bg-secondary');
-                        modal.find('#modalRegistrationDate').text('Registered: ' + farm.registrationDate);
-                        modal.find('#modalFarmSize').text(farm.size);
-                        modal.find('#modalFarmType').text(farm.type);
-                        modal.find('#modalEstablishedDate').text(farm.established);
-                        modal.find('#modalOwnershipType').text(farm.ownership);
-                        modal.find('#modalFarmingMethod').text(farm.farmingMethod);
-                        modal.find('#modalPrimaryCrop').text(farm.primaryCrop);
-                        
-                        // Additional crops
-                        let additionalCropsHtml = '';
-                        farm.additionalCrops.forEach(crop => {
-                            additionalCropsHtml += `<span class="badge bg-light text-dark me-1 mb-1">${crop}</span>`;
-                        });
-                        modal.find('#modalAdditionalCrops').html(additionalCropsHtml || '<span class="text-muted">None</span>');
-                        
-                        // Location details
-                        modal.find('#modalAddress').text(farm.address);
-                        modal.find('#modalCity').text(farm.city);
-                        modal.find('#modalState').text(farm.state);
-                        modal.find('#modalCountry').text(farm.country);
-                        modal.find('#modalZipCode').text(farm.zipCode);
-                        
-                        // Additional information
-                        modal.find('#modalIrrigationMethod').text(farm.irrigation);
-                        modal.find('#modalSoilType').text(farm.soilType);
-                        modal.find('#modalDescription').text(farm.description);
-                    }
-                    
-                    // Hide loading, show content
-                    $('#modalLoading').hide();
-                    $('#farmDetailsContent').show();
-                }, 500);
-            });
-            
+        document.addEventListener('DOMContentLoaded', function() {
             // Form navigation
-            $('.next-step').click(function() {
-                var nextStep = $(this).data('next');
-                $('.form-section').hide();
-                $('#' + nextStep).show();
-                
-                // Update step indicator
-                $('.step').removeClass('active');
-                $('.step-circle').each(function() {
-                    if ($(this).text() === nextStep.charAt(4)) {
-                        $(this).closest('.step').addClass('active');
+            const formSections = document.querySelectorAll('.form-section');
+            const steps = document.querySelectorAll('.step');
+            
+            // Show first step by default
+            showStep('step1');
+            
+            // Next step buttons
+            document.querySelectorAll('.next-step').forEach(button => {
+                button.addEventListener('click', function() {
+                    const currentSection = this.closest('.form-section');
+                    const nextStepId = this.getAttribute('data-next');
+                    
+                    // Validate current step before proceeding
+                    if (validateStep(currentSection.id)) {
+                        hideAllSteps();
+                        showStep(nextStepId);
+                        updateStepIndicator(nextStepId);
+                        
+                        // If moving to review step, update review content
+                        if (nextStepId === 'step4') {
+                            updateReviewContent();
+                        }
                     }
                 });
             });
             
-            $('.prev-step').click(function() {
-                var prevStep = $(this).data('prev');
-                $('.form-section').hide();
-                $('#' + prevStep).show();
-                
-                // Update step indicator
-                $('.step').removeClass('active');
-                $('.step-circle').each(function() {
-                    if ($(this).text() === prevStep.charAt(4)) {
-                        $(this).closest('.step').addClass('active');
-                    }
+            // Previous step buttons
+            document.querySelectorAll('.prev-step').forEach(button => {
+                button.addEventListener('click', function() {
+                    const prevStepId = this.getAttribute('data-prev');
+                    hideAllSteps();
+                    showStep(prevStepId);
+                    updateStepIndicator(prevStepId);
                 });
             });
             
             // Form submission
-            $('#farmRegistrationForm').on('submit', function(e) {
+            document.getElementById('farmRegistrationForm').addEventListener('submit', function(e) {
                 e.preventDefault();
                 alert('Farm registration submitted successfully!');
-                // Here you would typically send the data to the server
+                // Here you would typically send the data to your server
             });
+            
+            // Deactivate farm modal
+            const deactivateModal = document.getElementById('deactivateFarmModal');
+            if (deactivateModal) {
+                deactivateModal.addEventListener('show.bs.modal', function(event) {
+                    const button = event.relatedTarget;
+                    const farmName = button.getAttribute('data-farm-name');
+                    const modalTitle = deactivateModal.querySelector('#farmNameToDeactivate');
+                    modalTitle.textContent = farmName;
+                });
+            }
+            
+            // Use current location button
+            document.getElementById('useCurrentLocation').addEventListener('click', function() {
+                document.getElementById('locationFeedback').textContent = 'Location access requested...';
+                
+                // Simulate getting location (in a real app, you would use the Geolocation API)
+                setTimeout(function() {
+                    document.getElementById('locationFeedback').textContent = 'Location set to current position';
+                    document.getElementById('latitude').value = '37.7749';
+                    document.getElementById('longitude').value = '-122.4194';
+                }, 1500);
+            });
+            
+            // Crop selection buttons
+            document.querySelectorAll('.crop-selection-pill').forEach(button => {
+                button.addEventListener('click', function() {
+                    this.classList.toggle('btn-outline-secondary');
+                    this.classList.toggle('btn-success');
+                });
+            });
+            
+            // Helper functions
+            function hideAllSteps() {
+                formSections.forEach(section => {
+                    section.style.display = 'none';
+                });
+            }
+            
+            function showStep(stepId) {
+                document.getElementById(stepId).style.display = 'block';
+            }
+            
+            function updateStepIndicator(stepId) {
+                const stepNumber = stepId.replace('step', '');
+                steps.forEach((step, index) => {
+                    if (index < stepNumber - 1) {
+                        step.classList.add('completed');
+                        step.classList.remove('active');
+                    } else if (index === stepNumber - 1) {
+                        step.classList.add('active');
+                        step.classList.remove('completed');
+                    } else {
+                        step.classList.remove('active', 'completed');
+                    }
+                });
+            }
+            
+            function validateStep(stepId) {
+                const inputs = document.querySelectorAll(`#${stepId} [required]`);
+                let isValid = true;
+                
+                inputs.forEach(input => {
+                    if (!input.value.trim()) {
+                        isValid = false;
+                        input.classList.add('is-invalid');
+                    } else {
+                        input.classList.remove('is-invalid');
+                    }
+                });
+                
+                return isValid;
+            }
+            
+            function updateReviewContent() {
+                // Update review content with form values
+                document.getElementById('review-farmName').textContent = document.getElementById('farmName').value || '-';
+                document.getElementById('review-farmType').textContent = document.getElementById('farmType').value || '-';
+                document.getElementById('review-ownershipType').textContent = document.getElementById('ownershipType').value || '-';
+                document.getElementById('review-establishedDate').textContent = document.getElementById('establishedDate').value || '-';
+                document.getElementById('review-farmSize').textContent = 
+                    (document.getElementById('farmSize').value ? document.getElementById('farmSize').value + ' ' + document.getElementById('sizeUnit').value : '-');
+                document.getElementById('review-primaryCrop').textContent = document.getElementById('primaryCrop').value || '-';
+                document.getElementById('review-farmingMethod').textContent = document.getElementById('farmingMethod').value || '-';
+                document.getElementById('review-irrigationMethod').textContent = document.getElementById('irrigationMethod').value || '-';
+                document.getElementById('review-farmDescription').textContent = document.getElementById('farmDescription').value || '-';
+                document.getElementById('review-address').textContent = document.getElementById('address').value || '-';
+                document.getElementById('review-city').textContent = document.getElementById('city').value || '-';
+                document.getElementById('review-state').textContent = document.getElementById('state').value || '-';
+                document.getElementById('review-country').textContent = document.getElementById('country').value || '-';
+                document.getElementById('review-zipCode').textContent = document.getElementById('zipCode').value || '-';
+            }
         });
     </script>
 </body>

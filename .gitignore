@@ -13,6 +13,9 @@ db.sqlite3
 # Environment variables and secrets
 .env
 
+# Media files (uploaded images)
+media/
+
 # VS Code settings
 .vscode/
 

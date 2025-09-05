@@ -142,11 +142,6 @@
                         </div>
                         <div class="dropdown">
                             <button class="btn btn-light dropdown-toggle d-flex align-items-center gap-1" type="button" id="profileDropdown" data-bs-toggle="dropdown">
-                                <!-- {% if user.profile_image %}
-                                  <img src="{{ user.profile_image.url }}" class="profile-image" alt="Profile">
-                                {% else %}
-                                  
-                                {% endif %} -->
 
                                 <span class="profile-initial">{{ user.get_first_initial }}</span>
                             </button>
@@ -197,7 +192,7 @@
                                         <span class="{% if user_growth >= 0 %}trend-up{% else %}trend-down{% endif %}">
                                             <i class="fas fa-arrow-{% if user_growth >= 0 %}up{% else %}down{% endif %}"></i> 
                                             {{ user_growth|floatformat:1 }}%
-                                        </span> from {{ user.date_joined.count }}
+                                        </span> from {{ user_time_since }}{% if user_time_since != 'never' %} ago{% endif %}
                                     </div>
                                 </div>
                             </div>
@@ -205,10 +200,13 @@
                         <div class="col-6 col-md-3">
                             <div class="card card-primary">
                                 <div class="card-body">
-                                    <div class="stat-number">543</div>
-                                    <div class="stat-label d-flex align-items-center gap-1"><i class="fa-solid fa-magnifying-glass"></i>Today's Scans</div>
+                                    <div class="stat-number">{{ total_images }}</div>
+                                    <div class="stat-label d-flex align-items-center gap-1"><i class="fa-solid fa-disease"></i>Total Crop Disease Images</div>
                                     <div class="mt-2">
-                                        <span class="trend-up"><i class="fas fa-arrow-up"></i> 8%</span> from yesterday
+                                        <span class="{% if image_growth >= 0 %}trend-up{% else %}trend-down{% endif %}">
+                                            <i class="fas fa-arrow-{% if image_growth >= 0 %}up{% else %}down{% endif %}"></i> 
+                                            {{ image_growth|floatformat:1 }}%
+                                        </span> from {{ time_since }}{% if time_since != 'never' %} ago{% endif %}
                                     </div>
                                 </div>
                             </div>
@@ -326,56 +324,24 @@
                                 </div>
                                 <div class="card-body">
                                     <ul class="list-group list-group-flush">
-                                        <li
-                                            class="list-group-item d-flex justify-content-between align-items-center flex-wrap">
+                                        {% for activity in activities %}
+                                        <li class="list-group-item d-flex justify-content-between align-items-center flex-wrap">
                                             <div class="me-2">
+                                                {% if activity.type == 'user' %}
                                                 <i class="fas fa-user-plus text-primary me-2"></i>
-                                                New farmer registered
-                                                <div class="text-muted small">John Doe - 10 min ago</div>
+                                                {% else %}
+                                                <i class="fas fa-file-medical text-warning me-2"></i>
+                                                {% endif %}
+                                                {{ activity.message }}
+                                                <div class="text-muted small"><span class="badge rounded-pill text-bg-success">{{ activity.user }}</span> - {{ activity.time }}</div>
                                             </div>
-                                            <a href="#" class="btn btn-sm btn-outline-primary mt-2 mt-sm-0">View</a>
                                         </li>
-                                        <li
-                                            class="list-group-item d-flex justify-content-between align-items-center flex-wrap">
-                                            <div class="me-2">
-                                                <i class="fas fa-bug text-warning me-2"></i>
-                                                Disease detected
-                                                <div class="text-muted small">Tomato Blight - 25 min ago</div>
-                                            </div>
-                                            <a href="#" class="btn btn-sm btn-outline-primary mt-2 mt-sm-0">View</a>
+                                        {% empty %}
+                                        <li class="list-group-item text-center text-muted">
+                                            No recent activities
                                         </li>
-                                        <li
-                                            class="list-group-item d-flex justify-content-between align-items-center flex-wrap">
-                                            <div class="me-2">
-                                                <i class="fas fa-cog text-info me-2"></i>
-                                                System update installed
-                                                <div class="text-muted small">v2.1.3 - 1 hour ago</div>
-                                            </div>
-                                            <a href="#" class="btn btn-sm btn-outline-primary mt-2 mt-sm-0">View</a>
-                                        </li>
-                                        <li
-                                            class="list-group-item d-flex justify-content-between align-items-center flex-wrap">
-                                            <div class="me-2">
-                                                <i class="fas fa-chart-line text-success me-2"></i>
-                                                Model retrained
-                                                <div class="text-muted small">Accuracy improved to 92.4% - 3 hours ago
-                                                </div>
-                                            </div>
-                                            <a href="#" class="btn btn-sm btn-outline-primary mt-2 mt-sm-0">View</a>
-                                        </li>
-                                        <li
-                                            class="list-group-item d-flex justify-content-between align-items-center flex-wrap">
-                                            <div class="me-2">
-                                                <i class="fas fa-exclamation-triangle text-danger me-2"></i>
-                                                High severity diagnosis
-                                                <div class="text-muted small">Wheat Rust - 5 hours ago</div>
-                                            </div>
-                                            <a href="#" class="btn btn-sm btn-outline-primary mt-2 mt-sm-0">View</a>
-                                        </li>
+                                        {% endfor %}
                                     </ul>
-                                    <div class="text-center mt-2">
-                                        <a href="#" class="btn btn-sm btn-outline-secondary">View All Activity</a>
-                                    </div>
                                 </div>
                             </div>
                         </div>

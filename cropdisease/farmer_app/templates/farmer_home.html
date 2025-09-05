@@ -516,6 +516,11 @@
 
     <script>
       document.addEventListener('DOMContentLoaded', function() {
+        // Initialize Bootstrap dropdowns
+        var dropdownElementList = [].slice.call(document.querySelectorAll('.dropdown-toggle'));
+        var dropdownList = dropdownElementList.map(function (dropdownToggleEl) {
+          return new bootstrap.Dropdown(dropdownToggleEl);
+        });
         // Get elements
         const profileImageInput = document.getElementById('profileImageInput');
         const profileImagePreview = document.getElementById('profileImagePreview');
@@ -566,6 +571,16 @@
             profileImageInput.click();
           }
         });
+        
+        // Ensure dropdown works on click
+        const userDropdown = document.getElementById('userDropdown');
+        if (userDropdown) {
+          userDropdown.addEventListener('click', function(e) {
+            e.preventDefault();
+            const dropdown = bootstrap.Dropdown.getInstance(this) || new bootstrap.Dropdown(this);
+            dropdown.toggle();
+          });
+        }
       });
     </script>
 

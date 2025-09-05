@@ -21,7 +21,105 @@
     <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.3/dist/chart.umd.min.js"></script>
     <!-- custom css -->
     <link rel="stylesheet" href="{% static 'CSS/agronomist.css' %}">
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+    
+  <style>
+    /* Custom styles for the profile modal */
+    .modal-content {
+      max-height: 500px;
+      overflow-y: auto;
+    }
+    .profile-image-preview {
+      width: 200px;
+      height: 200px;
+      border-radius: 50%;
+      object-fit: cover;
+      border: 3px solid #dee2e6;
+      transition: all 0.3s ease;
+    }
+    .profile-image-preview:hover {
+      border-color: #4e9525;
+      transform: scale(1.05);
+    }
+    .profile-image-placeholder {
+      width: 80px;
+      height: 80px;
+      border-radius: 50%;
+      aspect-ratio: 1/1;
+      object-fit: cover;
+      background-color: #f8f9fa;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 24px;
+      font-weight: bold;
+      border: 3px solid #dee2e6;
+      transition: all 0.3s ease;
+    }
+    .profile-image-placeholder:hover {
+      border-color: #4e9525;
+      transform: scale(1.05);
+    }
+    .profile-header {
+      background: linear-gradient(135deg, #4e9525 0%, #2d5016 100%);
+      color: white;
+      padding: 15px 20px;
+      text-align: start;
+    }
+    .profile-body {
+      padding: 15px 20px;
+    }
+    .image-upload-label {
+      cursor: pointer;
+      display: block;
+      text-align: center;
+      margin-top: 8px;
+      color: #4e9525;
+      font-size: 0.85rem;
+      transition: all 0.2s ease;
+    }
+    .image-upload-label:hover {
+      text-decoration: underline;
+      transform: scale(1.05);
+    }
+    .btn-success {
+      background-color: #4e9525;
+      border-color: #4e9525;
+    }
+    .btn-success:hover {
+      background-color: #3d7a1d;
+      border-color: #3d7a1d;
+    }
+    .profile-initial {
+      width: 32px;
+      height: 32px;
+      border-radius: 50%;
+      background-color: #4e9525;
+      color: white;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+    .form-control:focus {
+      border-color: #4e9525;
+      box-shadow: 0 0 0 0.25rem rgba(78, 149, 37, 0.25);
+    }
+    .form-floating > .form-control:focus ~ label::after {
+      background-color: transparent;
+    }
+    .modal-dialog-centered {
+      display: flex;
+      align-items: center;
+      min-height: calc(100% - 1rem);
+    }
+    @media (max-width: 768px) {
+      .two-column-form {
+        flex-direction: column;
+      }
+      .modal-content {
+        max-height: 90vh;
+      }
+    }
+  </style>
 </head>
 
 <body>
@@ -31,6 +129,7 @@
       <a class="navbar-brand fw-bold text-success" href="#">
         <i class="fas fa-leaf me-2"></i>CropGuard
       </a>
+      
       <div class="d-flex align-items-center">
         <div class="dropdown me-3">
           <a class="text-reset" href="#" id="notificationDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false" aria-label="Notifications (3 unread)">
@@ -97,7 +196,7 @@
             {% endif %}
           </button>
         
-          <ul class="dropdown-menu dropdown-menu-end shadow-lg border-0" aria-labelledby="profileDropdown">
+          <ul class="dropdown-menu dropdown-menu-end shadow-lg border-0" aria-labelledby="userDropdown">
             <li>
               <div class="px-3 py-2">
                 <h6 class="mb-0">{{ user.user_name }}</h6>
@@ -190,6 +289,11 @@
                   <input type="tel" class="form-control" id="userPhone" name="phone" placeholder="Phone Number" value="{{ user.phone }}">
                   <label for="userPhone"><i class="bi bi-telephone me-1"></i> Phone Number</label>
                 </div>
+
+                <div class="form-floating mb-3">
+                  <input type="number" class="form-control" id="experience" name="experience" placeholder="Years of Experience" value="{{ user.experience }}">
+                  <label for="experience"><i class="bi bi-calendar-check me-1"></i> Phone Number</label>
+                </div>
               
                 <div class="form-floating mb-3">
                   <input type="password" class="form-control" id="newPassword" name="new_password" placeholder="New Password">
@@ -214,14 +318,15 @@
             <!-- Sidebar Navigation -->
             <div class="col-lg-2 p-0 sidebar d-none d-lg-block">
                 <div class="p-3 mt-4">
-                    <div class="input-group me-3 search-group mb-4">
-                        <input type="text" class="form-control" placeholder="Search here...">
-                        <i class="fas fa-search"></i>
-                    </div>
                     <ul class="nav flex-column">
                         <li class="nav-item">
                             <a class="nav-link active" href="#dashboard" id="dashboard-link">
-                                <i class="bi bi-house"></i> Dashboard
+                              <i class="bi bi-house"></i> Dashboard
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="#upload-crop-images" id="upload-link">
+                              <i class="fa-regular fa-images"></i> Crop Images
                             </a>
                         </li>
                         <li class="nav-item">
@@ -500,6 +605,7 @@
                 </section>
 
                 {% block content %}
+                {% include "partials/image_upload.html" %}
                 {% include "partials/field_reports.html" %}
                 {% include "partials/diagnosis_tools.html" %}
                 {% include "partials/advisory_center.html" %}
@@ -513,9 +619,9 @@
 
     <!-- Bootstrap JS Bundle with Popper -->
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+
     <!-- Leaflet JS -->
-    <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"
-        integrity="sha256-20nQCchB9co0qIjJZRGuk2/Z9VM+kNiyxNV1lvTlZBo=" crossorigin=""></script>
+    <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js" integrity="sha256-20nQCchB9co0qIjJZRGuk2/Z9VM+kNiyxNV1lvTlZBo=" crossorigin=""></script>
 
     <!-- Custom JS -->
     <script src="{% static 'agronomist_app/JS/agronomist.js' %}"></script>
@@ -523,46 +629,46 @@
     <!-- Initialize Bootstrap components -->
     <script>
       // --- Handles sidebar navigation ---
-  const sidebarLinks = document.querySelectorAll('.sidebar .nav-link[href^="#"]');
-  const contentSections = document.querySelectorAll(".dashboard-section, .content-section");
+      const sidebarLinks = document.querySelectorAll('.sidebar .nav-link[href^="#"]');
+      const contentSections = document.querySelectorAll(".dashboard-section, .content-section");
 
-  // Function to hide all content sections
-  function hideAllSections() {
-    contentSections.forEach((section) => {
-      section.style.display = "none";
-    });
-  }
-
-  // Find the initially active link and show its corresponding section
-  const activeLink = document.querySelector('.sidebar .nav-link.active');
-  if (activeLink) {
-    const activeSectionId = activeLink.getAttribute("href").substring(1);
-    const activeSection = document.getElementById(activeSectionId);
-    if (activeSection) {
-      activeSection.style.display = "block"; // Or ""
-    }
-  }
-
-  // Add click event listeners to sidebar links
-  sidebarLinks.forEach((link) => {
-    link.addEventListener("click", function (e) {
-      e.preventDefault();
-
-      // Remove 'active' class from all links and hide all sections
-      sidebarLinks.forEach((l) => l.classList.remove("active"));
-      hideAllSections();
-
-      // Add 'active' class to the clicked link
-      this.classList.add("active");
-
-      // Show the target section
-      const targetId = this.getAttribute("href").substring(1);
-      const targetSection = document.getElementById(targetId);
-      if (targetSection) {
-        targetSection.style.display = "block"; // Or ""
+      // Function to hide all content sections
+      function hideAllSections() {
+        contentSections.forEach((section) => {
+          section.style.display = "none";
+        });
       }
-    });
-  });
+    
+      // Find the initially active link and show its corresponding section
+      const activeLink = document.querySelector('.sidebar .nav-link.active');
+      if (activeLink) {
+        const activeSectionId = activeLink.getAttribute("href").substring(1);
+        const activeSection = document.getElementById(activeSectionId);
+        if (activeSection) {
+          activeSection.style.display = "block"; // Or ""
+        }
+      }
+    
+      // Add click event listeners to sidebar links
+      sidebarLinks.forEach((link) => {
+        link.addEventListener("click", function (e) {
+          e.preventDefault();
+        
+          // Remove 'active' class from all links and hide all sections
+          sidebarLinks.forEach((l) => l.classList.remove("active"));
+          hideAllSections();
+        
+          // Add 'active' class to the clicked link
+          this.classList.add("active");
+        
+          // Show the target section
+          const targetId = this.getAttribute("href").substring(1);
+          const targetSection = document.getElementById(targetId);
+          if (targetSection) {
+            targetSection.style.display = "block"; // Or ""
+          }
+        });
+      });
         document.addEventListener("DOMContentLoaded", function() {
             // Initialize all dropdowns
             var dropdownElementList = [].slice.call(document.querySelectorAll('.dropdown-toggle'))
@@ -577,6 +683,51 @@
             });
         });
     </script>
+
+  <script>
+    document.addEventListener('DOMContentLoaded', function() {
+      const profileImageInput = document.getElementById('profileImageInput');
+      const profileImagePreview = document.getElementById('profileImagePreview');
+      const profileImagePlaceholder = document.getElementById('profileImagePlaceholder');
+      
+      profileImageInput.addEventListener('change', function(event) {
+        const file = event.target.files[0];
+        
+        if (file) {
+          if (!file.type.match('image.*')) {
+            alert('Please select an image file (jpg, png, gif)');
+            return;
+          }
+          
+          const reader = new FileReader();
+          
+          reader.onload = function(e) {
+            if (profileImagePlaceholder) {
+              const newImg = document.createElement('img');
+              newImg.src = e.target.result;
+              newImg.classList.add('profile-image-preview', 'mb-2');
+              newImg.id = 'profileImagePreview';
+              newImg.alt = 'Profile Preview';
+              
+              profileImagePlaceholder.parentNode.replaceChild(newImg, profileImagePlaceholder);
+            } 
+            else if (profileImagePreview) {
+              profileImagePreview.src = e.target.result;
+            }
+          };
+          
+          reader.readAsDataURL(file);
+        }
+      });
+      
+      document.addEventListener('click', function(e) {
+        if (e.target.id === 'profileImagePreview') {
+          profileImageInput.click();
+        }
+      });
+    });
+  </script>
+
 
 </body>
 

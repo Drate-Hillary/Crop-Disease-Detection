@@ -1,0 +1,603 @@
+{% block content %}
+
+{% load static %}
+{% csrf_token %}
+
+<section id="upload-crop-images" class="content-section" style="display: none">
+    <div class="row mb-4 mt-4">
+        <div class="">
+            <h3 class="mb-4"><i class="fa-solid fa-upload text-success"></i> Crop Disease Image Upload</h3>
+            
+            <div class="bg-white border-start border-5 border-success p-3 rounded mb-4">
+                <div class="col-md-6 mx-auto">
+                    <div>
+                        <h3 class="text-center">Total Images: {{ total_images }}</h3>
+                    </div>
+                    <div class="d-flex align-items-center justify-content-center gap-3">
+                        <div class="text-center">
+                            <h4 id="totalFiles" class="mb-0">0</h4>
+                            <p class="text-muted mb-0">Total Images Uploaded</p>
+                        </div>
+                    
+                        <div class="text-center">
+                            <h4 id="processedFiles" class="mb-0">0</h4>
+                            <p class="text-muted mb-0">Processed</p>
+                        </div>
+                    
+                        <div class="text-center">
+                            <h4 id="remainingFiles" class="mb-0">0</h4>
+                            <p class="text-muted mb-0">Remaining</p>
+                        </div>
+                    </div>
+                
+                    <div class="d-flex flex-wrap justify-content-center gap-3 mt-2">
+
+                        {% for disease in diseases_with_counts %}
+                        <div class="d-flex align-items-center gap-1">
+                            <p class="mb-0">{{ disease.disease_name }}</p>
+                            <span class="badge rounded-pill text-bg-success">{{ disease.image_count }}</span>
+                        </div>
+                        {% endfor %}
+                    
+                    </div>
+                
+                </div>
+            </div>
+        </div>
+        
+        <div class="row">
+            <div class="mt-4 col-md-6">
+                <h5 class="border-bottom border-2 border-success pb-2 mb-4 d-flex align-items-center gap-2">
+                    <i class="fas fa-cloud-upload-alt text-success fs-4"></i>
+                    <span>Upload Images</span>
+                </h5>
+                <div class="border border-2 border-dashed border-success rounded-3 p-5 text-center d-flex flex-column justify-content-center bg-success-subtle" id="dropZone" style="min-height: 200px; cursor: pointer;">
+                    <div class="fs-1 text-success mb-3">
+                        <i class="bi bi-cloud-arrow-up"></i>
+                    </div>
+                    <h4>Drag & Drop Images Here</h4>
+                    <p class="text-muted mt-2">or</p>
+                    <input type="file" id="fileInput" multiple accept="image/*" class="d-none">
+                    <button class="btn btn-success btn-lg" onclick="document.getElementById('fileInput').click()">
+                        <i class="fas fa-images me-2"></i>Select Images
+                    </button>
+                    <p class="text-muted mt-3">Supported formats: JPG, PNG, JPEG, WEBP (Max 10MB per image)</p>
+                    <div class="mt-3">
+                        <span class="badge bg-info">Tip:</span>
+                        <small class="text-muted">Select multiple images at once</small>
+                    </div>
+                </div>
+                <div class="mt-3 bg-white p-3 rounded-3 border">
+                    <label class="form-label fw-bold">Image Compression</label>
+                    <div class="form-check form-switch">
+                        <input class="form-check-input" type="checkbox" role="switch" id="compressImages" checked>
+                        <label class="form-check-label" for="compressImages">Compress images to save bandwidth</label>
+                    </div>
+                    <div class="mt-2">
+                        <label for="compressionLevel" class="form-label">Compression Level: <span id="compressionValue">70</span>%</label>
+                        <input type="range" class="form-range" id="compressionLevel" min="30" max="90" value="70">
+                        <div class="form-text">Higher values mean better quality but larger file sizes</div>
+                    </div>
+                </div>
+                <div class="progress mt-4" id="uploadProgress" role="progressbar" aria-label="Upload progress" aria-valuenow="0" aria-valuemin="0" aria-valuemax="200" style="height: 10px;">
+                    <div class="progress-bar progress-bar-striped progress-bar-animated"></div>
+                </div>
+                <div class="bg-body-secondary rounded-2 p-2 px-3 mt-3 d-none" id="batchInfo">
+                    <div class="d-flex justify-content-between align-items-center">
+                        <span>Processing: <span id="currentBatch">1</span> of <span id="totalBatches">1</span> batches</span>
+                        <span>Images in current batch: <span id="batchCount">0</span></span>
+                    </div>
+                </div>
+            </div>
+            <div class="mt-4 col-md-6 bg-white py-2 rounded-2">
+                <h5 class="border-bottom border-2 border-success pb-2 mb-4 d-flex align-items-center gap-2">
+                    <i class="fas fa-images text-success fs-4"></i>
+                    <span>Image Previews <small class="text-muted">(First 200 images)</small></span>
+                </h5>
+                <div class="p-2 bg-white rounded-3 border overflow-y-auto d-grid gap-3" id="imagePreviews" style="max-height: 400px; grid-template-columns: repeat(auto-fill, minmax(120px, 1fr));">
+                    <div class="text-muted d-flex align-items-center justify-content-center flex-column h-80" id="emptyState">
+                        <i class="fas fa-images fa-2x mb-3"></i>
+                        <p>No Image Uploads</p>
+                    </div>
+                </div>
+                <div class="bg-white rounded-3 p-3 mt-4 border">
+                    <h5 class="border-bottom border-2 border-success pb-2 mb-4 d-flex align-items-center gap-2">
+                        <i class="fas fa-chart-bar text-success fs-4"></i>
+                        <span>Upload Statistics</span>
+                    </h5>
+                    <div class="d-flex justify-content-between py-1 border-bottom border-dashed">
+                        <span>Total size:</span>
+                        <span id="totalSize">0 MB</span>
+                    </div>
+                    <div class="d-flex justify-content-between py-1 border-bottom border-dashed">
+                        <span>Estimated upload time:</span>
+                        <span id="uploadTime">0 seconds</span>
+                    </div>
+                    <div class="d-flex justify-content-between py-1">
+                        <span>Average image size:</span>
+                        <span id="avgSize">0 KB</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <div class="d-flex gap-2 mt-3 d-none" id="batchControls">
+            <button class="btn btn-outline-primary" id="pauseBtn">
+                <i class="fas fa-pause me-2"></i>Pause
+            </button>
+            <button class="btn btn-outline-danger" id="cancelBtn">
+                <i class="fas fa-times me-2"></i>Cancel All
+            </button>
+        </div>
+        
+        <div class="card mt-4">
+            <div class="card-header">
+                <h5 class="mb-0 d-flex align-items-center gap-2">
+                    <i class="fas fa-info-circle text-success fs-4"></i>
+                    <span>Additional Information</span>
+                </h5>
+            </div>
+            <div class="card-body">
+                <div class="row">
+                    <div class="col-md-6 mb-3">
+                        <label for="disease-name" class="form-label fw-bold">Crop Disease Name</label>
+                        <input type="text" class="form-control" id="disease-name" name="disease_name" placeholder="e.g., Tomato Late Blight" required>
+                    </div>
+                    <div class="col-md-6 mb-3">
+                        <label for="priority" class="form-label fw-bold">Priority</label>
+                        <div class="row">
+                            <div class="col-md-6">
+                                <div class="form-check">
+                                    <input class="form-check-input" type="radio" name="priority" value="low" id="low" checked>
+                                    <label class="form-check-label" for="low"><span class="badge text-bg-secondary">Low Priority</span></label>
+                                </div>
+                                <div class="form-check">
+                                    <input class="form-check-input" type="radio" name="priority" value="medium" id="medium">
+                                    <label class="form-check-label" for="medium"><span class="badge text-bg-info">Medium Priority</span></label>
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="form-check">
+                                    <input class="form-check-input" type="radio" name="priority" value="high" id="high">
+                                    <label class="form-check-label" for="high"><span class="badge text-bg-warning">High Priority</span></label>
+                                </div>
+                                <div class="form-check">
+                                    <input class="form-check-input" type="radio" name="priority" value="critical" id="critical">
+                                    <label class="form-check-label" for="critical"><span class="badge text-bg-danger">Critical</span></label>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            
+                <div class="row">
+                    <div class="col-md-6 mb-3">
+                        <label for="symptoms" class="form-label fw-bold">Observed Signs and Symptoms</label>
+                        <div class="d-flex gap-3">
+                            <div class="form-check">
+                                <input class="form-check-input" type="checkbox" name="area_affected[]" value="leaves" id="leaves" checked>
+                                <label class="form-check-label" for="leaves"><span class="badge text-bg-warning">leaves</span></label>
+                            </div>
+                            <div class="form-check">
+                                <input class="form-check-input" type="checkbox" name="area_affected[]" value="stems" id="stems">
+                                <label class="form-check-label" for="stems"><span class="badge text-bg-warning">Stems</span></label>
+                            </div>
+                            <div class="form-check">
+                                <input class="form-check-input" type="checkbox" name="area_affected[]" value="fruits" id="fruits">
+                                <label class="form-check-label" for="fruits"><span class="badge text-bg-warning">Fruits</span></label>
+                            </div>
+                        </div>
+                        <textarea class="form-control" id="symptoms" name="symptoms" rows="5" placeholder="Describe the signs and symptoms you've observed (e.g., yellow spots, white mold)." required></textarea>
+                    </div>
+                    <div class="col-md-6 mb-3">
+                        <label for="solution" class="form-label fw-bold">Potential Solution for <span class="badge text-bg-danger">Tomato Late Blight</span></label>
+                        <div class="d-flex gap-3">
+                            <div class="form-check">
+                                <input class="form-check-input" type="checkbox" name="solutions[]" value="cultural_control" id="cultural_control" checked>
+                                <label class="form-check-label" for="cultural_control"><span class="badge text-bg-success">Cultural and Preventive Practices</span></label>
+                            </div>
+                            <div class="form-check">
+                                <input class="form-check-input" type="checkbox" name="solutions[]" value="chemical_control" id="chemical_control">
+                                <label class="form-check-label" for="chemical_control"><span class="badge text-bg-success">Chemical Control</span></label>
+                            </div>
+                        </div>
+                        <textarea class="form-control" id="solution" name="solution" rows="5" placeholder="Describe a potential solution or treatment method." required></textarea>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <form method="POST" action="{% url 'save_crop_disease_report' %}" enctype="multipart/form-data" id="diseaseForm">
+            {% csrf_token %}
+            <input type="file" name="images" multiple style="display: none;" id="hiddenFileInput">
+            <input type="hidden" name="disease_name" id="hiddenDiseaseName">
+            <input type="hidden" name="priority" id="hiddenPriority">
+            <input type="hidden" name="area_affected" id="hiddenAreaAffected">
+            <input type="hidden" name="symptoms" id="hiddenSymptoms">
+            <input type="hidden" name="solutions" id="hiddenSolutions">
+            <input type="hidden" name="solution" id="hiddenSolution">
+            <div class="d-flex gap-2 justify-content-end mt-2">
+                <button type="button" class="btn btn-outline-secondary" id="cancelButton">
+                    <i class="fas fa-times me-2"></i>Cancel
+                </button>
+                <button type="submit" class="btn btn-success" id="analyzeBtn">
+                    <i class="fa-solid fa-check-double me-2"></i> Save Images
+                </button>
+            </div>
+        </form>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+    
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            const dropZone = document.getElementById('dropZone');
+            const fileInput = document.getElementById('fileInput');
+            const imagePreviews = document.getElementById('imagePreviews');
+            const emptyState = document.getElementById('emptyState');
+            const analyzeBtn = document.getElementById('analyzeBtn');
+            const progressBar = document.querySelector('#uploadProgress .progress-bar');
+            const batchInfo = document.getElementById('batchInfo');
+            const batchControls = document.getElementById('batchControls');
+            const pauseBtn = document.getElementById('pauseBtn');
+            const cancelBtn = document.getElementById('cancelBtn');
+            const compressionLevel = document.getElementById('compressionLevel');
+            const compressionValue = document.getElementById('compressionValue');
+            const compressToggle = document.getElementById('compressImages');
+            
+            // Stats elements
+            const totalFilesElement = document.getElementById('totalFiles');
+            const processedFilesElement = document.getElementById('processedFiles');
+            const remainingFilesElement = document.getElementById('remainingFiles');
+            const totalSizeElement = document.getElementById('totalSize');
+            const uploadTimeElement = document.getElementById('uploadTime');
+            const avgSizeElement = document.getElementById('avgSize');
+            const currentBatchElement = document.getElementById('currentBatch');
+            const totalBatchesElement = document.getElementById('totalBatches');
+            const batchCountElement = document.getElementById('batchCount');
+            
+            let allFiles = [];
+            let processedFiles = 0;
+            let isPaused = false;
+            let currentBatch = [];
+            const BATCH_SIZE = 100; 
+            const MAX_PREVIEWS = 200;
+            
+            compressionLevel.addEventListener('input', function() {
+                compressionValue.textContent = this.value;
+            });
+            
+            // Drag and drop functionality
+            ['dragenter', 'dragover', 'dragleave', 'drop'].forEach(eventName => {
+                dropZone.addEventListener(eventName, preventDefaults, false);
+            });
+            
+            function preventDefaults(e) {
+                e.preventDefault();
+                e.stopPropagation();
+            }
+            
+            dropZone.addEventListener('dragenter', highlight, false);
+            dropZone.addEventListener('dragover', highlight, false);
+            dropZone.addEventListener('dragleave', unhighlight, false);
+            dropZone.addEventListener('drop', unhighlight, false);
+            
+            function highlight() {
+                // Toggle Bootstrap classes for visual feedback
+                dropZone.classList.add('bg-primary-subtle');
+                dropZone.classList.remove('bg-success-subtle');
+            }
+            
+            function unhighlight() {
+                // Revert to original Bootstrap classes
+                dropZone.classList.remove('bg-primary-subtle');
+                dropZone.classList.add('bg-success-subtle');
+            }
+            
+            dropZone.addEventListener('drop', handleDrop, false);
+            
+            function handleDrop(e) {
+                const dt = e.dataTransfer;
+                const items = dt.items;
+                
+                if (items) {
+                    const files = [];
+                    for (let i = 0; i < items.length; i++) {
+                        const item = items[i];
+                        if (item.kind === 'file') {
+                            const entry = item.webkitGetAsEntry();
+                            if (entry) {
+                                if (entry.isDirectory) {
+                                    traverseDirectory(entry, files);
+                                } else if (entry.isFile && entry.name.match(/\.(jpg|jpeg|png|gif|webp)$/i)) {
+                                    files.push(item.getAsFile());
+                                }
+                            }
+                        }
+                    }
+                    if (files.length > 0) {
+                        handleFiles(files);
+                    }
+                } else {
+                    handleFiles(dt.files);
+                }
+            }
+            
+            function traverseDirectory(entry, files) {
+                if (entry.isFile && entry.name.match(/\.(jpg|jpeg|png|gif|webp)$/i)) {
+                    entry.file(function(file) {
+                        files.push(file);
+                    });
+                } else if (entry.isDirectory) {
+                    const reader = entry.createReader();
+                    reader.readEntries(function(entries) {
+                        entries.forEach(function(childEntry) {
+                            traverseDirectory(childEntry, files);
+                        });
+                    });
+                }
+            }
+            
+            fileInput.addEventListener('change', function() {
+                handleFiles(this.files);
+            });
+            
+
+            
+            function handleFiles(files) {
+                if (files.length === 0) return;
+                
+                for (let i = 0; i < files.length; i++) {
+                    const file = files[i];
+                    if (file.type.startsWith('image/')) {
+                        allFiles.push(file);
+                    }
+                }
+                
+                updateStats();
+                emptyState.classList.add('d-none');
+                batchInfo.classList.remove('d-none');
+                batchControls.classList.remove('d-none');
+                processNextBatch();
+            }
+            
+            function updateStats() {
+                totalFilesElement.textContent = allFiles.length;
+                processedFilesElement.textContent = processedFiles;
+                remainingFilesElement.textContent = allFiles.length - processedFiles;
+                
+                let totalSize = allFiles.reduce((acc, file) => acc + file.size, 0);
+                const totalMB = (totalSize / (1024 * 1024)).toFixed(2);
+                const avgKB = allFiles.length > 0 ? (totalSize / allFiles.length / 1024).toFixed(2) : 0;
+                
+                totalSizeElement.textContent = `${totalMB} MB`;
+                avgSizeElement.textContent = `${avgKB} KB`;
+                
+                const uploadTimeSeconds = Math.round(totalSize / 625000); // Assuming 5 Mbps upload speed
+                uploadTimeElement.textContent = uploadTimeSeconds > 60 
+                    ? `${Math.floor(uploadTimeSeconds / 60)} min ${uploadTimeSeconds % 60} sec`
+                    : `${uploadTimeSeconds} seconds`;
+                
+                totalBatchesElement.textContent = Math.ceil(allFiles.length / BATCH_SIZE) || 1;
+            }
+            
+            function processNextBatch() {
+                if (isPaused) return;
+                
+                const remainingFilesCount = allFiles.length - processedFiles;
+                if (remainingFilesCount <= 0) {
+                    progressBar.style.width = '100%';
+                    progressBar.textContent = '100%';
+                    if (allFiles.length > 0) {
+                      analyzeBtn.removeAttribute('disabled');
+                    }
+                    return;
+                }
+                
+                const batchSize = Math.min(BATCH_SIZE, remainingFilesCount);
+                currentBatch = allFiles.slice(processedFiles, processedFiles + batchSize);
+                
+                currentBatchElement.textContent = Math.floor(processedFiles / BATCH_SIZE) + 1;
+                batchCountElement.textContent = batchSize;
+                
+                processBatch(currentBatch);
+            }
+            
+            function processBatch(batch) {
+                batch.forEach((file, index) => {
+                    setTimeout(() => {
+                        if (isPaused) return;
+                        
+                        const reader = new FileReader();
+                        
+                        reader.onload = function(e) {
+                            if (processedFiles < MAX_PREVIEWS) {
+                                const preview = document.createElement('div');
+                                preview.className = 'position-relative rounded-3 overflow-hidden shadow-sm';
+                                preview.innerHTML = `
+                                    <img src="${e.target.result}" alt="${file.name}" class="w-100 object-fit-cover" style="height: 120px;">
+                                    <div class="position-absolute top-0 end-0 m-1 bg-white bg-opacity-75 rounded-circle d-flex align-items-center justify-content-center" 
+                                         onclick="removeImage(${processedFiles})" 
+                                         style="width: 24px; height: 24px; font-size: 12px; cursor: pointer;">
+                                        <i class="fas fa-times"></i>
+                                    </div>
+                                `;
+                                imagePreviews.appendChild(preview);
+                            }
+                            
+                            processedFiles++;
+                            updateStats();
+                            
+                            const progress = Math.round((processedFiles / allFiles.length) * 100);
+                            progressBar.style.width = `${progress}%`;
+                            progressBar.setAttribute('aria-valuenow', progress);
+                            
+                            if (processedFiles % BATCH_SIZE === 0 || processedFiles === allFiles.length) {
+                                processNextBatch();
+                            }
+                        };
+                        
+                        if (compressToggle.checked) {
+                            compressImage(file, parseInt(compressionLevel.value)).then(compressedFile => {
+                                reader.readAsDataURL(compressedFile);
+                            }).catch(() => {
+                                reader.readAsDataURL(file); // Fallback to original file on compression error
+                            });
+                        } else {
+                            reader.readAsDataURL(file);
+                        }
+                    }, index * 50); // Stagger processing
+                });
+            }
+            
+            function compressImage(file, quality) {
+                return new Promise((resolve, reject) => {
+                    const reader = new FileReader();
+                    reader.onload = (event) => {
+                        const img = new Image();
+                        img.onload = () => {
+                            const canvas = document.createElement('canvas');
+                            const ctx = canvas.getContext('2d');
+                            
+                            let { width, height } = img;
+                            const MAX_DIMENSION = 1920;
+                            
+                            if (width > height && width > MAX_DIMENSION) {
+                                height *= MAX_DIMENSION / width;
+                                width = MAX_DIMENSION;
+                            } else if (height > MAX_DIMENSION) {
+                                width *= MAX_DIMENSION / height;
+                                height = MAX_DIMENSION;
+                            }
+                            
+                            canvas.width = width;
+                            canvas.height = height;
+                            ctx.drawImage(img, 0, 0, width, height);
+                            
+                            canvas.toBlob((blob) => {
+                                if (!blob) return reject(new Error('Canvas toBlob failed'));
+                                resolve(new File([blob], file.name, { type: 'image/jpeg', lastModified: Date.now() }));
+                            }, 'image/jpeg', quality / 100);
+                        };
+                        img.onerror = reject;
+                        img.src = event.target.result;
+                    };
+                    reader.onerror = reject;
+                    reader.readAsDataURL(file);
+                });
+            }
+            
+            pauseBtn.addEventListener('click', function() {
+                isPaused = !isPaused;
+                if (isPaused) {
+                    this.innerHTML = '<i class="fas fa-play me-2"></i>Resume';
+                    this.classList.replace('btn-outline-primary', 'btn-outline-success');
+                } else {
+                    this.innerHTML = '<i class="fas fa-pause me-2"></i>Pause';
+                    this.classList.replace('btn-outline-success', 'btn-outline-primary');
+                    processNextBatch();
+                }
+            });
+            
+            function resetUploader() {
+                allFiles = [];
+                processedFiles = 0;
+                isPaused = false;
+                
+                imagePreviews.innerHTML = '';
+                imagePreviews.appendChild(emptyState);
+                emptyState.classList.remove('d-none');
+                progressBar.style.width = '0%';
+                progressBar.setAttribute('aria-valuenow', 0);
+                batchInfo.classList.add('d-none');
+                batchControls.classList.add('d-none');
+                analyzeBtn.setAttribute('disabled', 'true');
+                document.getElementById('symptoms').value = '';
+                document.getElementById('disease-name').value = '';
+                updateStats();
+            }
+
+            cancelBtn.addEventListener('click', function() {
+                if (confirm('Are you sure you want to cancel all uploads?')) {
+                    resetUploader();
+                }
+            });
+            
+            document.getElementById('cancelButton').addEventListener('click', function() {
+                if (allFiles.length > 0) {
+                    if (!confirm('You have unsaved uploads. Are you sure you want to cancel?')) {
+                        return;
+                    }
+                }
+                resetUploader();
+            });
+            
+            window.removeImage = function(index) {
+                allFiles.splice(index, 1);
+                processedFiles = Math.min(processedFiles, allFiles.length);
+                
+                imagePreviews.innerHTML = '';
+                if (allFiles.length === 0) {
+                    imagePreviews.appendChild(emptyState);
+                    emptyState.classList.remove('d-none');
+                } else {
+                    const previewFiles = allFiles.slice(0, MAX_PREVIEWS);
+                    previewFiles.forEach((file, i) => {
+                        const reader = new FileReader();
+                        reader.onload = (e) => {
+                             const preview = document.createElement('div');
+                                preview.className = 'position-relative rounded-3 overflow-hidden shadow-sm';
+                                preview.innerHTML = `
+                                    <img src="${e.target.result}" alt="${file.name}" class="w-100 object-fit-cover" style="height: 120px;">
+                                    <div class="position-absolute top-0 end-0 m-1 bg-white bg-opacity-75 rounded-circle d-flex align-items-center justify-content-center" 
+                                         onclick="removeImage(${i})" 
+                                         style="width: 24px; height: 24px; font-size: 12px; cursor: pointer;">
+                                        <i class="fas fa-times"></i>
+                                    </div>
+                                `;
+                            imagePreviews.appendChild(preview);
+                        };
+                        reader.readAsDataURL(file);
+                    });
+                }
+                updateStats();
+                if (!isPaused && processedFiles < allFiles.length) {
+                    processNextBatch();
+                } else if (allFiles.length === 0) {
+                    resetUploader();
+                }
+            };
+            
+            document.getElementById('diseaseForm').addEventListener('submit', function(e) {
+                e.preventDefault();
+                
+                // Copy form field values to hidden inputs
+                document.getElementById('hiddenDiseaseName').value = document.getElementById('disease-name').value;
+                document.getElementById('hiddenPriority').value = document.querySelector('input[name="priority"]:checked')?.value || 'low';
+                document.getElementById('hiddenSymptoms').value = document.getElementById('symptoms').value;
+                document.getElementById('hiddenSolution').value = document.getElementById('solution').value;
+                
+                // Get checked area_affected values
+                const areaAffected = Array.from(document.querySelectorAll('input[name="area_affected[]"]:checked')).map(cb => cb.value);
+                document.getElementById('hiddenAreaAffected').value = areaAffected.join(',');
+                
+                // Get checked solutions values
+                const solutions = Array.from(document.querySelectorAll('input[name="solutions[]"]:checked')).map(cb => cb.value);
+                document.getElementById('hiddenSolutions').value = solutions.join(',');
+                
+                // Handle file uploads
+                const hiddenInput = document.getElementById('hiddenFileInput');
+                const dt = new DataTransfer();
+                
+                allFiles.forEach(file => {
+                    dt.items.add(file);
+                });
+                
+                hiddenInput.files = dt.files;
+                this.submit();
+            });
+        });
+    </script>
+</section>
+
+{% endblock %}

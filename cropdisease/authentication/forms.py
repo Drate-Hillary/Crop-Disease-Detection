@@ -133,6 +133,11 @@ class ProfileUpdateForm(forms.ModelForm):
         widget=forms.Textarea(attrs={'class': 'form-control', 'placeholder': 'Short Bio', 'rows': 5}),
         label="Bio"
     )
+    experience = forms.IntegerField(
+        required=False,
+        widget=forms.NumberInput(attrs={'class': 'form-control', 'placeholder': 'Years of Experience'}),
+        label="Experience (Years)"
+    )
     new_password = forms.CharField(
         required=False,
         widget=forms.PasswordInput(attrs={'class': 'form-control', 'id': 'userLocation', 'placeholder': 'Enter new password'}),
@@ -141,7 +146,7 @@ class ProfileUpdateForm(forms.ModelForm):
 
     class Meta:
         model = User
-        fields = ['user_name', 'email', 'phone', 'bio', 'profile_image']
+        fields = ['user_name', 'email', 'phone', 'bio', 'experience', 'profile_image']
     
     def clean_user_name(self):
         user_name = self.cleaned_data.get('user_name')

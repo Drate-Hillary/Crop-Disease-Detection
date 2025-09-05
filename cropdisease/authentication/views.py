@@ -147,12 +147,15 @@ def edit_profile(request):
                 update_session_auth_hash(request, user)  # Important to keep user logged in
                 messages.success(request, 'Your password was successfully updated!')
             
-            messages.success(request, 'Your profile has been updated successfully!')
-            return redirect('farmer_home')  # Redirect to profile page
+            if request.user.role == 'farmer':
+                messages.success(request, 'Your profile has been updated successfully!')
+                return redirect('farmer_home')
+            elif request.user.role == 'agronomist':
+                messages.success(request, 'Your profile has been updated successfully!')
+                return redirect('agronomist_home')
+            
             
         else:
             messages.error(request, 'Please correct the errors below.')
     else:
         form = ProfileUpdateForm(instance=request.user)
-    
-    return render(request, 'farmer_app/farmer_home.html')

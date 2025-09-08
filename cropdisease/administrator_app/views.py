@@ -62,16 +62,17 @@ def get_time_since_last_activities():
     return time_since, user_time_since, last_image.uploaded_at if last_image else None
 
 def get_recent_activities():
-    recent_users = User.objects.filter(is_superuser=False).order_by('-date_joined')[:5]
+    recent_users = User.objects.order_by('-date_joined')[:5]
     recent_reports = CropDisease.objects.select_related('agronomist').order_by('-created_at')[:5]
     
     activities = []
     
     for user in recent_users:
         time_ago = format_time_ago(timezone.now() - user.date_joined)
+        user_type = "Admin" if user.is_superuser else "User"
         activities.append({
             'type': 'user',
-            'message': "New user registered",
+            'message': f"New {user_type.lower()} registered",
             'user': user.user_name,
             'time': time_ago,
             'timestamp': user.date_joined

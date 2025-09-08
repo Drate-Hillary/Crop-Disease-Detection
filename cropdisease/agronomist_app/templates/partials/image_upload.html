@@ -4,6 +4,48 @@
 {% csrf_token %}
 
 <section id="upload-crop-images" class="content-section" style="display: none">
+
+    <div class="modal fade show" id="categorySelectionModal" style="display: block;" tabindex="-1" aria-labelledby="categorySelectionModalLabel" aria-modal="true" role="dialog">
+        <div class="modal-dialog modal-dialog-centered modal-lg">
+            <div class="modal-content border-0 shadow-lg">
+                <div class="modal-header bg-light border-0">
+                    <h5 class="modal-title" id="categorySelectionModalLabel">
+                        <i class="fa-solid fa-seedling text-success me-2"></i>Choose Your Crop Image Upload Category
+                    </h5>
+                </div>
+                <div class="modal-body p-4 p-md-5">
+                    <p class="text-center text-muted mb-4">Are you uploading images of healthy or diseased plants?</p>
+                    <div class="row g-4">
+
+                        <div class="col-md-6">
+                            <a href="#" id="healthyCrops" class="card h-100 text-center text-decoration-none text-dark border-1 shadow-sm border border-success">
+                                <div class="card-body d-flex flex-column justify-content-center align-items-center p-2">
+                                    <i class="fa-solid fa-leaf fa-3x text-success"></i>
+                                    <h4 class="card-title">Healthy Crops</h4>
+                                    <p class="card-text text-muted small">Help us build our database of healthy plants for comparison.</p>
+                                </div>
+                            </a>
+                        </div>
+
+                        <div class="col-md-6">
+                            <a href="#" id="diseasedCrops" class="card h-100 text-center text-decoration-none text-dark border-2 priority-high border-danger shadow-sm">
+                                <div class="card-body d-flex flex-column justify-content-center align-items-center p-4">
+                                    <i class="fa-solid fa-bug fa-3x text-danger mb-3"></i>
+                                    <h4 class="card-title">Diseased Crops</h4>
+                                    <p class="card-text text-muted small">Upload images of infected plants for analysis and identification.</p>
+                                </div>
+                            </a>
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="modal-backdrop fade show"></div>
+
+
     <div class="row mb-4 mt-4">
         <div class="">
             <h3 class="mb-4"><i class="fa-solid fa-upload text-success"></i> Crop Disease Image Upload</h3>
@@ -35,7 +77,14 @@
                         {% for disease in diseases_with_counts %}
                         <div class="d-flex align-items-center gap-1">
                             <p class="mb-0">{{ disease.disease_name }}</p>
-                            <span class="badge rounded-pill text-bg-success">{{ disease.image_count }}</span>
+                            <span class="badge rounded-pill text-bg-danger">{{ disease.image_count }}</span>
+                        </div>
+                        {% endfor %}
+                        
+                        {% for healthy_crop in healthy_crops_with_counts %}
+                        <div class="d-flex align-items-center gap-1">
+                            <p class="mb-0">{{ healthy_crop.crop_name }}</p>
+                            <span class="badge rounded-pill text-bg-success">{{ healthy_crop.image_count }}</span>
                         </div>
                         {% endfor %}
                     
@@ -138,76 +187,91 @@
                 </h5>
             </div>
             <div class="card-body">
-                <div class="row">
-                    <div class="col-md-6 mb-3">
-                        <label for="disease-name" class="form-label fw-bold">Crop Disease Name</label>
-                        <input type="text" class="form-control" id="disease-name" name="disease_name" placeholder="e.g., Tomato Late Blight" required>
+                <div class="diseasedCrops">
+                    <div class="row">
+                        <div class="col-md-6 mb-3">
+                            <label for="disease-name" class="form-label fw-bold">Crop Disease Name</label>
+                            <input type="text" class="form-control" id="disease-name" name="disease_name" placeholder="e.g., Tomato Late Blight" required>
+                        </div>
+                        <div class="col-md-6 mb-3">
+                            <label for="priority" class="form-label fw-bold">Priority</label>
+                            <div class="row">
+                                <div class="col-md-6">
+                                    <div class="form-check">
+                                        <input class="form-check-input" type="radio" name="priority" value="low" id="low" checked>
+                                        <label class="form-check-label" for="low"><span class="badge text-bg-secondary">Low Priority</span></label>
+                                    </div>
+                                    <div class="form-check">
+                                        <input class="form-check-input" type="radio" name="priority" value="medium" id="medium">
+                                        <label class="form-check-label" for="medium"><span class="badge text-bg-info">Medium Priority</span></label>
+                                    </div>
+                                </div>
+                                <div class="col-md-6">
+                                    <div class="form-check">
+                                        <input class="form-check-input" type="radio" name="priority" value="high" id="high">
+                                        <label class="form-check-label" for="high"><span class="badge text-bg-warning">High Priority</span></label>
+                                    </div>
+                                    <div class="form-check">
+                                        <input class="form-check-input" type="radio" name="priority" value="critical" id="critical">
+                                        <label class="form-check-label" for="critical"><span class="badge text-bg-danger">Critical</span></label>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
                     </div>
-                    <div class="col-md-6 mb-3">
-                        <label for="priority" class="form-label fw-bold">Priority</label>
-                        <div class="row">
-                            <div class="col-md-6">
+                
+                    <div class="row">
+                        <div class="col-md-6 mb-3">
+                            <label for="symptoms" class="form-label fw-bold">Observed Signs and Symptoms</label>
+                            <div class="d-flex gap-3">
                                 <div class="form-check">
-                                    <input class="form-check-input" type="radio" name="priority" value="low" id="low" checked>
-                                    <label class="form-check-label" for="low"><span class="badge text-bg-secondary">Low Priority</span></label>
+                                    <input class="form-check-input" type="checkbox" name="area_affected[]" value="leaves" id="leaves" checked>
+                                    <label class="form-check-label" for="leaves"><span class="badge text-bg-warning">leaves</span></label>
                                 </div>
                                 <div class="form-check">
-                                    <input class="form-check-input" type="radio" name="priority" value="medium" id="medium">
-                                    <label class="form-check-label" for="medium"><span class="badge text-bg-info">Medium Priority</span></label>
-                                </div>
-                            </div>
-                            <div class="col-md-6">
-                                <div class="form-check">
-                                    <input class="form-check-input" type="radio" name="priority" value="high" id="high">
-                                    <label class="form-check-label" for="high"><span class="badge text-bg-warning">High Priority</span></label>
+                                    <input class="form-check-input" type="checkbox" name="area_affected[]" value="stems" id="stems">
+                                    <label class="form-check-label" for="stems"><span class="badge text-bg-warning">Stems</span></label>
                                 </div>
                                 <div class="form-check">
-                                    <input class="form-check-input" type="radio" name="priority" value="critical" id="critical">
-                                    <label class="form-check-label" for="critical"><span class="badge text-bg-danger">Critical</span></label>
+                                    <input class="form-check-input" type="checkbox" name="area_affected[]" value="fruits" id="fruits">
+                                    <label class="form-check-label" for="fruits"><span class="badge text-bg-warning">Fruits</span></label>
                                 </div>
                             </div>
+                            <textarea class="form-control" id="symptoms" name="symptoms" rows="5" placeholder="Describe the signs and symptoms you've observed (e.g., yellow spots, white mold)." required></textarea>
+                        </div>
+                        <div class="col-md-6 mb-3">
+                            <label for="solution" class="form-label fw-bold">Potential Solution for <span class="badge text-bg-danger">Tomato Late Blight</span></label>
+                            <div class="d-flex gap-3">
+                                <div class="form-check">
+                                    <input class="form-check-input" type="checkbox" name="solutions[]" value="cultural_control" id="cultural_control" checked>
+                                    <label class="form-check-label" for="cultural_control"><span class="badge text-bg-success">Cultural and Preventive Practices</span></label>
+                                </div>
+                                <div class="form-check">
+                                    <input class="form-check-input" type="checkbox" name="solutions[]" value="chemical_control" id="chemical_control">
+                                    <label class="form-check-label" for="chemical_control"><span class="badge text-bg-success">Chemical Control</span></label>
+                                </div>
+                            </div>
+                            <textarea class="form-control" id="solution" name="solution" rows="5" placeholder="Describe a potential solution or treatment method." required></textarea>
                         </div>
                     </div>
                 </div>
-            
-                <div class="row">
-                    <div class="col-md-6 mb-3">
-                        <label for="symptoms" class="form-label fw-bold">Observed Signs and Symptoms</label>
-                        <div class="d-flex gap-3">
-                            <div class="form-check">
-                                <input class="form-check-input" type="checkbox" name="area_affected[]" value="leaves" id="leaves" checked>
-                                <label class="form-check-label" for="leaves"><span class="badge text-bg-warning">leaves</span></label>
-                            </div>
-                            <div class="form-check">
-                                <input class="form-check-input" type="checkbox" name="area_affected[]" value="stems" id="stems">
-                                <label class="form-check-label" for="stems"><span class="badge text-bg-warning">Stems</span></label>
-                            </div>
-                            <div class="form-check">
-                                <input class="form-check-input" type="checkbox" name="area_affected[]" value="fruits" id="fruits">
-                                <label class="form-check-label" for="fruits"><span class="badge text-bg-warning">Fruits</span></label>
-                            </div>
+
+                <div class="healthyCrops">
+                    <div class="row" id="characteristicsSection" style="display: none;">
+                        <div class="col-md-6 mb-3">
+                            <label for="crop_name" class="form-label fw-bold">Crop Disease Name</label>
+                            <input type="text" class="form-control" id="crop_name" name="crop_name" placeholder="Healthy Crop Title" required>
                         </div>
-                        <textarea class="form-control" id="symptoms" name="symptoms" rows="5" placeholder="Describe the signs and symptoms you've observed (e.g., yellow spots, white mold)." required></textarea>
-                    </div>
-                    <div class="col-md-6 mb-3">
-                        <label for="solution" class="form-label fw-bold">Potential Solution for <span class="badge text-bg-danger">Tomato Late Blight</span></label>
-                        <div class="d-flex gap-3">
-                            <div class="form-check">
-                                <input class="form-check-input" type="checkbox" name="solutions[]" value="cultural_control" id="cultural_control" checked>
-                                <label class="form-check-label" for="cultural_control"><span class="badge text-bg-success">Cultural and Preventive Practices</span></label>
-                            </div>
-                            <div class="form-check">
-                                <input class="form-check-input" type="checkbox" name="solutions[]" value="chemical_control" id="chemical_control">
-                                <label class="form-check-label" for="chemical_control"><span class="badge text-bg-success">Chemical Control</span></label>
-                            </div>
+                        <div class="col-md-12 mb-3">
+                            <label for="characteristics" class="form-label fw-bold">Characteristics</label>
+                            <textarea class="form-control" id="characteristics" name="characteristics" rows="5" placeholder="Describe the healthy characteristics of this crop (e.g., vibrant green leaves, strong stems, proper growth pattern)." required></textarea>
                         </div>
-                        <textarea class="form-control" id="solution" name="solution" rows="5" placeholder="Describe a potential solution or treatment method." required></textarea>
                     </div>
                 </div>
             </div>
         </div>
         
-        <form method="POST" action="{% url 'save_crop_disease_report' %}" enctype="multipart/form-data" id="diseaseForm">
+        <form method="POST" action="{% url 'save_crop_data' %}" enctype="multipart/form-data" id="diseaseForm">
             {% csrf_token %}
             <input type="file" name="images" multiple style="display: none;" id="hiddenFileInput">
             <input type="hidden" name="disease_name" id="hiddenDiseaseName">
@@ -216,6 +280,7 @@
             <input type="hidden" name="symptoms" id="hiddenSymptoms">
             <input type="hidden" name="solutions" id="hiddenSolutions">
             <input type="hidden" name="solution" id="hiddenSolution">
+            <input type="hidden" name="category" id="hiddenCategory">
             <div class="d-flex gap-2 justify-content-end mt-2">
                 <button type="button" class="btn btn-outline-secondary" id="cancelButton">
                     <i class="fas fa-times me-2"></i>Cancel
@@ -231,6 +296,59 @@
     
     <script>
         document.addEventListener('DOMContentLoaded', function() {
+            const healthyCropsBtn = document.getElementById('healthyCrops');
+            const diseasedCropsBtn = document.getElementById('diseasedCrops');
+            const modal = document.getElementById('categorySelectionModal');
+            const modalBackdrop = document.querySelector('.modal-backdrop');
+            const diseasedSection = document.querySelector('.diseasedCrops');
+            const healthySection = document.querySelector('.healthyCrops');
+
+            // Handle healthy crops selection
+            healthyCropsBtn.addEventListener('click', function(e) {
+                e.preventDefault();
+                enableHealthyCrops();
+                hideModal();
+            });
+
+            // Handle diseased crops selection
+            diseasedCropsBtn.addEventListener('click', function(e) {
+                e.preventDefault();
+                enableDiseasedCrops();
+                hideModal();
+            });
+
+            function enableHealthyCrops() {
+                // Enable healthy crops section only
+                healthySection.style.display = 'block';
+                diseasedSection.style.display = 'none';
+                document.getElementById('characteristicsSection').style.display = 'block';
+                // Add category field for healthy crops
+                document.getElementById('hiddenCategory').value = 'healthy';
+            }
+            
+            // Copy healthy crop values to hidden inputs before form submission
+            document.getElementById('diseaseForm').addEventListener('submit', function(e) {
+                if (document.getElementById('diseaseForm').action.includes('save-healthy-crop')) {
+                    document.getElementById('hiddenCropName').value = document.getElementById('crop_name').value;
+                    document.getElementById('hiddenCharacteristics').value = document.getElementById('characteristics').value;
+                }
+            });
+
+            function enableDiseasedCrops() {
+                // Enable diseased crops section only
+                diseasedSection.style.display = 'block';
+                healthySection.style.display = 'none';
+                document.getElementById('characteristicsSection').style.display = 'none';
+                // Add category field for diseased crops
+                document.getElementById('hiddenCategory').value = 'diseased';
+            }
+
+            function hideModal() {
+                modal.style.display = 'none';
+                modalBackdrop.style.display = 'none';
+            }
+
+
             const dropZone = document.getElementById('dropZone');
             const fileInput = document.getElementById('fileInput');
             const imagePreviews = document.getElementById('imagePreviews');

@@ -1,10 +1,7 @@
 from django.shortcuts import render, redirect
 from django.contrib.auth.decorators import login_required
 from django.contrib import messages
-from django.http import JsonResponse
-import os
-from .models import CropDisease, CropDiseaseImage, HealthyCrop, HealthyCropImage, AIModel, Prediction
-from .ai_model import CropDiseasePredictor
+from .models import CropDisease, CropDiseaseImage, HealthyCrop, HealthyCropImage
 from django.db.models import Count
 
 
@@ -78,49 +75,4 @@ def save_crop_data(request):
             messages.success(request, f'Crop disease report "{disease_name}" saved successfully!')
     
     return redirect('agronomist_home')
-
-@login_required
-def predict_disease(request):
-    if request.method == 'POST' and request.FILES.get('image'):
-        image = request.FILES['image']
-        
-        # Save uploaded image temporarily
-        temp_path = f'temp_{image.name}'
-        with open(temp_path, 'wb+') as destination:
-            for chunk in image.chunks():
-                destination.write(chunk)
-        
-        # Make prediction
-        predictor = CropDiseasePredictor()
-        try:
-            # Load pre-trained model (you need to train and save it first)
-            predictor.load_model('crop_disease_model.h5')
-            result = predictor.predict(temp_path)
-            
-            # Save prediction to database
-            model = AIModel.objects.first()  # Get first available model
-            if model:
-                Prediction.objects.create(
-                    model=model,
-                    image=image,
-                    predicted_disease=result['disease'],
-                    confidence=result['confidence']
-                )
-            
-            # Clean up temp file
-            os.remove(temp_path)
-            
-            return JsonResponse({
-                'success': True,
-                'disease': result['disease'],
-                'confidence': result['confidence']
-            })
-            
-        except Exception as e:
-            # Clean up temp file
-            if os.path.exists(temp_path):
-                os.remove(temp_path)
-            return JsonResponse({'success': False, 'error': str(e)})
-    
-    return JsonResponse({'success': False, 'error': 'No image provided'})
 

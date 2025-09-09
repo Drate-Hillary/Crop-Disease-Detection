@@ -791,46 +791,62 @@
               </div>
               <div class="col-md-4">
                 <label for="modelType" class="form-label">Model Type</label>
-                <select class="form-select" id="modelType">
-                  <option selected>Select type</option>
-                  <option>Convolutional Neural Network (CNN)</option>
-                  <option>ResNet</option>
-                  <option>EfficientNet</option>
-                  <option>Vision Transformer</option>
-                  <option>Custom Architecture</option>
-                </select>
+
+                <div class="position-relative">
+                  <input
+                    class="form-control pe-4" list="modelTypeOptions"
+                    id="modelType"
+                    placeholder="Select or type..."
+                  />
+                  <i class="fa-solid fa-chevron-down position-absolute top-50 me-2 end-0 translate-middle-y text-secondary pe-none"></i>
+                  <datalist id="modelTypeOptions">
+                    <option value="Convolutional Neural Network (CNN)"></option>
+                    <option value="ResNet"></option>
+                    <option value="EfficientNet"></option>
+                    <option value="Vision Transformer"></option>
+                    <option value="Custom Architecture"></option>
+                  </datalist>
+                </div>
               </div>
             </div>
 
             <div class="row mb-3">
               <div class="col-md-6">
                 <label for="modelCrop" class="form-label">Target Crop</label>
-                <select class="form-select" id="modelCrop">
-                  <option selected>Select crop</option>
-                  <option>Tomatoes</option>
-                  <option>Wheat</option>
-                  <option>Maize</option>
-                  <option>Potatoes</option>
-                  <option>Rice</option>
-                  <option>Other</option>
-                </select>
+                <div class="position-relative">
+                  <input
+                    class="form-control pe-4" list="modelCropOptions"
+                    id="modelCrop"
+                    placeholder="Select or type here..."
+                  />
+                  <i class="fa-solid fa-chevron-down position-absolute top-50 me-2 end-0 translate-middle-y text-secondary pe-none"></i>
+                  <datalist id="modelCropOptions">
+                    <option value="Tomato Early Blight"></option>
+                    <option value="Tomato Late Blight"></option>
+                  </datalist>
+                </div>
               </div>
               <div class="col-md-6">
                 <label for="modelFramework" class="form-label">Framework</label>
-                <select class="form-select" id="modelFramework">
-                  <option selected>TensorFlow</option>
-                  <option>PyTorch</option>
-                  <option>Keras</option>
-                  <option>Scikit-learn</option>
-                  <option>Other</option>
-                </select>
+                <div class="position-relative">
+                  <input
+                    class="form-control pe-4" list="modelFramework"
+                    id="modelFramework"
+                    placeholder="Select or type here..."
+                  />
+                  <i class="fa-solid fa-chevron-down position-absolute top-50 me-2 end-0 translate-middle-y text-secondary pe-none"></i>
+                  <datalist id="modelFramework">
+                    <option value="TensorFlow"></option>
+                    <option value="PyTorch"></option>
+                    <option value="Keras"></option>
+                    <option value="Scikit-learn"></option>
+                  </datalist>
+                </div>
               </div>
             </div>
 
             <div class="mb-3">
-              <label for="modelDescription" class="form-label"
-                >Description</label
-              >
+              <label for="modelDescription" class="form-label">Description</label>
               <textarea
                 class="form-control"
                 id="modelDescription"
@@ -925,50 +941,39 @@
                 <div class="row">
                   <div class="col-md-6 mb-3">
                     <label for="optimizer" class="form-label">Optimizer</label>
-                    <select class="form-select" id="optimizer">
-                      <option selected>Adam</option>
-                      <option>SGD</option>
-                      <option>RMSprop</option>
-                      <option>Adagrad</option>
-                      <option>Custom</option>
-                    </select>
+                    <div class="position-relative">
+                      <input
+                        class="form-control pe-4" list="modelOptimizer"
+                        id="optimizer"
+                        placeholder="Select or type here..."
+                      />
+                      <i class="fa-solid fa-chevron-down position-absolute top-50 me-2 end-0 translate-middle-y text-secondary pe-none"></i>
+                      <datalist id="modelOptimizer">
+                        <option value="Adam"></option>
+                        <option value="SGD"></option>
+                        <option value="RMSprop"></option>
+                        <option value="Adagrad"></option>
+                      </datalist>
+                    </div>
                   </div>
                   <div class="col-md-6">
-                    <label for="lossFunction" class="form-label"
-                      >Loss Function</label
-                    >
-                    <select class="form-select" id="lossFunction">
-                      <option selected>Categorical Crossentropy</option>
-                      <option>Binary Crossentropy</option>
-                      <option>Sparse Categorical Crossentropy</option>
-                      <option>Custom</option>
-                    </select>
+                    <label for="lossFunction" class="form-label">Loss Function</label>
+                    <div class="position-relative">
+                      <input
+                        class="form-control pe-4" list="modelLossFunction"
+                        id="lossFunction"
+                        placeholder="Select or type here..."
+                      />
+                      <i class="fa-solid fa-chevron-down position-absolute top-50 me-2 end-0 translate-middle-y text-secondary pe-none"></i>
+                      <datalist id="modelLossFunction">
+                        <option value="Categorical Crossentropy"></option>
+                        <option value="Binary Crossentropy"></option>
+                        <option value="Sparse Categorical Crossentropy"></option>
+                      </datalist>
+                    </div>
                   </div>
                 </div>
               </div>
-            </div>
-
-            <div class="form-check mb-3">
-              <input
-                class="form-check-input"
-                type="checkbox"
-                id="enableAugmentation"
-                checked
-              />
-              <label class="form-check-label" for="enableAugmentation">
-                Enable Data Augmentation
-              </label>
-            </div>
-            <div class="form-check mb-3">
-              <input
-                class="form-check-input"
-                type="checkbox"
-                id="enableEarlyStopping"
-                checked
-              />
-              <label class="form-check-label" for="enableEarlyStopping">
-                Enable Early Stopping
-              </label>
             </div>
           </form>
         </div>

@@ -3,7 +3,11 @@ from django.contrib.auth.decorators import login_required
 from authentication.models import User
 from django.utils import timezone
 from datetime import timedelta
-from agronomist_app.models import CropDisease, CropDiseaseImage
+from agronomist_app.models import CropDisease, CropDiseaseImage, HealthyCrop, HealthyCropImage
+from django.http import JsonResponse
+from .models import AIModel, Prediction
+from .ai_model import CropDiseasePredictor
+import os
 
 def format_time_ago(time_diff):
     total_seconds = int(time_diff.total_seconds())
@@ -29,8 +33,8 @@ def calculate_growth_stats():
     
     user_growth = round(((current_users - last_week_users) / last_week_users) * 100, 1) if last_week_users > 0 else (100 if current_users > 0 else 0)
     
-    current_images = CropDiseaseImage.objects.count()
-    yesterday_images = CropDiseaseImage.objects.filter(uploaded_at__lt=yesterday).count()
+    current_images = CropDiseaseImage.objects.count() + HealthyCropImage.objects.count()
+    yesterday_images = CropDiseaseImage.objects.filter(uploaded_at__lt=yesterday).count() + HealthyCropImage.objects.filter(uploaded_at__lt=yesterday).count()
     
     image_growth = round(((current_images - yesterday_images) / yesterday_images) * 100, 1) if yesterday_images > 0 else (100 if current_images > 0 else 0)
     
@@ -129,3 +133,52 @@ def admin_home(request):
     }
 
     return render(request, 'administrator_page.html', context)
+
+
+# crop disease prediction view 
+
+@login_required
+def predict_disease(request):
+    if request.method == 'POST' and request.FILES.get('image'):
+        image = request.FILES['image']
+        
+        # Save uploaded image temporarily
+        temp_path = f'temp_{image.name}'
+        with open(temp_path, 'wb+') as destination:
+            for chunk in image.chunks():
+                destination.write(chunk)
+        
+        # Make prediction
+        predictor = CropDiseasePredictor()
+        try:
+            # Load pre-trained model (you need to train and save it first)
+            predictor.load_model('crop_disease_model.h5')
+            result = predictor.predict(temp_path)
+            
+            # Save prediction to database
+            model = AIModel.objects.first()  # Get first available model
+            if model:
+                Prediction.objects.create(
+                    model=model,
+                    image=image,
+                    predicted_disease=result['disease'],
+                    confidence=result['confidence']
+                )
+            
+            # Clean up temp file
+            os.remove(temp_path)
+            
+            return JsonResponse({
+                'success': True,
+                'disease': result['disease'],
+                'confidence': result['confidence']
+            })
+            
+        except Exception as e:
+            # Clean up temp file
+            if os.path.exists(temp_path):
+                os.remove(temp_path)
+            return JsonResponse({'success': False, 'error': str(e)})
+    
+    return JsonResponse({'success': False, 'error': 'No image provided'})
+
